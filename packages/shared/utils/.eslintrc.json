@@ -1,0 +1,32 @@
+{
+  "extends": [
+    "../../../.eslintrc.json",
+    "plugin:@shopify/typescript",
+    "plugin:@shopify/typescript-type-checking"
+  ],
+  "ignorePatterns": ["!**/*"],
+  "overrides": [
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      // We set parserOptions.project for the project to allow TypeScript to create the type-checker behind the scenes when we run linting
+      "parserOptions": {
+        "project": ["packages/shared/utils/tsconfig.*?.json"]
+      },
+      "rules": {
+        "@typescript-eslint/await-thenable": "error"
+      }
+    },
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "rules": {}
+    },
+    {
+      "files": ["*.ts", "*.tsx"],
+      "rules": {}
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "rules": {}
+    }
+  ]
+}
