@@ -28,7 +28,7 @@ export type Goal = {
   description?: string;
   icon: GoalIcon;
   date: string; // date in UTC format (YYYY-MM-DD)
-  time?: { start: string; end: string };
+  time?: { start: string; end: string } | undefined;
   repeat: GoalRepeat;
   categories: Set<string>;
   completion: {
@@ -38,14 +38,18 @@ export type Goal = {
     streaks: { streakStart: string; streakEnd: string; skipped: string[] }[];
     total: number;
   };
-  groupId?: string;
-  location?: string | LatLng;
-  commute?: {
-    duration: Duration;
-  };
-  break?: {
-    duration: Duration;
-  };
+  groupId?: string | undefined;
+  location?: string | LatLng | undefined;
+  commute?:
+    | {
+        duration: Duration;
+      }
+    | undefined;
+  break?:
+    | {
+        duration: Duration;
+      }
+    | undefined;
 };
 export const _emptyGoal: Goal = {
   id: '',
