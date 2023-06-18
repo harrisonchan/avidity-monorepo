@@ -1,3 +1,7 @@
 {
+  "printWidth": 150,
+  "semi": true,
+  "bracketSameLine": true,
+  "endOfLine": "auto",
   "singleQuote": true
 }

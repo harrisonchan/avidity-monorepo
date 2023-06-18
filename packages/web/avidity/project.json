@@ -15,14 +15,12 @@
         "baseHref": "/",
         "main": "packages/web/avidity/src/main.tsx",
         "tsConfig": "packages/web/avidity/tsconfig.app.json",
-        "assets": [
-          "packages/web/avidity/src/favicon.ico",
-          "packages/web/avidity/src/assets"
-        ],
+        "assets": ["packages/web/avidity/src/favicon.ico", "packages/web/avidity/src/assets"],
         "styles": [],
         "scripts": [],
         "isolatedConfig": true,
-        "webpackConfig": "packages/web/avidity/webpack.config.js"
+        "webpackConfig": "packages/web/avidity/webpack.config.js",
+        "postcssConfig": "packages/web/avidity/postcss.config.js"
       },
       "configurations": {
         "development": {
