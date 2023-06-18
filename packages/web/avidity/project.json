@@ -16,7 +16,7 @@
         "main": "packages/web/avidity/src/main.tsx",
         "tsConfig": "packages/web/avidity/tsconfig.app.json",
         "assets": ["packages/web/avidity/src/favicon.ico", "packages/web/avidity/src/assets"],
-        "styles": [],
+        "styles": ["packages/web/avidity/src/styles.css"],
         "scripts": [],
         "isolatedConfig": true,
         "webpackConfig": "packages/web/avidity/webpack.config.js",

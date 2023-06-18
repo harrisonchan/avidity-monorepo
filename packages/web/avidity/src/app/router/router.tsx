@@ -1,13 +1,13 @@
+import { Home } from '@web/pages';
 import React from 'react';
 import { useRoutes } from 'react-router-dom';
-import { Home } from '@web/pages';
 
 export default function AppRouter() {
-  const elements = useRoutes([
+  const routes = useRoutes([
     {
       path: '/',
       element: <Home />,
     },
   ]);
-  return elements;
+  return routes;
 }
