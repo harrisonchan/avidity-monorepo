@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@shared-helpers": ["packages/shared/helpers/src/index.ts"],
+      "@shared/helpers": ["packages/shared/helpers/src/index.ts"],
+      "@shared/stores": ["packages/shared/stores/src/index.ts"],
       "@shared/types": ["packages/shared/types/src/index.ts"],
       "@shared/utils": ["packages/shared/utils/src/index.ts"],
       "@web/*": ["packages/web/avidity/src/app/*"]

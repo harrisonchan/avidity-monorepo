@@ -1,20 +1,19 @@
-import { ColorType } from './baseTypes';
-import { Illustration } from './components';
+import { Duration } from 'dayjs/plugin/duration';
+import { Color, LatLng } from './baseTypes';
+import { Illustration, IoniconsName } from './components';
 
-export type GoalIcon = {
-  name: string;
-  iconColor: ColorType;
-  backgroundColor: ColorType;
+type BaseGoalIconIllustration = {
+  iconColor?: Color;
+  backgroundColor?: Color;
 };
-
-export type GoalIllustration = {
+export type GoalIcon = BaseGoalIconIllustration & {
+  name: IoniconsName;
+};
+export type GoalIllustration = BaseGoalIconIllustration & {
   name: Illustration;
-  color: ColorType;
-  backgroundColor: ColorType;
 };
 
 export type GoalWeekdays = 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday';
-
 export type GoalRepeat = {
   type: 'daily' | 'weekly' | 'monthly' | 'yearly' | 'custom' | 'weekdays' | 'none';
   frequency?: number;
@@ -26,7 +25,7 @@ export type GoalRepeat = {
 export type Goal = {
   id: string;
   title: string;
-  description: string;
+  description?: string;
   icon: GoalIcon;
   date: string; // date in UTC format (YYYY-MM-DD)
   time?: { start: string; end: string };
@@ -36,11 +35,46 @@ export type Goal = {
     completed: Set<string>; //set of dates in UTC format
     incomplete: Set<string>;
     skipped: Set<string>;
+    streaks: { streakStart: string; streakEnd: string; skipped: string[] }[];
     total: number;
   };
-  missionGroupId: string;
-  location?: string || LatLng
+  groupId?: string;
+  location?: string | LatLng;
   commute?: {
+    duration: Duration;
+  };
+  break?: {
+    duration: Duration;
+  };
+};
+export const _emptyGoal: Goal = {
+  id: '',
+  title: '_emptyGoal',
+  icon: { name: 'accessibility' },
+  date: '',
+  repeat: { type: 'none' },
+  categories: new Set(),
+  completion: {
+    completed: new Set(),
+    incomplete: new Set(),
+    skipped: new Set(),
+    streaks: [],
+    total: 0,
+  },
+};
 
-  }
+export type GoalGroup = {
+  id: string;
+  title: string;
+  description?: string;
+  illustration: GoalIllustration;
+  goals: Set<string>; //set of goal ids
+  categories: Set<string>;
+};
+export const _emptyGoalGroup: GoalGroup = {
+  id: '',
+  title: '_emptyGoalGroup',
+  illustration: { name: 'illustration-animal' },
+  goals: new Set(),
+  categories: new Set(),
 };
