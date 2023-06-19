@@ -7,8 +7,10 @@ import { SideBar } from '@web/components';
 export function App() {
   return (
     <BrowserRouter>
-      <SideBar />
-      <AppRouter />
+      <div className="flex flex-row">
+        <SideBar />
+        <AppRouter />
+      </div>
     </BrowserRouter>
   );
 }

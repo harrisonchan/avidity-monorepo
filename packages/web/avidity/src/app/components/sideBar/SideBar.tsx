@@ -55,7 +55,10 @@ export default function SideBar(props: SideBarProps) {
     setCurrentTab(item.link);
   };
   return (
-    <div className={`flex flex-col h-screen bg-red-500 p-5 pt-8 ${sideBarOpen ? 'w-80' : 'w-24'} duration-300 rounded-br-3xl rounded-tr-3xl z-10`}>
+    <div
+      className={`relative flex flex-col h-screen bg-red-500 p-5 pt-8 ${
+        sideBarOpen ? 'w-80' : 'w-24'
+      } duration-300 rounded-br-3xl rounded-tr-3xl z-10`}>
       {/* <div className="inline-flex">
         <IoHappy className="text-4xl block rounded-full cursor-pointer float-left bg-amber-300 mr-2 text-amber-700" />
         <h1 className={`text-white origin-left font-medium text-2xl ${!sideBarOpen && 'scale-0'}`}>Avidity</h1>
