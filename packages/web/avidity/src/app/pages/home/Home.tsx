@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { GoalCard } from '@web/components';
+import { GoalCard, SideBar } from '@web/components';
 import useGoalStore from '@web/stores/useGoalStore';
 import dayjs, { Dayjs } from 'dayjs';
 import { standardFormat } from '@shared/utils';
@@ -19,8 +19,10 @@ export default function Home() {
     setSelectedDateData({ date, timeFormat: 'local' });
   };
   return (
-    <div className="flex-row">
-      <button
+    <div className="flex">
+      {/* <SideBar /> */}
+      <h1>Hello World</h1>
+      {/* <button
         className="btn"
         onClick={() =>
           useGoalStore.setState((state) => ({
@@ -36,7 +38,7 @@ export default function Home() {
           useGoalStore.setState((state) => ({ selectedDateData: { ...state.selectedDateData, date: standardFormat(dayjs(date).add(1, 'day')) } }))
         }>
         Forward
-      </button>
+      </button> */}
     </div>
   );
 }
