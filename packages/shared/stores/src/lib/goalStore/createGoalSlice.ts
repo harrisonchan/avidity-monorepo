@@ -91,7 +91,7 @@ const createGoalSlice: StateCreator<
   getDateData: (params) => {
     const { date, timeFormat } = params;
     const utcFormattedDate = timeFormat === 'utc' ? standardFormat(date) : utcFormat(date);
-    const goals = get().dateCache.get(utcFormattedDate);
+    const goals = get().dateCache?.get(utcFormattedDate);
     if (goals) {
       const groupIds = new Set<string>();
       goals.forEach((_m) => {
@@ -117,6 +117,8 @@ const createGoalSlice: StateCreator<
     const { date, timeFormat, checkIsSameSelectedDate } = params;
     const utcFormattedDate = timeFormat === 'utc' ? standardFormat(date) : utcFormat(date);
     if ((checkIsSameSelectedDate && utcFormattedDate !== get().selectedDateData.date) || !checkIsSameSelectedDate) {
+      // console.log(get());
+      // console.log(get().getDateData);
       const { goals, groups } = get().getDateData({ date });
       set((state) => {
         state.selectedDateData = { date: utcFormattedDate, goals, groups };
