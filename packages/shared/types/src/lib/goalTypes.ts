@@ -18,7 +18,6 @@ export type GoalRepeat = {
   type: 'daily' | 'weekly' | 'monthly' | 'yearly' | 'custom' | 'weekdays' | 'none';
   frequency?: number;
   weekdays?: Set<GoalWeekdays>;
-  numRepeats?: number;
   end?: string; // date in UTC format
 };
 
@@ -35,8 +34,6 @@ export type Goal = {
     completed: Set<string>; //set of dates in UTC format
     incomplete: Set<string>;
     skipped: Set<string>;
-    streaks: { streakStart: string; streakEnd: string; skipped: string[] }[];
-    total: number;
   };
   groupId?: string | undefined;
   location?: string | LatLng | undefined;
@@ -51,21 +48,6 @@ export type Goal = {
       }
     | undefined;
 };
-export const _emptyGoal: Goal = {
-  id: '',
-  title: '_emptyGoal',
-  icon: { name: 'accessibility' },
-  date: '',
-  repeat: { type: 'none' },
-  categories: new Set(),
-  completion: {
-    completed: new Set(),
-    incomplete: new Set(),
-    skipped: new Set(),
-    streaks: [],
-    total: 0,
-  },
-};
 
 export type GoalGroup = {
   id: string;
@@ -74,11 +56,4 @@ export type GoalGroup = {
   illustration: GoalIllustration;
   goals: Set<string>; //set of goal ids
   categories: Set<string>;
-};
-export const _emptyGoalGroup: GoalGroup = {
-  id: '',
-  title: '_emptyGoalGroup',
-  illustration: { name: 'illustration-animal' },
-  goals: new Set(),
-  categories: new Set(),
 };

@@ -1,1 +1,1 @@
-export { default as createGoalSlice } from './createGoalSlice';
+export * from './goalStore';
