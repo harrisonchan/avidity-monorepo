@@ -19,18 +19,27 @@ export function generateGroupId(title: string): string {
   return 'goalGroup-' + uuidV5(`${rightNow}_${title}`, UUID_NAMESPACE);
 }
 
+export function convertPartialGoalToDateCacheGoal(params: { goal: Partial<Goal> & Pick<Goal, 'id'>; date: DateParam }): Partial<CachedGoal> {
+  const formattedDate = standardFormat(params.date);
+  const { status } = params.goal;
+  return {
+    ...params.goal,
+    status: status
+      ? status.completed.has(formattedDate)
+        ? 'completed'
+        : status.skipped.has(formattedDate)
+        ? 'skipped'
+        : 'incomplete'
+      : 'incomplete',
+  };
+}
+
 export function convertGoalToDateCacheGoal(params: { goal: Goal; date: DateParam }): CachedGoal {
   const formattedDate = standardFormat(params.date);
-  const { id, title, description, date, icon, time, categories, completion } = params.goal;
+  const { status } = params.goal;
   return {
-    id,
-    title,
-    description,
-    date,
-    icon,
-    time,
-    categories,
-    isComplete: completion.completed.has(formattedDate) ? 'completed' : completion.skipped.has(formattedDate) ? 'skipped' : 'incomplete',
+    ...params.goal,
+    status: status.completed.has(formattedDate) ? 'completed' : status.skipped.has(formattedDate) ? 'skipped' : 'incomplete',
   };
 }
 

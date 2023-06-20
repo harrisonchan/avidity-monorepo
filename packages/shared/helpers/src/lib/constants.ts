@@ -8,7 +8,7 @@ export const EMPTY_GOAL: Goal = {
   date: TODAY_DATE_FORMATTED,
   repeat: { type: 'none' },
   categories: new Set(),
-  completion: {
+  status: {
     completed: new Set(),
     incomplete: new Set(),
     skipped: new Set(),

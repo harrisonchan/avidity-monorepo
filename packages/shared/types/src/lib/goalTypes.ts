@@ -30,7 +30,7 @@ export type Goal = {
   time?: { start: string; end: string; blocks?: { start: string; end: string }[] } | undefined;
   repeat: GoalRepeat;
   categories: Set<string>;
-  completion: {
+  status: {
     completed: Set<string>; //set of dates in UTC format
     incomplete: Set<string>;
     skipped: Set<string>;
