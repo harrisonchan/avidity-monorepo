@@ -13,11 +13,11 @@ export type GoalIllustration = BaseGoalIconIllustration & {
   name: Illustration;
 };
 
-export type GoalWeekdays = 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday';
+export type Weekdays = 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday';
 export type GoalRepeat = {
   type: 'daily' | 'weekly' | 'monthly' | 'yearly' | 'custom' | 'weekdays' | 'none';
   frequency?: number;
-  weekdays?: Set<GoalWeekdays>;
+  weekdays?: Set<Weekdays>;
   end?: string; // date in UTC format
 };
 
@@ -27,7 +27,7 @@ export type Goal = {
   description?: string;
   icon: GoalIcon;
   date: string; // date in UTC format (YYYY-MM-DD)
-  time?: { start: string; end: string } | undefined;
+  time?: { start: string; end: string; blocks?: { start: string; end: string }[] } | undefined;
   repeat: GoalRepeat;
   categories: Set<string>;
   completion: {

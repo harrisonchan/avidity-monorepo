@@ -1,10 +1,11 @@
 import { Goal, GoalGroup } from '@shared/types';
+import { TODAY_DATE_FORMATTED } from '@shared/utils';
 
 export const EMPTY_GOAL: Goal = {
   id: '',
   title: 'EMPTY_GOAL',
   icon: { name: 'accessibility' },
-  date: '',
+  date: TODAY_DATE_FORMATTED,
   repeat: { type: 'none' },
   categories: new Set(),
   completion: {

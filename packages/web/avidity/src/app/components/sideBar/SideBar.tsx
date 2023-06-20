@@ -1,6 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { IoHome, IoAdd, IoSettings } from 'react-icons/io5';
+import { IoHome, IoAdd, IoSettings, IoColorPalette } from 'react-icons/io5';
+import { daisyUIThemeArr } from '@web/types';
+import { toTitleCase } from '@shared/utils';
+import useUtilStore from '@web/stores/useUtilStore';
 
 interface SideBarItemProps {
   icon?: React.ReactNode;
@@ -17,8 +20,8 @@ function SideBarItem(props: SideBarItemProps) {
     <Link to={'/' + props.link}>
       <button
         onClick={onClick}
-        className={`p-2 transition-colors rounded-lg text-gray-700 shadow-xl bg-slate-100 hover:bg-indigo-800 hover:text-white focus:outline-none focus:ring focus:ring-indigo-600 focus:ring-offset-white focus:ring-offset-2 ${
-          props.isSelected && 'bg-indigo-800 text-white'
+        className={`p-2 transition-colors rounded-lg text-primary-content shadow-xl bg-primary hover:bg-secondary hover:text-white focus:outline-none focus:ring focus:ring-secondary-focus focus:ring-offset-secondary-content focus:ring-offset-2 ${
+          props.isSelected && 'bg-secondary-focus text-secondary-content'
         }`}>
         {props.icon ?? null}
       </button>
@@ -54,9 +57,10 @@ export default function SideBar(props: SideBarProps) {
     else setSideBarOpen(false);
     setCurrentTab(item.link);
   };
+  const setTheme = useUtilStore.use.setTheme();
   return (
     <div
-      className={`relative flex flex-col h-screen bg-red-500 p-5 pt-8 ${
+      className={`relative flex flex-col h-screen bg-base-300 p-5 pt-8 ${
         sideBarOpen ? 'w-80' : 'w-24'
       } duration-300 rounded-br-3xl rounded-tr-3xl z-10`}>
       {/* <div className="inline-flex">
@@ -64,12 +68,41 @@ export default function SideBar(props: SideBarProps) {
         <h1 className={`text-white origin-left font-medium text-2xl ${!sideBarOpen && 'scale-0'}`}>Avidity</h1>
       </div> */}
       <div className="flex flex-row">
-        <div className="mr-3">
-          {TABS.map((item, idx) => (
-            <div className={`${idx !== TABS.length - 1 && 'mb-3'}`}>
-              <SideBarItem icon={item.icon} isSelected={currentTab === item.link} onClick={() => onItemClick(item)} link={item.link} />
-            </div>
-          ))}
+        <div>
+          <div className="items-center">
+            {TABS.map((item, idx) => (
+              <div className={`self-center ${idx !== TABS.length - 1 && 'mb-3'}`}>
+                <SideBarItem icon={item.icon} isSelected={currentTab === item.link} onClick={() => onItemClick(item)} link={item.link} />
+              </div>
+            ))}
+          </div>
+          {/* <div className="dropdown dropdown-top place-self-end bottom-10 absolute">
+            <label tabIndex={1} className="btn m-1">
+              Set Theme
+            </label>
+            <ul tabIndex={1} className="dropdown-content menu shadow bg-base-100 rounded-box w-52">
+              {daisyUIThemeArr.map((_t) => (
+                <li onClick={() => setTheme(_t)}>
+                  <a>{toTitleCase(_t)}</a>
+                </li>
+              ))}
+            </ul>
+          </div> */}
+          <button
+            onClick={() => {}}
+            className={`absolute bottom-10 dropdown dropdown-top p-2 transition-colors rounded-lg text-primary-content shadow-xl bg-primary hover:bg-secondary hover:text-white focus:outline-none focus:ring focus:ring-secondary-focus focus:ring-offset-secondary-content focus:ring-offset-2`}>
+            <IoColorPalette className="text-3xl rounded-full cursor-pointer" />
+            {/* <label tabIndex={1} className="btn m-1">
+              Set Theme
+            </label> */}
+            <ul tabIndex={1} className="dropdown-content menu shadow bg-base-100 rounded-box w-52">
+              {daisyUIThemeArr.map((_t) => (
+                <li onClick={() => setTheme(_t)}>
+                  <a className="text-base-content">{toTitleCase(_t)}</a>
+                </li>
+              ))}
+            </ul>
+          </button>
         </div>
         <div className={`flex-1 items-center duration-300 ${!sideBarOpen && 'opacity-0'}`}>hello wolrd</div>
       </div>

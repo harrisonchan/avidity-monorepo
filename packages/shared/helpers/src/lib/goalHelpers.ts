@@ -10,6 +10,7 @@ dayjs.extend(utc);
 
 const UUID_NAMESPACE = 'c3a24e92-b09b-11ed-afa1-0242ac120002';
 export function generateGoalId(title: string, date: DateParam): string {
+  console.log(date);
   const rightNow = dayjs().utc().toISOString();
   return 'goal-' + uuidV5(`${rightNow}_${utcDate(date).toISOString()}_${title}`, UUID_NAMESPACE);
 }
@@ -64,6 +65,7 @@ export function checkValidRepeatDate(params: { goal: Goal; date: DateParam }): b
 export function createValidRepeatDates(params: { goal: Goal; range: number }): Dayjs[] {
   const { goal, range } = params;
   return Array(range)
+    .fill(0)
     .map((_, idx) => dayjs(goal.date).add(idx, 'day'))
     .filter((date) => checkValidRepeatDate({ goal, date }));
 }
