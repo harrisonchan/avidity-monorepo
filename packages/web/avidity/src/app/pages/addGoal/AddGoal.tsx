@@ -31,7 +31,7 @@ export default function AddGoal() {
               : repeat.type === 'weekdays'
               ? { type: 'weekdays', weekdays: repeat.weekdays }
               : { type: repeat.type };
-          const newGoal: Omit<Goal, 'id'> = {
+          const newGoal: Omit<Goal, 'id' | 'status'> = {
             ...EMPTY_GOAL,
             ...values,
             repeat: newRepeat,
