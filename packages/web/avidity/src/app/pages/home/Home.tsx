@@ -6,9 +6,10 @@ import { TODAY_DATE, TODAY_DATE_FORMATTED, standardFormat } from '@shared/utils'
 import useUtilStore from '@web/stores/useUtilStore';
 import { daisyUIThemeArr } from '@web/types';
 import useTestStore from '@web/stores/useTestStore';
-import { EMPTY_GOAL } from '@shared/helpers';
+import { EMPTY_GOAL, EMPTY_GOAL_GROUP } from '@shared/helpers';
 import { IoChevronBack, IoChevronForward, IoRemoveCircleOutline } from 'react-icons/io5';
 import classNames from 'classnames';
+import { Link, useNavigate } from 'react-router-dom';
 
 const TEST_DATA = [
   { title: 'test1', description: '' },
@@ -19,22 +20,23 @@ const TEST_DATA = [
 ];
 
 export default function Home() {
+  const navigate = useNavigate();
   const { date, goals, groups } = useGoalStore.use.selectedDateData();
   const setSelectedDateData = useGoalStore.use.setSelectedDateData();
-  const { addGoal, clearStore, deleteGoal, updateGoalStatus } = useGoalStore((state) => ({
+  const { addGoal, clearStore, deleteGoal, updateGoalStatus, addGroup, stateGoals, stateGroups } = useGoalStore((state) => ({
     addGoal: state.addGoal,
     clearStore: state.clearStore,
     deleteGoal: state.deleteGoal,
     updateGoalStatus: state.updateGoalStatus,
+    addGroup: state.addGroup,
+    stateGoals: state.goals,
+    stateGroups: state.groups,
   }));
   const changeDate = (date: Dayjs) => {
     setSelectedDateData({ date, timeFormat: 'local' });
   };
-  const onClick = () => {
-    addGoal({ goal: { ...EMPTY_GOAL, title: `TestMission ${goals.length + 1}`, date } });
-  };
-  return (
-    <div className="flex flex-col bg-base-100 pl-4">
+  const renderGoals = () => (
+    <div className="flex flex-col">
       <div className="flex flex-row items-center self-center mb-1">
         <button className="mr-2" onClick={() => setSelectedDateData({ date: dayjs(date).subtract(1, 'day') })}>
           <IoChevronBack className="text-3xl" />
@@ -47,13 +49,15 @@ export default function Home() {
           <IoChevronForward className="text-3xl" />
         </button>
       </div>
-      <button className="btn" onClick={() => setSelectedDateData({ date: TODAY_DATE })}>
+      <button className="btn mt-1" onClick={() => setSelectedDateData({ date: TODAY_DATE })}>
         Go back to Today
       </button>
-      <button className="btn" onClick={onClick}>
+      <button
+        className="btn mt-2"
+        onClick={() => addGoal({ goal: { ...EMPTY_GOAL, title: `TestMission ${Object.keys(stateGoals).length + 1}`, date } })}>
         Add Goal
       </button>
-      <button className="btn" onClick={clearStore}>
+      <button className="btn mt-2 mb-3" onClick={clearStore}>
         Clear All
       </button>
       {goals.map((goal) => (
@@ -88,6 +92,51 @@ export default function Home() {
           </div>
         </div>
       ))}
+    </div>
+  );
+  const renderSelectedDateGroups = () => (
+    <div className="flex flex-col">
+      <p className="text-2xl">Groups for the day</p>
+      {groups.map((group) => (
+        <div>
+          <p className="text-3xl">{group.title}</p>
+        </div>
+      ))}
+    </div>
+  );
+  const renderGroups = () => (
+    <div className="flex flex-col text-center">
+      <p className="text-2xl">Groups</p>
+      <button
+        className="btn mt-1"
+        onClick={() =>
+          addGroup({
+            group: {
+              ...EMPTY_GOAL_GROUP,
+              title: `Test Group ${Object.keys(stateGroups).length + 1}`,
+            },
+          })
+        }>
+        Add Group
+      </button>
+      {Object.values(stateGroups).map((group) => (
+        <div>
+          <Link to={`/group/${group.id}`}>
+            <button
+            // onClick={() => navigate(`/groups/${group.id}`)}
+            >
+              <p className="text-3xl">{group.title}</p>
+            </button>
+          </Link>
+        </div>
+      ))}
+    </div>
+  );
+  return (
+    <div className="flex flex-1 flex-row bg-base-100 p-6 pt-5 justify-between">
+      {renderGoals()}
+      {renderSelectedDateGroups()}
+      {renderGroups()}
     </div>
   );
 }

@@ -1,12 +1,12 @@
-import { Home } from '@web/pages';
+import { Group, Home } from '@web/pages';
 import { AddGoal } from '@web/pages/addGoal';
-import React from 'react';
-import { useRoutes } from 'react-router-dom';
+import { RouteObject, useRoutes } from 'react-router-dom';
 
-export const ROUTES: { path: string; element: React.ReactNode }[] = [
+export const ROUTES: RouteObject[] = [
   { path: '/', element: <Home /> },
   { path: '/home', element: <Home /> },
   { path: '/add-goal', element: <AddGoal /> },
+  { path: '/group/:id', element: <Group /> },
 ];
 
 export default function AppRouter() {

@@ -54,8 +54,9 @@ export interface BaseGoalActions {
   updateGoalStatus: (params: { id: string; status: 'completed' | 'incomplete' | 'skipped'; statusDate: DateParam; timeFormat?: TimeFormat }) => void;
   deleteGoal: (params: { id: string }) => void;
   getGroup: (params: { id: string }) => GoalGroup | undefined;
-  getGoalsNotInGroup: () => Goal[];
-  getGoalsInGroup: (params: { id: string }) => Goal[];
+  getGoalsNotInGroup: (params: { id: string }) => Goal[] | null;
+  getGoalsInGroup: (params: { id: string }) => Goal[] | null;
+  getGroupGoalsData: (params: { id: string; timeFormat?: TimeFormat }) => { goalsInGroup: Goal[]; goalsNotInGroup: Goal[] };
   addGroup: (params: { group: Omit<GoalGroup, 'id'> }) => void;
   updateGroup: (params: { group: Pick<GoalGroup, 'id'> & Partial<GoalGroup> }) => void;
   deleteGroup: (params: { id: string }) => void;
@@ -309,25 +310,29 @@ const createGoalSlice: StateCreator<
     }
     return group;
   },
-  getGoalsNotInGroup: () => {
-    const goalsNotInGroup: Goal[] = [];
-    Object.values(get().goals ?? {}).forEach((goal) => {
-      goal.groupId === '' && goalsNotInGroup.push(goal);
-    });
-    return goalsNotInGroup;
+  getGoalsNotInGroup: (params) => {
+    const id = params.id;
+    const group = get().groups[id];
+    if (!group) console.debug(`useNewGoalStore (getGoalsNotInGroup): No goal group found with id ${id}`);
+    else {
+      return Object.values(get().goals).filter((goal) => !group.goals.has(goal.id) && (goal.groupId === undefined || goal.groupId === ''));
+    }
+    return null;
   },
   getGoalsInGroup: (params) => {
     const id = params.id;
-    const goalsInGroup: Goal[] = [];
     const group = get().groups[id];
     if (!group) console.debug(`useNewGoalStore (getGoalsInGroup): No goal group found with id ${id}`);
     else {
-      group.goals.forEach((id) => {
-        const goal = get().goals[id];
-        if (goal) goalsInGroup.push(goal);
-      });
+      return Object.values(get().goals).filter((goal) => group.goals.has(goal.id));
     }
-    return goalsInGroup;
+    return null;
+  },
+  getGroupGoalsData: (params) => {
+    const id = params.id;
+    const goalsInGroup = get().getGoalsInGroup({ id }) ?? [];
+    const goalsNotInGroup = get().getGoalsNotInGroup({ id }) ?? [];
+    return { goalsInGroup, goalsNotInGroup };
   },
   addGroup: (params) => {
     const { group } = params;
@@ -371,8 +376,9 @@ const createGoalSlice: StateCreator<
     const goal = get().goals[id];
     const group = get().groups[groupId];
     if (!goal) console.debug(`useNewGoalStore (addToGroup): No goal found with id ${id}`);
-    else if (goal.groupId !== '' && goal.groupId !== groupId) console.debug(`useNewGoalStore (addToGroup): Goal ${id} already belongs to a group`);
-    else if (!group) console.debug(`useNewGoalStore (addToGroup): No goal group found with id ${groupId}`);
+    else if (goal.groupId) {
+      if (goal.groupId !== '' && goal.groupId !== groupId) console.debug(`useNewGoalStore (addToGroup): Goal ${id} already belongs to a group`);
+    } else if (!group) console.debug(`useNewGoalStore (addToGroup): No goal group found with id ${groupId}`);
     else if (group.goals.has(id)) console.debug(`useNewGoalStore (addToGroup): Goal ${id} already belongs to goal group ${groupId}`);
     else {
       set((state) => {

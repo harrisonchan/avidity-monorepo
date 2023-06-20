@@ -16,7 +16,7 @@ export function generateGoalId(title: string, date: DateParam): string {
 }
 export function generateGroupId(title: string): string {
   const rightNow = dayjs().utc().toISOString();
-  return 'goalGroup-' + uuidV5(`${rightNow}_${title}`, UUID_NAMESPACE);
+  return 'group-' + uuidV5(`${rightNow}_${title}`, UUID_NAMESPACE);
 }
 
 export function convertPartialGoalToDateCacheGoal(params: { goal: Partial<Goal> & Pick<Goal, 'id'>; date: DateParam }): Partial<CachedGoal> {
