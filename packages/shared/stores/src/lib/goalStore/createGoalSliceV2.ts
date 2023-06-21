@@ -1,26 +1,25 @@
-import { create, StateCreator } from 'zustand';
-import { persist, PersistOptions } from 'zustand/middleware';
-import { immer } from 'zustand/middleware/immer';
-import { cloneDeep, isEqual } from 'lodash';
+import { StateCreator } from 'zustand';
+import { isEqual } from 'lodash';
 import * as dayjs from 'dayjs';
 import * as isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import { DateParam, Goal, GoalGroup, TimeFormat } from '@shared/types';
-import { TODAY_DATE, TODAY_DATE_FORMATTED, convertMapToArray, standardDate, standardFormat, utcFormat } from '@shared/utils';
+import { TODAY_DATE, TODAY_DATE_FORMATTED, standardDate, standardFormat, utcFormat } from '@shared/utils';
 import {
   generateGoalId,
   generateGroupId,
   checkValidRepeatDate,
   createValidRepeatDates,
   convertGoalToDateCacheGoal,
-  EMPTY_GOAL,
+  getUpdatedGoalStreaks,
 } from '@shared/helpers';
 
 dayjs.extend(isSameOrAfter);
 
 const DEFAULT_DATE_CACHE_RANGE = 61;
 
+export type CachedGoalStatus = 'completed' | 'incomplete' | 'skipped';
 export type CachedGoal = Omit<Goal, 'repeat' | 'status' | 'groupId' | 'location' | 'commute' | 'break'> & {
-  status: 'completed' | 'incomplete' | 'skipped';
+  status: CachedGoalStatus;
 };
 
 export type GoalRecord = Record<string, Goal>;
@@ -88,6 +87,19 @@ const createGoalSlice: StateCreator<
   runDailyTasks: (params) => {
     //Update selectedDateData
     get().setSelectedDateData({ date: TODAY_DATE_FORMATTED });
+    //Before pruning and updating dateCache, we need to mark all goals before today that don't have status as "incomplete"
+    const goals = get().goals;
+    const dateCache = get().dateCache;
+    const todayIdx = Object.keys(dateCache).indexOf(TODAY_DATE_FORMATTED);
+    Object.entries(dateCache)
+      .slice(0, todayIdx)
+      .forEach(([formattedDate, cachedGoalsForDate]) => {
+        Object.values(cachedGoalsForDate).forEach((cachedGoal) => {
+          set((state) => {
+            goals[cachedGoal.id].status.incomplete.add(formattedDate);
+          });
+        });
+      });
     //Prune and update dateCache
     const dateCachePruneOptions = params?.dateCachePruneOptions;
     if (dateCachePruneOptions) {
@@ -274,6 +286,7 @@ const createGoalSlice: StateCreator<
           goal.status.completed.delete(utcFormattedDate);
           goal.status.skipped.delete(utcFormattedDate);
         }
+        goal.status.streaks = getUpdatedGoalStreaks({ goal, date: utcFormattedDate, status });
       }
     });
     if (utcFormattedDate === get().selectedDateData.date) {

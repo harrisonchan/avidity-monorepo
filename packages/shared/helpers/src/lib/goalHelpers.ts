@@ -1,11 +1,12 @@
-import { isUndefined } from 'lodash';
+import { cloneDeep, isUndefined } from 'lodash';
 import { v5 as uuidV5 } from 'uuid';
 import * as dayjs from 'dayjs';
 import { Dayjs } from 'dayjs';
 import * as utc from 'dayjs/plugin/utc';
-import { DateParam, Goal } from '@shared/types';
+import { DateParam, Goal, GoalStreakData, GoalStreaks } from '@shared/types';
 import { standardDate, standardFormat, utcDate } from '@shared/utils';
-import { CachedGoal } from '@shared/stores';
+import { CachedGoal, CachedGoalStatus } from '@shared/stores';
+
 dayjs.extend(utc);
 
 const UUID_NAMESPACE = 'c3a24e92-b09b-11ed-afa1-0242ac120002';
@@ -77,4 +78,59 @@ export function createValidRepeatDates(params: { goal: Goal; range: number }): D
     .fill(0)
     .map((_, idx) => dayjs(goal.date).add(idx, 'day'))
     .filter((date) => checkValidRepeatDate({ goal, date }));
+}
+
+export function getUpdatedGoalStreaks(params: { goal: Goal; status: CachedGoalStatus; date: string }): GoalStreaks {
+  const { date, goal, status } = params;
+  const streakOptions = goal.streakOptions ?? {};
+  const streaks = cloneDeep(goal.status.streaks ?? { current: undefined, longest: undefined, data: [] });
+  if (!streaks.current) {
+    streaks.current = {
+      date: undefined,
+      length: 0,
+      skipped: new Set(),
+      breaks: new Set(),
+      options: streakOptions,
+    };
+  }
+  if (!streaks.current.skipped) streaks.current.skipped = new Set();
+  if (!streaks.current.breaks) streaks.current.breaks = new Set();
+  let current: GoalStreakData | undefined = streaks.current!;
+  switch (status) {
+    case 'completed':
+      if (!streaks.current.date) {
+        current.date = [date, date];
+        current.length = 1;
+        current.skipped = new Set();
+        current.breaks = new Set();
+        streaks.data.push(streaks.current);
+      } else {
+        streaks.current.date[1] = date;
+        current.length++;
+      }
+      if (streaks.current.length > (streaks.longest?.length || 0)) {
+        streaks.longest = streaks.current;
+      }
+      break;
+    case 'skipped':
+      current.skipped!.add(date);
+      break;
+    case 'incomplete':
+      if (goal.status.isOnBreak) {
+        current.skipped!.add(date);
+        current.breaks!.add(date);
+      } else {
+        if (current.length > (streaks.longest?.length ?? 0)) {
+          streaks.longest = current;
+        }
+        streaks.data.push({
+          date: [date, date],
+          length: 1,
+          options: streakOptions,
+        });
+        current = undefined;
+      }
+      break;
+  }
+  return streaks;
 }

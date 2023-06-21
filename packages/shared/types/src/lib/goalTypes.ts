@@ -21,6 +21,32 @@ export type GoalRepeat = {
   end?: string; // date in UTC format
 };
 
+export type GoalStreakOptions = {
+  skips?: { frequency: number } & ({ type: 'week' } | { type: 'month' } | { type: 'year' });
+};
+
+export type GoalStreakData = {
+  date: [string, string] | undefined; // [start, end] date in UTC YYYY-MM-DD format
+  length: number;
+  skipped?: Set<string> | undefined; // set of dates in UTC YYYY-MM-DD format
+  breaks?: Set<string> | undefined; // set of dates in UTC YYYY-MM-DD format
+  options: GoalStreakOptions;
+};
+
+export type GoalStreaks = {
+  current: GoalStreakData | undefined;
+  longest: GoalStreakData | undefined;
+  data: GoalStreakData[];
+};
+
+export type GoalStatus = {
+  completed: Set<string>; //set of dates in UTC format
+  incomplete: Set<string>;
+  skipped: Set<string>;
+  streaks?: GoalStreaks | undefined;
+  isOnBreak?: boolean;
+};
+
 export type Goal = {
   id: string;
   title: string;
@@ -30,11 +56,8 @@ export type Goal = {
   time?: { start: string; end: string; blocks?: { start: string; end: string }[] } | undefined;
   repeat: GoalRepeat;
   categories: Set<string>;
-  status: {
-    completed: Set<string>; //set of dates in UTC format
-    incomplete: Set<string>;
-    skipped: Set<string>;
-  };
+  status: GoalStatus;
+  streakOptions?: GoalStreakOptions | undefined;
   groupId?: string | undefined;
   location?: string | LatLng | undefined;
   commute?:
