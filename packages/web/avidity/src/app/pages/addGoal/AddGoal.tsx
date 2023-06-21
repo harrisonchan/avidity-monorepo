@@ -6,22 +6,17 @@ import { useGoalStore } from '@web/stores';
 import { ErrorMessage, Field, FieldArray, Form, Formik, FormikHelpers } from 'formik';
 import React, { useEffect, useRef } from 'react';
 
+const initialValues: AddForm = {
+  ...EMPTY_GOAL,
+  time: null,
+};
+
 export default function AddGoal() {
   const addGoal = useGoalStore.use.addGoal();
   return (
     <div className="flex bg-base-100">
       <Formik
-        initialValues={{
-          title: '',
-          description: '',
-          date: TODAY_DATE_FORMATTED,
-          icon: { name: 'accessibility', backgroundColor: 'beige', iconColor: 'indianred' },
-          time: undefined,
-          repeat: { type: 'none' },
-          break: undefined,
-          commute: undefined,
-          location: undefined,
-        }}
+        initialValues={initialValues}
         onSubmit={(values, { setSubmitting }: FormikHelpers<AddForm>) => {
           // console.log(values);
           const repeat = values.repeat;
@@ -35,7 +30,7 @@ export default function AddGoal() {
             ...EMPTY_GOAL,
             ...values,
             repeat: newRepeat,
-            time: values.time ? { start: standardFormat(values.time.start), end: standardFormat(values.time.end) } : undefined,
+            time: values.time ? { start: standardFormat(values.time.start), end: standardFormat(values.time.end) } : null,
             categories: new Set(),
           };
           addGoal({

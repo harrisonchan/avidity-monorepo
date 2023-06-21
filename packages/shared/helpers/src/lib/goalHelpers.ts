@@ -1,13 +1,23 @@
-import { cloneDeep, isUndefined } from 'lodash';
+import { isUndefined } from 'lodash';
 import { v5 as uuidV5 } from 'uuid';
 import * as dayjs from 'dayjs';
 import { Dayjs } from 'dayjs';
 import * as utc from 'dayjs/plugin/utc';
-import { DateParam, Goal, GoalStreakData, GoalStreaks } from '@shared/types';
-import { standardDate, standardFormat, utcDate } from '@shared/utils';
-import { CachedGoal, CachedGoalStatus } from '@shared/stores';
+import * as isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+import * as isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
+import * as isBetween from 'dayjs/plugin/isBetween';
+import Holidays from 'date-holidays';
+import { DateParam, Goal, GoalStatus, GoalStreakItem, GoalStreakOptions, GoalStreaks, TimeFormat } from '@shared/types';
+import { standardDate, standardFormat, utcDate, utcFormat } from '@shared/utils';
+import { CachedGoal } from '@shared/stores';
+import { EMPTY_STREAK_ITEM } from './constants';
 
 dayjs.extend(utc);
+dayjs.extend(isSameOrBefore);
+dayjs.extend(isSameOrAfter);
+dayjs.extend(isBetween);
+
+const holidays = new Holidays('US');
 
 const UUID_NAMESPACE = 'c3a24e92-b09b-11ed-afa1-0242ac120002';
 export function generateGoalId(title: string, date: DateParam): string {
@@ -80,57 +90,75 @@ export function createValidRepeatDates(params: { goal: Goal; range: number }): D
     .filter((date) => checkValidRepeatDate({ goal, date }));
 }
 
-export function getUpdatedGoalStreaks(params: { goal: Goal; status: CachedGoalStatus; date: string }): GoalStreaks {
-  const { date, goal, status } = params;
-  const streakOptions = goal.streakOptions ?? {};
-  const streaks = cloneDeep(goal.status.streaks ?? { current: undefined, longest: undefined, data: [] });
-  if (!streaks.current) {
-    streaks.current = {
-      date: undefined,
-      length: 0,
-      skipped: new Set(),
-      breaks: new Set(),
-      options: streakOptions,
-    };
-  }
-  if (!streaks.current.skipped) streaks.current.skipped = new Set();
-  if (!streaks.current.breaks) streaks.current.breaks = new Set();
-  let current: GoalStreakData | undefined = streaks.current!;
-  switch (status) {
-    case 'completed':
-      if (!streaks.current.date) {
-        current.date = [date, date];
-        current.length = 1;
-        current.skipped = new Set();
-        current.breaks = new Set();
-        streaks.data.push(streaks.current);
-      } else {
-        streaks.current.date[1] = date;
-        current.length++;
-      }
-      if (streaks.current.length > (streaks.longest?.length || 0)) {
-        streaks.longest = streaks.current;
-      }
-      break;
-    case 'skipped':
-      current.skipped!.add(date);
-      break;
-    case 'incomplete':
-      if (goal.status.isOnBreak) {
-        current.skipped!.add(date);
-        current.breaks!.add(date);
-      } else {
-        if (current.length > (streaks.longest?.length ?? 0)) {
-          streaks.longest = current;
+export function useGoalBreakCheck(params: { date: DateParam; timeFormat?: TimeFormat; streakOptions: GoalStreakOptions }): {
+  passesHolidayCheck: boolean;
+  passesBreakCheck: boolean;
+} {
+  const { date, timeFormat, streakOptions } = params;
+  const utcFormattedDate = timeFormat === 'utc' ? standardFormat(date) : utcFormat(date);
+  const isHoliday = holidays.isHoliday(utcFormattedDate);
+  const passesHolidayCheck = streakOptions.skipsHolidays && (typeof isHoliday === 'boolean' ? isHoliday : isHoliday.length > 0);
+  const passesBreakCheck = streakOptions.breaks
+    .map(({ start, end }) => dayjs(utcFormattedDate).isBetween(dayjs(start), dayjs(end), 'day', '[]'))
+    .includes(true);
+  return { passesHolidayCheck, passesBreakCheck };
+}
+
+type StreakMetadataItem = { date: string; type: 'completed' | 'skipped' | 'incomplete' | 'break' };
+export function getStreaks(params: { status: GoalStatus; streakOptions: GoalStreakOptions }): {
+  streaks: GoalStreaks;
+  latest: GoalStreakItem;
+  longest: GoalStreakItem;
+  metadata: StreakMetadataItem[];
+} {
+  const { status, streakOptions } = params;
+  //remember to organize from [early...late]
+  const completed: StreakMetadataItem[] = Array.from(status.completed).map((date) => ({ date, type: 'completed' }));
+  const skipped: StreakMetadataItem[] = Array.from(status.skipped).map((date) => ({ date, type: 'skipped' }));
+  const incomplete: StreakMetadataItem[] = Array.from(status.incomplete).map((date) => ({ date, type: 'incomplete' }));
+  const breaks: StreakMetadataItem[] = Array.from(status.breaks).map((date) => ({ date, type: 'break' }));
+  let dates: StreakMetadataItem[] = [...completed, ...skipped, ...incomplete, ...breaks].sort((a, b) =>
+    dayjs(b.date).isAfter(a.date, 'day') ? -1 : 1
+  );
+  console.debug('dates', dates);
+  const goalStreaks: GoalStreaks = [];
+  let currentStreak: GoalStreakItem = { date: { start: dates[0].date, end: dates[0].date }, skipped: new Set(), breaks: new Set(), length: 0 };
+  let tolerantRange = [];
+  let tolerance = 0;
+  dates.forEach((_d) => {
+    tolerantRange = [
+      dayjs(_d.date).startOf(streakOptions.skips.type !== 'none' ? streakOptions.skips.type : 'day'),
+      dayjs(_d.date).endOf(streakOptions.skips.type !== 'none' ? streakOptions.skips.type : 'day'),
+    ];
+    tolerance = streakOptions.skips.frequency;
+    const { passesBreakCheck, passesHolidayCheck } = useGoalBreakCheck({ date: _d.date, streakOptions });
+    switch (_d.type) {
+      case 'completed':
+      case 'break':
+        if (currentStreak.length === 0) currentStreak.date.start = _d.date;
+        currentStreak.date.end = _d.date;
+        currentStreak.length++;
+        _d.type === 'break' && currentStreak.breaks.add(_d.date);
+        break;
+      case 'skipped':
+      case 'incomplete':
+        if (passesHolidayCheck || passesBreakCheck || (tolerance > 0 && dayjs(_d.date).isBetween(tolerantRange[0], tolerantRange[1], 'day', '[]'))) {
+          if (currentStreak.length === 0) currentStreak.date.start = _d.date;
+          currentStreak.date.end = _d.date;
+          !(passesHolidayCheck || passesBreakCheck) && tolerance > 0 && tolerance--;
+          currentStreak.length++;
+          currentStreak.skipped.add(_d.date);
+        } else {
+          currentStreak.length > 0 && goalStreaks.push(currentStreak);
+          currentStreak = { ...EMPTY_STREAK_ITEM, date: { start: _d.date, end: _d.date } };
         }
-        streaks.data.push({
-          date: [date, date],
-          length: 1,
-          options: streakOptions,
-        });
-        current = undefined;
-      }
-      break;
-  }
-  return streaks;
+        break;
+    }
+  });
+  if (currentStreak.length > 0) goalStreaks.push(currentStreak);
+  //Get latest streak
+  const latest = goalStreaks.reduce((a, b) => (dayjs(a.date.end).isAfter(b.date.end, 'day') ? a : b));
+  //Get longest streak
+  const longest = goalStreaks.reduce((a, b) => (a.length > b.length ? a : b));
+  return { streaks: goalStreaks, latest, longest, metadata: dates };
 }

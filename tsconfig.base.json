@@ -20,7 +20,8 @@
       "@shared/types": ["packages/shared/types/src/index.ts"],
       "@shared/utils": ["packages/shared/utils/src/index.ts"],
       "@web/*": ["packages/web/avidity/src/app/*"]
-    }
+    },
+    "noErrorTruncation": true
   },
   "exclude": ["node_modules", "tmp"]
 }

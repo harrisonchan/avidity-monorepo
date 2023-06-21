@@ -89,6 +89,9 @@ export default function Home() {
             <button className="btn" onClick={() => updateGoalStatus({ id: goal.id, status: 'skipped', statusDate: date })}>
               Skip
             </button>
+            <button className="btn" onClick={() => updateGoalStatus({ id: goal.id, status: 'incomplete', statusDate: date })}>
+              Mark incomplete
+            </button>
           </div>
         </div>
       ))}

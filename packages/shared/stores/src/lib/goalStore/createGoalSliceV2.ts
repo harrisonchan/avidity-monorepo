@@ -10,7 +10,9 @@ import {
   checkValidRepeatDate,
   createValidRepeatDates,
   convertGoalToDateCacheGoal,
-  getUpdatedGoalStreaks,
+  EMPTY_GOAL_STATUS,
+  getStreaks,
+  useGoalBreakCheck,
 } from '@shared/helpers';
 
 dayjs.extend(isSameOrAfter);
@@ -85,58 +87,54 @@ const createGoalSlice: StateCreator<
 > = (set, get) => ({
   ...initialState,
   runDailyTasks: (params) => {
-    //Update selectedDateData
-    get().setSelectedDateData({ date: TODAY_DATE_FORMATTED });
-    //Before pruning and updating dateCache, we need to mark all goals before today that don't have status as "incomplete"
-    const goals = get().goals;
-    const dateCache = get().dateCache;
-    const todayIdx = Object.keys(dateCache).indexOf(TODAY_DATE_FORMATTED);
-    Object.entries(dateCache)
-      .slice(0, todayIdx)
-      .forEach(([formattedDate, cachedGoalsForDate]) => {
-        Object.values(cachedGoalsForDate).forEach((cachedGoal) => {
-          set((state) => {
+    set((state) => {
+      //Update selectedDateData
+      state.setSelectedDateData({ date: TODAY_DATE_FORMATTED });
+      //Before pruning and updating dateCache, we need to mark all goals before today that don't have status as "incomplete"
+      const goals = state.goals;
+      const dateCache = state.dateCache;
+      const todayIdx = Object.keys(dateCache).indexOf(TODAY_DATE_FORMATTED);
+      Object.entries(dateCache)
+        .slice(0, todayIdx)
+        .forEach(([formattedDate, cachedGoalsForDate]) => {
+          Object.values(cachedGoalsForDate).forEach((cachedGoal) => {
             goals[cachedGoal.id].status.incomplete.add(formattedDate);
           });
         });
-      });
-    //Prune and update dateCache
-    const dateCachePruneOptions = params?.dateCachePruneOptions;
-    if (dateCachePruneOptions) {
-      const { pastDates, futureDates } = dateCachePruneOptions;
-      if (pastDates?.enable) {
-        const cutoff = pastDates?.cutoff
-          ? typeof pastDates.cutoff === 'number'
-            ? TODAY_DATE.subtract(pastDates.cutoff, 'day')
-            : dayjs(pastDates.cutoff)
-          : TODAY_DATE.subtract(DEFAULT_DATE_CACHE_RANGE, 'day');
-        const _d = dayjs(Object.keys(get().dateCache ?? {}).at(0));
-        const diff = Math.abs(cutoff.diff(_d, 'day'));
-        if (diff > 0) {
-          set((state) => {
+      //Prune and update dateCache
+      const dateCachePruneOptions = params?.dateCachePruneOptions;
+      if (dateCachePruneOptions) {
+        const { pastDates, futureDates } = dateCachePruneOptions;
+        if (pastDates?.enable) {
+          const cutoff = pastDates?.cutoff
+            ? typeof pastDates.cutoff === 'number'
+              ? TODAY_DATE.subtract(pastDates.cutoff, 'day')
+              : dayjs(pastDates.cutoff)
+            : TODAY_DATE.subtract(DEFAULT_DATE_CACHE_RANGE, 'day');
+          const _d = dayjs(Object.keys(get().dateCache ?? {}).at(0));
+          const diff = Math.abs(cutoff.diff(_d, 'day'));
+          if (diff > 0) {
             Object.keys(state.dateCache).forEach((formattedDate) => {
               if (dayjs(formattedDate).isBefore(cutoff, 'day')) delete state.dateCache[formattedDate];
             });
-          });
+          }
         }
-      }
-      if (futureDates?.enable) {
-        const cutoff = futureDates?.cutoff
-          ? typeof futureDates.cutoff === 'number'
-            ? TODAY_DATE.add(futureDates.cutoff, 'day')
-            : dayjs(futureDates.cutoff)
-          : TODAY_DATE.add(DEFAULT_DATE_CACHE_RANGE, 'day');
-        const _d = dayjs(Object.keys(get().dateCache ?? {}).at(-1));
-        const diff = Math.abs(cutoff.diff(_d, 'day'));
-        if (diff > 0) {
-          set((state) => {
+        if (futureDates?.enable) {
+          const cutoff = futureDates?.cutoff
+            ? typeof futureDates.cutoff === 'number'
+              ? TODAY_DATE.add(futureDates.cutoff, 'day')
+              : dayjs(futureDates.cutoff)
+            : TODAY_DATE.add(DEFAULT_DATE_CACHE_RANGE, 'day');
+          const _d = dayjs(Object.keys(get().dateCache ?? {}).at(-1));
+          const diff = Math.abs(cutoff.diff(_d, 'day'));
+          if (diff > 0) {
             Object.keys(state.dateCache).forEach((formattedDate) => {
               if (dayjs(formattedDate).isAfter(cutoff, 'day')) delete state.dateCache[formattedDate];
             });
-          });
+          }
         }
       }
-    }
+    });
   },
   getDateData: (params) => {
     const _stateGoals = get().goals;
@@ -223,7 +221,7 @@ const createGoalSlice: StateCreator<
         .map((_, idx) => standardFormat(dayjs(selectedDate).subtract(idx + 1, 'day')))
     );
     incomplete.add(goal.date);
-    const newGoal: Goal = { ...goal, id, status: { completed: new Set(), incomplete, skipped: new Set() } };
+    const newGoal: Goal = { ...goal, id, status: EMPTY_GOAL_STATUS };
     set((state) => {
       state.goals[id] = newGoal;
     });
@@ -277,16 +275,34 @@ const createGoalSlice: StateCreator<
           goal.status.completed.add(utcFormattedDate);
           goal.status.incomplete.delete(utcFormattedDate);
           goal.status.skipped.delete(utcFormattedDate);
+          goal.status.breaks.delete(utcFormattedDate);
         } else if (status === 'skipped') {
           goal.status.skipped.add(utcFormattedDate);
           goal.status.completed.delete(utcFormattedDate);
           goal.status.incomplete.delete(utcFormattedDate);
+          goal.status.breaks.delete(utcFormattedDate);
         } else {
           goal.status.incomplete.add(utcFormattedDate);
           goal.status.completed.delete(utcFormattedDate);
           goal.status.skipped.delete(utcFormattedDate);
+          goal.status.breaks.delete(utcFormattedDate);
         }
-        goal.status.streaks = getUpdatedGoalStreaks({ goal, date: utcFormattedDate, status });
+        const { passesHolidayCheck, passesBreakCheck } = useGoalBreakCheck({
+          date: statusDate,
+          timeFormat: 'utc',
+          streakOptions: goal.streakOptions,
+        });
+        if (passesBreakCheck || passesHolidayCheck) {
+          goal.status.breaks.add(utcFormattedDate);
+          goal.status.completed.delete(utcFormattedDate);
+          goal.status.skipped.delete(utcFormattedDate);
+          goal.status.incomplete.delete(utcFormattedDate);
+        }
+        const { latest, longest } = getStreaks({ status: goal.status, streakOptions: goal.streakOptions });
+        if (longest.length > (goal.status.streaks.longest?.length ?? 0)) {
+          goal.status.streaks.longest = longest;
+        }
+        goal.status.streaks.current = latest;
       }
     });
     if (utcFormattedDate === get().selectedDateData.date) {

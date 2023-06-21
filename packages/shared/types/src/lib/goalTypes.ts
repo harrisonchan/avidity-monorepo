@@ -21,30 +21,33 @@ export type GoalRepeat = {
   end?: string; // date in UTC format
 };
 
-export type GoalStreakOptions = {
-  skips?: { frequency: number } & ({ type: 'week' } | { type: 'month' } | { type: 'year' });
+export type GoalStreakItem = {
+  date: { start: string; end: string }; // [start, end] date in UTC YYYY-MM-DD format
+  length: number;
+  skipped: Set<string>; // set of dates in UTC YYYY-MM-DD format
+  breaks: Set<string>; // set of dates in UTC YYYY-MM-DD format
 };
 
 export type GoalStreakData = {
-  date: [string, string] | undefined; // [start, end] date in UTC YYYY-MM-DD format
-  length: number;
-  skipped?: Set<string> | undefined; // set of dates in UTC YYYY-MM-DD format
-  breaks?: Set<string> | undefined; // set of dates in UTC YYYY-MM-DD format
-  options: GoalStreakOptions;
+  current: GoalStreakItem | null;
+  longest: GoalStreakItem | null;
 };
 
-export type GoalStreaks = {
-  current: GoalStreakData | undefined;
-  longest: GoalStreakData | undefined;
-  data: GoalStreakData[];
+export type GoalStreakOptions = {
+  skips: { frequency: number } & ({ type: 'week' } | { type: 'month' } | { type: 'year' } | { type: 'none' });
+  skipsWeekends: boolean;
+  skipsHolidays: boolean;
+  breaks: { start: string; end: string }[]; // [start, end] date in UTC YYYY-MM-DD format
 };
+
+export type GoalStreaks = GoalStreakItem[];
 
 export type GoalStatus = {
   completed: Set<string>; //set of dates in UTC format
   incomplete: Set<string>;
   skipped: Set<string>;
-  streaks?: GoalStreaks | undefined;
-  isOnBreak?: boolean;
+  breaks: Set<string>;
+  streaks: GoalStreakData;
 };
 
 export type Goal = {
@@ -53,23 +56,19 @@ export type Goal = {
   description?: string;
   icon: GoalIcon;
   date: string; // date in UTC format (YYYY-MM-DD)
-  time?: { start: string; end: string; blocks?: { start: string; end: string }[] } | undefined;
+  time: { start: string; end: string; blocks?: { start: string; end: string }[] } | null;
   repeat: GoalRepeat;
   categories: Set<string>;
   status: GoalStatus;
-  streakOptions?: GoalStreakOptions | undefined;
-  groupId?: string | undefined;
-  location?: string | LatLng | undefined;
-  commute?:
-    | {
-        duration: Duration;
-      }
-    | undefined;
-  break?:
-    | {
-        duration: Duration;
-      }
-    | undefined;
+  streakOptions: GoalStreakOptions;
+  groupId: string | null;
+  location: string | LatLng | undefined;
+  commute: {
+    duration: Duration;
+  } | null;
+  break: {
+    duration: Duration;
+  } | null;
 };
 
 export type GoalGroup = {
