@@ -8,7 +8,7 @@ import * as isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import * as isBetween from 'dayjs/plugin/isBetween';
 import Holidays from 'date-holidays';
 import { DateParam, Goal, GoalStatus, GoalStreakItem, GoalStreakOptions, GoalStreaks, TimeFormat } from '@shared/types';
-import { standardDate, standardFormat, utcDate, utcFormat } from '@shared/utils';
+import { TODAY_DATE_FORMATTED, standardDate, standardFormat, utcDate, utcFormat } from '@shared/utils';
 import { CachedGoal } from '@shared/stores';
 import { EMPTY_STREAK_ITEM } from './constants';
 
@@ -21,7 +21,6 @@ const holidays = new Holidays('US');
 
 const UUID_NAMESPACE = 'c3a24e92-b09b-11ed-afa1-0242ac120002';
 export function generateGoalId(title: string, date: DateParam): string {
-  console.log(date);
   const rightNow = dayjs().utc().toISOString();
   return 'goal-' + uuidV5(`${rightNow}_${utcDate(date).toISOString()}_${title}`, UUID_NAMESPACE);
 }
@@ -107,8 +106,8 @@ export function useGoalBreakCheck(params: { date: DateParam; timeFormat?: TimeFo
 type StreakMetadataItem = { date: string; type: 'completed' | 'skipped' | 'incomplete' | 'break' };
 export function getStreaks(params: { status: GoalStatus; streakOptions: GoalStreakOptions }): {
   streaks: GoalStreaks;
-  latest: GoalStreakItem;
-  longest: GoalStreakItem;
+  latest: GoalStreakItem | null;
+  longest: GoalStreakItem | null;
   metadata: StreakMetadataItem[];
 } {
   const { status, streakOptions } = params;
@@ -120,9 +119,15 @@ export function getStreaks(params: { status: GoalStatus; streakOptions: GoalStre
   let dates: StreakMetadataItem[] = [...completed, ...skipped, ...incomplete, ...breaks].sort((a, b) =>
     dayjs(b.date).isAfter(a.date, 'day') ? -1 : 1
   );
-  console.debug('dates', dates);
+  // console.debug('dates', dates);
   const goalStreaks: GoalStreaks = [];
-  let currentStreak: GoalStreakItem = { date: { start: dates[0].date, end: dates[0].date }, skipped: new Set(), breaks: new Set(), length: 0 };
+  // start and end date doesn't really matter YET here I guess
+  let currentStreak: GoalStreakItem = {
+    date: { start: dates[0]?.date ?? TODAY_DATE_FORMATTED, end: dates[0]?.date ?? TODAY_DATE_FORMATTED },
+    skipped: new Set(),
+    breaks: new Set(),
+    length: 0,
+  };
   let tolerantRange = [];
   let tolerance = 0;
   dates.forEach((_d) => {
@@ -157,8 +162,8 @@ export function getStreaks(params: { status: GoalStatus; streakOptions: GoalStre
   });
   if (currentStreak.length > 0) goalStreaks.push(currentStreak);
   //Get latest streak
-  const latest = goalStreaks.reduce((a, b) => (dayjs(a.date.end).isAfter(b.date.end, 'day') ? a : b));
+  const latest = goalStreaks.length > 0 ? goalStreaks.reduce((a, b) => (dayjs(a.date.end).isAfter(b.date.end, 'day') ? a : b)) : null;
   //Get longest streak
-  const longest = goalStreaks.reduce((a, b) => (a.length > b.length ? a : b));
+  const longest = goalStreaks.length > 0 ? goalStreaks.reduce((a, b) => (a.length > b.length ? a : b)) : null;
   return { streaks: goalStreaks, latest, longest, metadata: dates };
 }

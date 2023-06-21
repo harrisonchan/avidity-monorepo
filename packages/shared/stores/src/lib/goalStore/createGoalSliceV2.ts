@@ -3,7 +3,7 @@ import { isEqual } from 'lodash';
 import * as dayjs from 'dayjs';
 import * as isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import { DateParam, Goal, GoalGroup, TimeFormat } from '@shared/types';
-import { TODAY_DATE, TODAY_DATE_FORMATTED, standardDate, standardFormat, utcFormat } from '@shared/utils';
+import { TODAY_DATE, TODAY_DATE_FORMATTED, localDate, standardDate, standardFormat, utcFormat } from '@shared/utils';
 import {
   generateGoalId,
   generateGroupId,
@@ -106,6 +106,7 @@ const createGoalSlice: StateCreator<
       if (dateCachePruneOptions) {
         const { pastDates, futureDates } = dateCachePruneOptions;
         if (pastDates?.enable) {
+          console.debug('useGoalStore (runDailyTasks): Pruning past dates from dateCache...');
           const cutoff = pastDates?.cutoff
             ? typeof pastDates.cutoff === 'number'
               ? TODAY_DATE.subtract(pastDates.cutoff, 'day')
@@ -113,13 +114,19 @@ const createGoalSlice: StateCreator<
             : TODAY_DATE.subtract(DEFAULT_DATE_CACHE_RANGE, 'day');
           const _d = dayjs(Object.keys(get().dateCache ?? {}).at(0));
           const diff = Math.abs(cutoff.diff(_d, 'day'));
+          let count = 0;
           if (diff > 0) {
             Object.keys(state.dateCache).forEach((formattedDate) => {
-              if (dayjs(formattedDate).isBefore(cutoff, 'day')) delete state.dateCache[formattedDate];
+              if (dayjs(formattedDate).isBefore(cutoff, 'day')) {
+                delete state.dateCache[formattedDate];
+                count++;
+              }
             });
           }
+          console.debug(`useGoalStore (runDailyTasks): Pruned ${count} past dates from dateCache`);
         }
         if (futureDates?.enable) {
+          console.debug('useGoalStore (runDailyTasks): Pruning future dates from dateCache...');
           const cutoff = futureDates?.cutoff
             ? typeof futureDates.cutoff === 'number'
               ? TODAY_DATE.add(futureDates.cutoff, 'day')
@@ -127,11 +134,16 @@ const createGoalSlice: StateCreator<
             : TODAY_DATE.add(DEFAULT_DATE_CACHE_RANGE, 'day');
           const _d = dayjs(Object.keys(get().dateCache ?? {}).at(-1));
           const diff = Math.abs(cutoff.diff(_d, 'day'));
+          let count = 0;
           if (diff > 0) {
             Object.keys(state.dateCache).forEach((formattedDate) => {
-              if (dayjs(formattedDate).isAfter(cutoff, 'day')) delete state.dateCache[formattedDate];
+              if (dayjs(formattedDate).isAfter(cutoff, 'day')) {
+                delete state.dateCache[formattedDate];
+                count++;
+              }
             });
           }
+          console.debug(`useGoalStore (runDailyTasks): Pruned ${count} future dates from dateCache`);
         }
       }
     });
@@ -146,7 +158,7 @@ const createGoalSlice: StateCreator<
       if (fillGoalsForSelectedDate) {
         const newGoalsForDate = get().fillGoalsForSelectedDate({ date: utcFormattedDate, timeFormat: 'utc' });
         if (newGoalsForDate) goals = Object.values(newGoalsForDate);
-      } else console.debug(`useNewGoalStore (getDateData): No goals found for ${standardFormat(date)}`);
+      } else console.debug(`useGoalStore (getDateData): No goals found for ${standardFormat(date)}`);
     }
     if (goals && goals.length > 0) {
       const groupIds = new Set<string>();
@@ -172,9 +184,7 @@ const createGoalSlice: StateCreator<
     const { date, timeFormat, skipChecks } = params;
     const utcFormattedDate = timeFormat === 'utc' ? standardFormat(date) : utcFormat(date);
     const utcDate = dayjs(utcFormattedDate);
-    console.debug(
-      `useNewGoalStore (fillGoalsForSelectedDate): Trying to create goals for ${utcFormattedDate} with params: ${JSON.stringify(params)}`
-    );
+    console.debug(`useGoalStore (fillGoalsForSelectedDate): Trying to create goals for ${utcFormattedDate} with params: ${JSON.stringify(params)}`);
     if (!skipChecks) {
       const goalsForDate = get().dateCache[utcFormattedDate];
       if (Object.keys(goalsForDate ?? {}).length > 0) return null;
@@ -200,13 +210,13 @@ const createGoalSlice: StateCreator<
       set((state) => {
         state.selectedDateData = { date: utcFormattedDate, goals, groups };
       });
-    } else console.debug(`useNewGoalStore (setSelectedDateData): Cannot change date because ${standardFormat(date)} is already the selected date`);
+    } else console.debug(`useGoalStore (setSelectedDateData): Cannot change date because ${standardFormat(date)} is already the selected date`);
   },
   getGoal: (params) => {
     const id = params.id;
     const goal = get().goals[id];
     if (!goal) {
-      console.debug(`useNewGoalStore (getGoal): No goal found with id ${id}`);
+      console.debug(`useGoalStore (getGoal): No goal found with id ${id}`);
       return undefined;
     } else return goal;
   },
@@ -227,27 +237,37 @@ const createGoalSlice: StateCreator<
     });
     get().addToDateCache({ id });
     newGoal.groupId && get().addToGroup({ id, groupId: newGoal.groupId });
-    utcFormattedDate === get().selectedDateData.date && get().setSelectedDateData({ date: utcFormattedDate });
+    (utcFormattedDate === get().selectedDateData.date || checkValidRepeatDate({ goal: newGoal, date: get().selectedDateData.date })) &&
+      get().setSelectedDateData({ date: get().selectedDateData.date });
   },
+  // TODO: Figure this out
+  // Should we remove completion data if date or repeat changes?
   updateGoal: (params) => {
     const { goal, timeFormat } = params;
-    const utcFormattedDate = timeFormat === 'utc' ? goal.date : utcFormat(goal.date);
     const id = goal.id;
     const originalGoal = get().goals[id];
-    if (!originalGoal) console.debug(`useNewGoalStore (updateGoal): No goal found with id ${id}`);
+    if (!originalGoal) console.debug(`useGoalStore (updateGoal): No goal found with id ${id}`);
     else {
+      const utcFormattedDate = timeFormat === 'utc' ? goal.date ?? originalGoal.date : utcFormat(goal.date ?? localDate(originalGoal.date));
+      const newGoal: Goal = { ...originalGoal, ...goal };
+      console.debug(`useGoalStore (updateGoal): Updating goal with id ${id} with params: ${JSON.stringify(goal)}`);
       set((state) => {
-        state.goals[id] = { ...originalGoal, ...goal };
+        state.goals[id] = newGoal;
       });
-      if ((goal.date && !isEqual(goal.date, originalGoal.date)) || (goal.repeat && !isEqual(goal.repeat, originalGoal.repeat))) {
+      if ((goal.date && utcFormattedDate !== originalGoal.date) || (goal.repeat && !isEqual(goal.repeat, originalGoal.repeat))) {
         get().removeFromDateCache({ id });
         get().addToDateCache({ id });
+        // Need to update streaks
+        const { latest, longest } = getStreaks({ status: newGoal.status, streakOptions: newGoal.streakOptions });
+        set((state) => {
+          state.goals[id].status.streaks.current = latest;
+          state.goals[id].status.streaks.longest = longest;
+        });
       } else {
         set((state) => {
-          const converted = convertGoalToDateCacheGoal({ goal: originalGoal, date: utcFormattedDate });
-          Object.values(state.dateCache).forEach((goalsForDate) => {
+          Object.entries(state.dateCache).forEach(([_date, goalsForDate]) => {
             Object.values(goalsForDate).forEach((_g) => {
-              if (_g.id === id) goalsForDate[id] = { ..._g, ...converted };
+              if (_g.id === id) goalsForDate[id] = { ..._g, ...convertGoalToDateCacheGoal({ goal: newGoal, date: _date }) };
             });
           });
         });
@@ -256,9 +276,8 @@ const createGoalSlice: StateCreator<
       if (goal.groupId && !isEqual(goal.groupId, originalGoal.groupId)) {
         get().removeFromGroup({ id });
         get().addToGroup({ id, groupId: goal.groupId });
-      } else if (utcFormattedDate === get().selectedDateData.date) {
-        get().setSelectedDateData({ date: utcFormattedDate });
       }
+      get().setSelectedDateData({ date: get().selectedDateData.date });
     }
   },
   updateGoalStatus: (params) => {
@@ -267,8 +286,8 @@ const createGoalSlice: StateCreator<
     set((state) => {
       const goal = state.goals[id];
       const goalsForDate = state.dateCache[utcFormattedDate];
-      if (!goal) console.debug(`useNewGoalStore (updateGoalComplete): No goal found with id ${id}`);
-      else if (!goalsForDate) console.debug(`useNewGoalStore (updateGoalComplete): No goals found for ${utcFormattedDate}`);
+      if (!goal) console.debug(`useGoalStore (updateGoalComplete): No goal found with id ${id}`);
+      else if (!goalsForDate) console.debug(`useGoalStore (updateGoalComplete): No goals found for ${utcFormattedDate}`);
       else {
         goalsForDate[id] = { ...goalsForDate[id], status };
         if (status === 'completed') {
@@ -299,22 +318,18 @@ const createGoalSlice: StateCreator<
           goal.status.incomplete.delete(utcFormattedDate);
         }
         const { latest, longest } = getStreaks({ status: goal.status, streakOptions: goal.streakOptions });
-        if (longest.length > (goal.status.streaks.longest?.length ?? 0)) {
-          goal.status.streaks.longest = longest;
-        }
         goal.status.streaks.current = latest;
+        goal.status.streaks.longest = longest;
       }
     });
-    if (utcFormattedDate === get().selectedDateData.date) {
-      get().setSelectedDateData({ date: utcFormattedDate });
-    }
+    utcFormattedDate === get().selectedDateData.date && get().setSelectedDateData({ date: utcFormattedDate });
   },
   deleteGoal: (params) => {
     const id = params.id;
     const _g = get().goals[id];
     const goal: Goal = { ..._g, repeat: { ..._g.repeat } }; // shallow copy with repeat deeper and deepa and deepa an deepa
     /** I think I am literally going insane. I will definitely be out on the streets soon. How fun. */
-    if (!goal) console.debug(`useNewGoalStore (deleteGoal): No goal found with id ${id}`);
+    if (!goal) console.debug(`useGoalStore (deleteGoal): No goal found with id ${id}`);
     else {
       set((state) => {
         state.groups[goal.groupId ?? '']?.goals.delete(id);
@@ -322,19 +337,17 @@ const createGoalSlice: StateCreator<
           delete goalsForDate[id];
         });
         delete state.goals[id];
-        console.debug(`useNewGoalStore (deleteGoal): Deleted goal ${id} with title: ${goal.title}`);
+        console.debug(`useGoalStore (deleteGoal): Deleted goal ${id} with title: ${goal.title}`);
       });
       const selectedDate = get().selectedDateData.date;
-      if (selectedDate === goal.date || checkValidRepeatDate({ goal, date: selectedDate })) {
-        get().setSelectedDateData({ date: selectedDate });
-      }
+      get().setSelectedDateData({ date: selectedDate });
     }
   },
   getGroup: (params) => {
     const id = params.id;
     const group = get().groups[id];
     if (!group) {
-      console.debug(`useNewGoalStore (getGroup): No goal group found with id ${id}`);
+      console.debug(`useGoalStore (getGroup): No goal group found with id ${id}`);
       return undefined;
     }
     return group;
@@ -342,16 +355,14 @@ const createGoalSlice: StateCreator<
   getGoalsNotInGroup: (params) => {
     const id = params.id;
     const group = get().groups[id];
-    if (!group) console.debug(`useNewGoalStore (getGoalsNotInGroup): No goal group found with id ${id}`);
-    else {
-      return Object.values(get().goals).filter((goal) => !group.goals.has(goal.id) && (goal.groupId === undefined || goal.groupId === ''));
-    }
+    if (!group) console.debug(`useGoalStore (getGoalsNotInGroup): No goal group found with id ${id}`);
+    else return Object.values(get().goals).filter((goal) => !group.goals.has(goal.id) && (goal.groupId === null || goal.groupId === ''));
     return null;
   },
   getGoalsInGroup: (params) => {
     const id = params.id;
     const group = get().groups[id];
-    if (!group) console.debug(`useNewGoalStore (getGoalsInGroup): No goal group found with id ${id}`);
+    if (!group) console.debug(`useGoalStore (getGoalsInGroup): No goal group found with id ${id}`);
     else {
       return Object.values(get().goals).filter((goal) => group.goals.has(goal.id));
     }
@@ -375,7 +386,7 @@ const createGoalSlice: StateCreator<
     const group = params.group;
     const id = group.id;
     const originalGroup = get().groups[id];
-    if (!originalGroup) console.debug(`useNewGoalStore (updateGroup): No goal group found with id ${id}`);
+    if (!originalGroup) console.debug(`useGoalStore (updateGroup): No goal group found with id ${id}`);
     else {
       set((state) => {
         state.groups[id] = { ...originalGroup, ...group };
@@ -389,10 +400,10 @@ const createGoalSlice: StateCreator<
     const _stateGoals = get().goals;
     const id = params.id;
     const group = get().groups[id];
-    if (!group) console.debug(`useNewGoalStore (deleteGroup): No goal group found with id ${id}`);
+    if (!group) console.debug(`useGoalStore (deleteGroup): No goal group found with id ${id}`);
     else {
       set((state) => {
-        group.goals.forEach((id) => (state.goals[id].groupId = ''));
+        group.goals.forEach((id) => (state.goals[id].groupId = null));
         delete state.groups[id];
       });
       let shouldUpdateSelectedDateDataFlag = false;
@@ -404,11 +415,11 @@ const createGoalSlice: StateCreator<
     const { id, groupId } = params;
     const goal = get().goals[id];
     const group = get().groups[groupId];
-    if (!goal) console.debug(`useNewGoalStore (addToGroup): No goal found with id ${id}`);
+    if (!goal) console.debug(`useGoalStore (addToGroup): No goal found with id ${id}`);
     else if (goal.groupId) {
-      if (goal.groupId !== '' && goal.groupId !== groupId) console.debug(`useNewGoalStore (addToGroup): Goal ${id} already belongs to a group`);
-    } else if (!group) console.debug(`useNewGoalStore (addToGroup): No goal group found with id ${groupId}`);
-    else if (group.goals.has(id)) console.debug(`useNewGoalStore (addToGroup): Goal ${id} already belongs to goal group ${groupId}`);
+      if (goal.groupId !== '' && goal.groupId !== groupId) console.debug(`useGoalStore (addToGroup): Goal ${id} already belongs to a group`);
+    } else if (!group) console.debug(`useGoalStore (addToGroup): No goal group found with id ${groupId}`);
+    else if (group.goals.has(id)) console.debug(`useGoalStore (addToGroup): Goal ${id} already belongs to goal group ${groupId}`);
     else {
       set((state) => {
         state.goals[id].groupId = groupId;
@@ -420,26 +431,26 @@ const createGoalSlice: StateCreator<
   removeFromGroup: (params) => {
     const id = params.id;
     const goal = get().goals[id]!;
-    if (!goal) console.debug(`useNewGoalStore (removeFromGroup): No goal found with id ${id}`);
-    else if (!goal.groupId) console.debug(`useNewGoalStore (removeFromGroup): Goal ${id} does not have a group id?`);
+    if (!goal) console.debug(`useGoalStore (removeFromGroup): No goal found with id ${id}`);
+    else if (!goal.groupId) console.debug(`useGoalStore (removeFromGroup): Goal ${id} does not have a group id?`);
     const group = get().groups[goal.groupId ?? ''];
-    if (!group) console.debug(`useNewGoalStore (removeFromGroup): No goal group found with id ${goal.groupId}`);
-    else if (!group.goals.has(id)) console.debug(`useNewGoalStore (removeFromGroup): Goal group ${group.id} does not have goal ${id}???`);
+    if (!group) console.debug(`useGoalStore (removeFromGroup): No goal group found with id ${goal.groupId}`);
+    else if (!group.goals.has(id)) console.debug(`useGoalStore (removeFromGroup): Goal group ${group.id} does not have goal ${id}???`);
     else {
       set((state) => {
         state.goals[id].groupId = '';
         state.groups[group.id].goals.delete(id);
       });
-      checkValidRepeatDate({ goal, date: get().selectedDateData.date }) && get().setSelectedDateData({ date: get().selectedDateData.date });
+      get().setSelectedDateData({ date: get().selectedDateData.date });
     }
   },
   //adds goal and repeats to dateCache
   addToDateCache: (params) => {
-    console.debug('useNewGoalStore (addToDateCache): Adding to date cache...');
+    console.debug('useGoalStore (addToDateCache): Adding to date cache...');
     const dateCache = get().dateCache;
     const id = params.id;
     const goal = get().goals[id];
-    if (!goal) console.debug(`useNewGoalStore (addToDateCache): No goal found with id ${id}`);
+    if (!goal) console.debug(`useGoalStore (addToDateCache): No goal found with id ${id}`);
     else {
       const diff = dayjs(Object.keys(get().dateCache).at(-1) ?? TODAY_DATE).diff(goal.date, 'day') + 1;
       const selectedDate = get().selectedDateData.date;
@@ -459,13 +470,15 @@ const createGoalSlice: StateCreator<
     }
   },
   removeFromDateCache: (params) => {
-    const dateCache = Object.values(get().dateCache ?? {});
+    const dateCacheKeys = Object.keys(get().dateCache ?? {});
     const id = params.id;
     const goal = get().goals[id];
-    if (!goal) console.debug(`useNewGoalStore (removeFromDateCache): No goal found with id ${id}`);
+    if (!goal) console.debug(`useGoalStore (removeFromDateCache): No goal found with id ${id}`);
     else {
-      dateCache.forEach((goalsForDate) => {
-        delete goalsForDate[id];
+      set((state) => {
+        dateCacheKeys.forEach((keys) => {
+          delete state.dateCache[keys][id];
+        });
       });
     }
   },

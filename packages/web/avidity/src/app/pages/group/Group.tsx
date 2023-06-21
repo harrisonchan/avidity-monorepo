@@ -20,6 +20,7 @@ export default function Group() {
     const groupGoalsData = getGroupGoalsData({ id: group.id })!;
     setGoalsInGroup(groupGoalsData.goalsInGroup);
     setGoalsNotInGroup(groupGoalsData.goalsNotInGroup);
+    console.debug('groupGoalsData', groupGoalsData);
   }, [_groups]);
   return (
     <div>

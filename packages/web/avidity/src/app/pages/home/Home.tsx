@@ -7,9 +7,9 @@ import useUtilStore from '@web/stores/useUtilStore';
 import { daisyUIThemeArr } from '@web/types';
 import useTestStore from '@web/stores/useTestStore';
 import { EMPTY_GOAL, EMPTY_GOAL_GROUP } from '@shared/helpers';
-import { IoChevronBack, IoChevronForward, IoRemoveCircleOutline } from 'react-icons/io5';
+import { IoChevronBack, IoChevronForward, IoRemoveCircle, IoRemoveCircleOutline } from 'react-icons/io5';
 import classNames from 'classnames';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useFetcher, useNavigate } from 'react-router-dom';
 
 const TEST_DATA = [
   { title: 'test1', description: '' },
@@ -23,18 +23,22 @@ export default function Home() {
   const navigate = useNavigate();
   const { date, goals, groups } = useGoalStore.use.selectedDateData();
   const setSelectedDateData = useGoalStore.use.setSelectedDateData();
-  const { addGoal, clearStore, deleteGoal, updateGoalStatus, addGroup, stateGoals, stateGroups } = useGoalStore((state) => ({
-    addGoal: state.addGoal,
-    clearStore: state.clearStore,
-    deleteGoal: state.deleteGoal,
-    updateGoalStatus: state.updateGoalStatus,
-    addGroup: state.addGroup,
-    stateGoals: state.goals,
-    stateGroups: state.groups,
-  }));
-  const changeDate = (date: Dayjs) => {
-    setSelectedDateData({ date, timeFormat: 'local' });
-  };
+  const { addGoal, clearStore, deleteGoal, updateGoal, updateGoalStatus, addGroup, deleteGroup, updateGroup, stateGoals, stateGroups } = useGoalStore(
+    (state) => ({
+      addGoal: state.addGoal,
+      clearStore: state.clearStore,
+      deleteGoal: state.deleteGoal,
+      updateGoal: state.updateGoal,
+      updateGoalStatus: state.updateGoalStatus,
+      addGroup: state.addGroup,
+      deleteGroup: state.deleteGroup,
+      updateGroup: state.updateGroup,
+      stateGoals: state.goals,
+      stateGroups: state.groups,
+    })
+  );
+  const [newGoalName, setNewGoalName] = useState('');
+  const [newGroupName, setNewGroupName] = useState('');
   const renderGoals = () => (
     <div className="flex flex-col">
       <div className="flex flex-row items-center self-center mb-1">
@@ -62,6 +66,7 @@ export default function Home() {
       </button>
       {goals.map((goal) => (
         <div
+          key={goal.id}
           className={classNames('rounded-md card-bordered mb-1 p-3', {
             'bg-warning': goal.status === 'skipped',
             'bg-error': goal.status === 'incomplete',
@@ -77,9 +82,9 @@ export default function Home() {
               <IoRemoveCircleOutline className="text-xl text-primary" />
             </button>
           </div>
-          <div className="mt-2">
+          <div className="mt-2 flex flex-row justify-evenly">
             <button
-              className="btn mr-2"
+              className="btn"
               onClick={() => {
                 if (goal.status === 'completed') updateGoalStatus({ id: goal.id, status: 'incomplete', statusDate: date });
                 else updateGoalStatus({ id: goal.id, status: 'completed', statusDate: date });
@@ -91,6 +96,21 @@ export default function Home() {
             </button>
             <button className="btn" onClick={() => updateGoalStatus({ id: goal.id, status: 'incomplete', statusDate: date })}>
               Mark incomplete
+            </button>
+          </div>
+          <div className="mt-2 flex flex-col">
+            <label>
+              New goal name
+              <input placeholder="Enter new name" onChange={(evt) => setNewGoalName(evt.target.value)} />
+            </label>
+            <button className="btn" onClick={() => updateGoal({ goal: { id: goal.id, title: newGoalName } })}>
+              Update goal
+            </button>
+            <button className="btn" onClick={() => updateGoal({ goal: { id: goal.id, date: standardFormat(dayjs(goal.date).add(1, 'day')) } })}>
+              Change date
+            </button>
+            <button className="btn" onClick={() => updateGoal({ goal: { id: goal.id, repeat: { type: 'custom', frequency: 3 } } })}>
+              Change repeat
             </button>
           </div>
         </div>
@@ -124,13 +144,24 @@ export default function Home() {
       </button>
       {Object.values(stateGroups).map((group) => (
         <div>
-          <Link to={`/group/${group.id}`}>
+          <Link to={`/group/${group.id}`} className="flex flex-col">
             <button
             // onClick={() => navigate(`/groups/${group.id}`)}
             >
               <p className="text-3xl">{group.title}</p>
             </button>
           </Link>
+          <button onClick={() => deleteGroup({ id: group.id })}>
+            <IoRemoveCircle className="text-2xl" />
+          </button>
+          <div>
+            <label>
+              <input placeholder="enter new group name" onChange={(evt) => setNewGroupName(evt.target.value)} />
+            </label>
+            <button className="btn btn-sm" onClick={() => updateGroup({ group: { id: group.id, title: newGroupName } })}>
+              Update group
+            </button>
+          </div>
         </div>
       ))}
     </div>
