@@ -12,6 +12,9 @@ dayjs.extend(isSameOrBefore);
 dayjs.extend(duration);
 dayjs.extend(isBetween);
 
+const MINUTES_IN_HOUR = 60;
+const MINUTES_IN_DAY = 1440;
+
 export type LatLngType = {
   lat: string | number;
   lng: string | number;
@@ -117,7 +120,7 @@ export const scheduleMissions = async (params: {
       const startTime = dayjs(mission.time!.start);
       const startHour = startTime.hour();
       const startMinute = startTime.minute();
-      return { mission, score: 1440 - (startHour * 60 + startMinute) };
+      return { mission, score: MINUTES_IN_DAY - (startHour * MINUTES_IN_HOUR + startMinute) };
     })
     .sort((a, b) => b.score - a.score)
     .map((_m) => _m.mission); // Now missionsWithTime is orgainzed by starting time, with the earliest starting time first
