@@ -1,6 +1,6 @@
 import { useGoalSchedule } from '@shared/helpers';
 import { Goal, ScheduledGoal } from '@shared/types';
-import { TODAY_DATE, formatDuration, hourTimeFormat, standardFormat, toTitleCase } from '@shared/utils';
+import { TODAY_DATE, formatDuration, getHourTimeFormat, getStandardFormat, toTitleCase } from '@shared/utils';
 import { useGoalStore } from '@web/stores';
 import * as dayjs from 'dayjs';
 import { Dayjs } from 'dayjs';
@@ -40,17 +40,17 @@ function ScheduleItem(props: ScheduleItemProps) {
         {toTitleCase(type)}: {title}
       </p>
       <p className="text-xl">
-        Time: {hourTimeFormat(time.start)} ~ {hourTimeFormat(time.end)}-
+        Time: {getHourTimeFormat(time.start)} ~ {getHourTimeFormat(time.end)}-
       </p>
       <p className="text-xl">Duration: {duration.format()}</p>
       {commute ? (
         <p className="text-xl">
-          Commute: {hourTimeFormat(commute.start)} ~ {hourTimeFormat(commute.end)}
+          Commute: {getHourTimeFormat(commute.start)} ~ {getHourTimeFormat(commute.end)}
         </p>
       ) : null}
       {rest ? (
         <p className="text-xl">
-          Rest: {hourTimeFormat(rest.start)} ~ {hourTimeFormat(rest.end)}
+          Rest: {getHourTimeFormat(rest.start)} ~ {getHourTimeFormat(rest.end)}
         </p>
       ) : null}
     </div>
@@ -126,11 +126,11 @@ export default function Schedule() {
                 </td>
                 <td className="text-center px-4">{item.type}</td>
                 <td className="text-center px-4">
-                  Time: {hourTimeFormat(item.time.start)} ~ {hourTimeFormat(item.time.end)}
+                  Time: {getHourTimeFormat(item.time.start)} ~ {getHourTimeFormat(item.time.end)}
                 </td>
                 <td className="text-center px-4">{formatDuration(item.duration, ['hours', 'minutes'])}</td>
-                <td className="text-center px-4">{commute ? `${hourTimeFormat(commute.start)} ~ ${hourTimeFormat(commute.end)}` : 'n/a'}</td>
-                <td className="text-center px-4">{rest ? `${hourTimeFormat(rest.start)} ~ ${hourTimeFormat(rest.end)}` : 'n/a'}</td>
+                <td className="text-center px-4">{commute ? `${getHourTimeFormat(commute.start)} ~ ${getHourTimeFormat(commute.end)}` : 'n/a'}</td>
+                <td className="text-center px-4">{rest ? `${getHourTimeFormat(rest.start)} ~ ${getHourTimeFormat(rest.end)}` : 'n/a'}</td>
               </tr>
             );
           })}
@@ -155,7 +155,7 @@ export default function Schedule() {
             return (
               <tr key={item.id}>
                 <td className="text-center px-4">{item.title}</td>
-                <td className="text-center px-4">{time ? `${hourTimeFormat(time.start)} ~ ${hourTimeFormat(time.end)}` : 'n/a'}</td>
+                <td className="text-center px-4">{time ? `${getHourTimeFormat(time.start)} ~ ${getHourTimeFormat(time.end)}` : 'n/a'}</td>
                 <td className="text-center px-4">{formatDuration(item.duration, ['hours', 'minutes'])}</td>
                 <td className="text-center px-4">{commute ? `${formatDuration(commute.duration, ['hours', 'minutes'])}` : 'n/a'}</td>
                 <td className="text-center px-4">{item.rest ? `${formatDuration(item.rest.duration, ['hours', 'minutes'])}` : 'n/a'}</td>

@@ -3,7 +3,7 @@ import { persist, PersistOptions } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
 import { isEqual } from 'lodash';
 import { DateParam, Goal, GoalGroup, TimeFormat } from '@shared/types';
-import { TODAY_DATE_FORMATTED, convertMapToArray, standardDate, standardFormat, utcFormat } from '@shared/utils';
+import { TODAY_DATE_FORMATTED, convertMapToArray, standardDate, getStandardFormat, utcFormat } from '@shared/utils';
 import {
   generateGoalId,
   generateGroupId,
@@ -79,7 +79,7 @@ const createGoalSlice: StateCreator<
   ...initialState,
   runTasks: () => {
     // console.log('hello')
-    // console.log(`Today's date: ${dayjsUtils.standardFormat(dayjsUtils.TODAY_DATE_FORMATTED)}`)
+    // console.log(`Today's date: ${dayjsUtils.getStandardFormat(dayjsUtils.TODAY_DATE_FORMATTED)}`)
     //Update selectedDateData
     get().setSelectedDateData({ date: TODAY_DATE_FORMATTED });
     // console.debug(`useV1GoalStore (runTasks): Updating selectedDateData`)
@@ -88,7 +88,7 @@ const createGoalSlice: StateCreator<
     // set((state) => {
     //   console.log('biatch')
     //   state.selectedDateData = {
-    //     date: dayjsUtils.standardFormat(dayjsUtils.TODAY_DATE.add(1, 'day')),
+    //     date: dayjsUtils.getStandardFormat(dayjsUtils.TODAY_DATE.add(1, 'day')),
     //     goals,
     //     groups,
     //   }
@@ -97,7 +97,7 @@ const createGoalSlice: StateCreator<
   },
   getDateData: (params) => {
     const { date, timeFormat } = params;
-    const utcFormattedDate = timeFormat === 'utc' ? standardFormat(date) : utcFormat(date);
+    const utcFormattedDate = timeFormat === 'utc' ? getStandardFormat(date) : getUtcFormat(date);
     const goals = get().dateCache?.get(utcFormattedDate);
     if (goals) {
       const groupIds = new Set<string>();
@@ -117,12 +117,12 @@ const createGoalSlice: StateCreator<
       const result = { goals: sortedGoals, groups: sortedGroups };
       return result;
     }
-    console.debug(`useV1GoalStore (getDateData): No goals found for ${standardFormat(date)}`);
+    console.debug(`useV1GoalStore (getDateData): No goals found for ${getStandardFormat(date)}`);
     return { goals: [], groups: [] };
   },
   setSelectedDateData: (params) => {
     const { date, timeFormat, checkIsSameSelectedDate } = params;
-    const utcFormattedDate = timeFormat === 'utc' ? standardFormat(date) : utcFormat(date);
+    const utcFormattedDate = timeFormat === 'utc' ? getStandardFormat(date) : getUtcFormat(date);
     if ((checkIsSameSelectedDate && utcFormattedDate !== get().selectedDateData.date) || !checkIsSameSelectedDate) {
       // console.log(get());
       // console.log(get().getDateData);
@@ -130,7 +130,7 @@ const createGoalSlice: StateCreator<
       set((state) => {
         state.selectedDateData = { date: utcFormattedDate, goals, groups };
       });
-    } else console.debug(`useV1GoalStore (setSelectedDateData): Cannot change date because ${standardFormat(date)} is already the selected date`);
+    } else console.debug(`useV1GoalStore (setSelectedDateData): Cannot change date because ${getStandardFormat(date)} is already the selected date`);
   },
   getGoal: (params) => {
     const id = params.id;
@@ -142,7 +142,7 @@ const createGoalSlice: StateCreator<
   },
   addGoal: (params) => {
     const { goal, timeFormat } = params;
-    const utcFormattedDate = timeFormat === 'utc' ? goal.date : utcFormat(goal.date);
+    const utcFormattedDate = timeFormat === 'utc' ? goal.date : getUtcFormat(goal.date);
     const id = generateGoalId(goal.title, goal.date);
     const newGoal = { ...goal, id };
     get().goals.set(id, newGoal);
@@ -152,7 +152,7 @@ const createGoalSlice: StateCreator<
   },
   updateGoal: (params) => {
     const { goal, timeFormat } = params;
-    const utcFormattedDate = timeFormat === 'utc' ? goal.date : utcFormat(goal.date);
+    const utcFormattedDate = timeFormat === 'utc' ? goal.date : getUtcFormat(goal.date);
     const id = goal.id;
     const originalGoal = get().goals.get(id);
     if (!originalGoal) console.debug(`useV1GoalStore (updateGoal): No goal found with id ${id}`);
@@ -181,7 +181,7 @@ const createGoalSlice: StateCreator<
   },
   updateGoalComplete: (params) => {
     const { id, isComplete, isCompleteDate, timeFormat } = params;
-    const utcFormattedDate = timeFormat === 'utc' ? standardFormat(isCompleteDate) : utcFormat(isCompleteDate);
+    const utcFormattedDate = timeFormat === 'utc' ? getStandardFormat(isCompleteDate) : getUtcFormat(isCompleteDate);
     set((state) => {
       const goal = state.goals.get(id);
       const goalsForDate = state.dateCache.get(utcFormattedDate);
@@ -330,7 +330,7 @@ const createGoalSlice: StateCreator<
       // const dateCacheGoal = convertGoalToDateCacheGoal({ goal, date:  });
       const range = goal.repeat ? params.range ?? 25 : 1;
       createValidRepeatDates({ goal, range }).forEach((date) => {
-        const formattedDate = standardFormat(date);
+        const formattedDate = getStandardFormat(date);
         const goalsForDate = dateCache.get(formattedDate);
         const cachedGoal: CachedGoal = convertGoalToDateCacheGoal({ goal, date: date });
         if (goalsForDate) {

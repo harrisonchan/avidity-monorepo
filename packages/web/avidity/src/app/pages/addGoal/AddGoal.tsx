@@ -1,6 +1,6 @@
 import { EMPTY_GOAL } from '@shared/helpers';
 import { AddForm, Goal, GoalRepeat, ioniconsArr } from '@shared/types';
-import { WEEKDAYS, standardFormat } from '@shared/utils';
+import { WEEKDAYS, getStandardFormat } from '@shared/utils';
 import { SideBar } from '@web/components';
 import { useGoalStore } from '@web/stores';
 import { ErrorMessage, Field, FieldArray, Form, Formik, FormikHelpers } from 'formik';
@@ -30,7 +30,7 @@ export default function AddGoal() {
             ...EMPTY_GOAL,
             ...values,
             repeat: newRepeat,
-            time: values.time ? { start: standardFormat(values.time.start), end: standardFormat(values.time.end) } : null,
+            time: values.time ? { start: getStandardFormat(values.time.start), end: getStandardFormat(values.time.end) } : null,
             categories: new Set(),
           };
           addGoal({
