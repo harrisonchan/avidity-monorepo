@@ -3,7 +3,7 @@ import { isEqual } from 'lodash';
 import * as dayjs from 'dayjs';
 import * as isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import { DateParam, Goal, GoalGroup, TimeFormat } from '@shared/types';
-import { TODAY_DATE, TODAY_DATE_FORMATTED, localDate, standardDate, standardFormat, utcFormat } from '@shared/utils';
+import { TODAY_DATE_UTC, TODAY_DATE_UTC_FORMATTED, localDate, standardDate, standardFormat, utcFormat } from '@shared/utils';
 import {
   generateGoalId,
   generateGroupId,
@@ -12,7 +12,7 @@ import {
   convertGoalToDateCacheGoal,
   EMPTY_GOAL_STATUS,
   getStreaks,
-  useGoalBreakCheck,
+  useGoalRestCheck,
 } from '@shared/helpers';
 
 dayjs.extend(isSameOrAfter);
@@ -20,7 +20,7 @@ dayjs.extend(isSameOrAfter);
 const DEFAULT_DATE_CACHE_RANGE = 61;
 
 export type CachedGoalStatus = 'completed' | 'incomplete' | 'skipped';
-export type CachedGoal = Omit<Goal, 'repeat' | 'status' | 'groupId' | 'location' | 'commute' | 'break'> & {
+export type CachedGoal = Omit<Goal, 'repeat' | 'status' | 'groupId' | 'location' | 'commute' | 'rest'> & {
   status: CachedGoalStatus;
 };
 
@@ -34,6 +34,7 @@ export interface BaseGoalState {
   groups: GroupRecord;
   selectedDateData: {
     date: string;
+    localDate: string;
     goals: CachedGoal[];
     groups: GoalGroup[];
   };
@@ -43,10 +44,7 @@ export type DateCachePruneOption = { enable: boolean; cutoff?: number | DatePara
 
 export interface BaseGoalActions {
   runDailyTasks: (params?: { dateCachePruneOptions: { pastDates?: DateCachePruneOption; futureDates?: DateCachePruneOption } }) => void;
-  getDateData: (params: { date: DateParam; timeFormat?: TimeFormat; fillGoalsForSelectedDate?: boolean }) => {
-    goals: CachedGoal[];
-    groups: GoalGroup[];
-  };
+  getDateData(params: { date: DateParam; timeFormat?: TimeFormat; fillGoalsForSelectedDate?: boolean }): { goals: CachedGoal[]; groups: GoalGroup[] };
   fillGoalsForSelectedDate: (params: { date: DateParam; timeFormat?: TimeFormat; skipChecks?: boolean }) => Record<string, CachedGoal> | null;
   setSelectedDateData: (params: { date: DateParam; timeFormat?: TimeFormat; checkIsSameSelectedDate?: boolean }) => void;
   getGoal: (params: { id: string }) => Goal | undefined;
@@ -73,7 +71,8 @@ const initialState: BaseGoalState = {
   dateCache: {},
   groups: {},
   selectedDateData: {
-    date: TODAY_DATE_FORMATTED,
+    date: TODAY_DATE_UTC_FORMATTED,
+    localDate: TODAY_DATE_UTC_FORMATTED,
     goals: [],
     groups: [],
   },
@@ -87,13 +86,14 @@ const createGoalSlice: StateCreator<
 > = (set, get) => ({
   ...initialState,
   runDailyTasks: (params) => {
+    console.log;
     set((state) => {
-      //Update selectedDateData
-      state.setSelectedDateData({ date: TODAY_DATE_FORMATTED });
+      //Update selectedDateData to today
+      state.setSelectedDateData({ date: TODAY_DATE_UTC_FORMATTED });
       //Before pruning and updating dateCache, we need to mark all goals before today that don't have status as "incomplete"
       const goals = state.goals;
       const dateCache = state.dateCache;
-      const todayIdx = Object.keys(dateCache).indexOf(TODAY_DATE_FORMATTED);
+      const todayIdx = Object.keys(dateCache).indexOf(TODAY_DATE_UTC_FORMATTED);
       Object.entries(dateCache)
         .slice(0, todayIdx)
         .forEach(([formattedDate, cachedGoalsForDate]) => {
@@ -109,9 +109,9 @@ const createGoalSlice: StateCreator<
           console.debug('useGoalStore (runDailyTasks): Pruning past dates from dateCache...');
           const cutoff = pastDates?.cutoff
             ? typeof pastDates.cutoff === 'number'
-              ? TODAY_DATE.subtract(pastDates.cutoff, 'day')
+              ? TODAY_DATE_UTC.subtract(pastDates.cutoff, 'day')
               : dayjs(pastDates.cutoff)
-            : TODAY_DATE.subtract(DEFAULT_DATE_CACHE_RANGE, 'day');
+            : TODAY_DATE_UTC.subtract(DEFAULT_DATE_CACHE_RANGE, 'day');
           const _d = dayjs(Object.keys(get().dateCache ?? {}).at(0));
           const diff = Math.abs(cutoff.diff(_d, 'day'));
           let count = 0;
@@ -129,9 +129,9 @@ const createGoalSlice: StateCreator<
           console.debug('useGoalStore (runDailyTasks): Pruning future dates from dateCache...');
           const cutoff = futureDates?.cutoff
             ? typeof futureDates.cutoff === 'number'
-              ? TODAY_DATE.add(futureDates.cutoff, 'day')
+              ? TODAY_DATE_UTC.add(futureDates.cutoff, 'day')
               : dayjs(futureDates.cutoff)
-            : TODAY_DATE.add(DEFAULT_DATE_CACHE_RANGE, 'day');
+            : TODAY_DATE_UTC.add(DEFAULT_DATE_CACHE_RANGE, 'day');
           const _d = dayjs(Object.keys(get().dateCache ?? {}).at(-1));
           const diff = Math.abs(cutoff.diff(_d, 'day'));
           let count = 0;
@@ -165,6 +165,7 @@ const createGoalSlice: StateCreator<
       goals.forEach((_m) => {
         const groupId = _stateGoals[_m.id]?.groupId;
         groupId && groupId !== '' && groupIds.add(groupId);
+        // if ()
       });
       const groups: GoalGroup[] = Array.from(groupIds).map((_id) => _stateGroups[_id]);
       const sortedGroups = groups.sort((a, b) => {
@@ -208,7 +209,7 @@ const createGoalSlice: StateCreator<
     if ((checkIsSameSelectedDate && utcFormattedDate !== get().selectedDateData.date) || !checkIsSameSelectedDate) {
       const { goals, groups } = get().getDateData({ date, fillGoalsForSelectedDate: true });
       set((state) => {
-        state.selectedDateData = { date: utcFormattedDate, goals, groups };
+        state.selectedDateData = { date: utcFormattedDate, localDate: standardFormat(date), goals, groups };
       });
     } else console.debug(`useGoalStore (setSelectedDateData): Cannot change date because ${standardFormat(date)} is already the selected date`);
   },
@@ -294,25 +295,25 @@ const createGoalSlice: StateCreator<
           goal.status.completed.add(utcFormattedDate);
           goal.status.incomplete.delete(utcFormattedDate);
           goal.status.skipped.delete(utcFormattedDate);
-          goal.status.breaks.delete(utcFormattedDate);
+          goal.status.rests.delete(utcFormattedDate);
         } else if (status === 'skipped') {
           goal.status.skipped.add(utcFormattedDate);
           goal.status.completed.delete(utcFormattedDate);
           goal.status.incomplete.delete(utcFormattedDate);
-          goal.status.breaks.delete(utcFormattedDate);
+          goal.status.rests.delete(utcFormattedDate);
         } else {
           goal.status.incomplete.add(utcFormattedDate);
           goal.status.completed.delete(utcFormattedDate);
           goal.status.skipped.delete(utcFormattedDate);
-          goal.status.breaks.delete(utcFormattedDate);
+          goal.status.rests.delete(utcFormattedDate);
         }
-        const { passesHolidayCheck, passesBreakCheck } = useGoalBreakCheck({
+        const { passesHolidayCheck, passesRestCheck } = useGoalRestCheck({
           date: statusDate,
           timeFormat: 'utc',
           streakOptions: goal.streakOptions,
         });
-        if (passesBreakCheck || passesHolidayCheck) {
-          goal.status.breaks.add(utcFormattedDate);
+        if (passesRestCheck || passesHolidayCheck) {
+          goal.status.rests.add(utcFormattedDate);
           goal.status.completed.delete(utcFormattedDate);
           goal.status.skipped.delete(utcFormattedDate);
           goal.status.incomplete.delete(utcFormattedDate);
@@ -452,7 +453,7 @@ const createGoalSlice: StateCreator<
     const goal = get().goals[id];
     if (!goal) console.debug(`useGoalStore (addToDateCache): No goal found with id ${id}`);
     else {
-      const diff = dayjs(Object.keys(get().dateCache).at(-1) ?? TODAY_DATE).diff(goal.date, 'day') + 1;
+      const diff = dayjs(Object.keys(get().dateCache).at(-1) ?? TODAY_DATE_UTC).diff(goal.date, 'day') + 1;
       const selectedDate = get().selectedDateData.date;
       const range = goal.repeat ? (params.range ?? diff > DEFAULT_DATE_CACHE_RANGE ? diff : DEFAULT_DATE_CACHE_RANGE) : 1;
       let shouldUpdateSelectedDateData = false;

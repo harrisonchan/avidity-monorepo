@@ -2,6 +2,7 @@ import { DateParam, Weekdays } from '@shared/types';
 import * as dayjs from 'dayjs';
 import { Dayjs } from 'dayjs';
 import * as utc from 'dayjs/plugin/utc';
+import { Duration } from 'dayjs/plugin/duration';
 
 dayjs.extend(utc);
 
@@ -90,5 +91,21 @@ export function standardLocalDate(date: DateParam): Dayjs {
   return standardDate(date).local();
 }
 
+export function hourTimeFormat(date: DateParam): string {
+  return dayjs(date).format('HH:mm');
+}
+
+export function formatDuration(duration: Duration | string, formatType: ('hours' | 'minutes' | 'seconds')[]): string {
+  const _duration = typeof duration === 'string' ? dayjs.duration(duration) : duration;
+  const hours = formatType.includes('hours') && _duration.hours() ? `${_duration.hours()} ${_duration.hours() > 1 ? 'hours' : 'hour'}` : '';
+  const minutes =
+    formatType.includes('minutes') && _duration.minutes() ? `${_duration.minutes()} ${_duration.minutes() > 1 ? 'minutes' : 'minute'}` : '';
+  const seconds =
+    formatType.includes('seconds') && _duration.seconds() ? `${_duration.seconds()} ${_duration.seconds() > 1 ? 'seconds' : 'second'}` : '';
+  return `${hours} ${minutes} ${seconds}`.trim();
+}
+
 export const TODAY_DATE = standardDate(dayjs());
 export const TODAY_DATE_FORMATTED = standardFormat(dayjs());
+export const TODAY_DATE_UTC = utcDate(dayjs());
+export const TODAY_DATE_UTC_FORMATTED = utcFormat(dayjs());

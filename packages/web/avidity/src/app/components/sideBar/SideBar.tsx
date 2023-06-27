@@ -104,7 +104,8 @@ export default function SideBar(props: SideBarProps) {
             </ul>
           </button>
         </div>
-        <div className={`flex-1 items-center duration-300 ${!sideBarOpen && 'opacity-0'}`}>hello wolrd</div>
+        <div className={`flex-1 items-center duration-300 ${!sideBarOpen && 'opacity-0'}`}>hello world</div>
+        <div className={`flex-1 items-center duration-300 ${!sideBarOpen && 'opacity-0'}`}>hello world 2</div>
       </div>
     </div>
   );
