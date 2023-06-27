@@ -8,7 +8,7 @@ import * as isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import * as isBetween from 'dayjs/plugin/isBetween';
 import Holidays from 'date-holidays';
 import { DateParam, Goal, GoalStatus, GoalStreakItem, GoalStreakOptions, GoalStreaks, TimeFormat } from '@shared/types';
-import { TODAY_DATE_FORMATTED, standardDate, standardFormat, utcDate, utcFormat } from '@shared/utils';
+import { TODAY_DATE_UTC_FORMATTED, standardDate, standardFormat, utcDate, utcFormat } from '@shared/utils';
 import { CachedGoal } from '@shared/stores';
 import { EMPTY_STREAK_ITEM } from './constants';
 
@@ -89,21 +89,21 @@ export function createValidRepeatDates(params: { goal: Goal; range: number }): D
     .filter((date) => checkValidRepeatDate({ goal, date }));
 }
 
-export function useGoalBreakCheck(params: { date: DateParam; timeFormat?: TimeFormat; streakOptions: GoalStreakOptions }): {
+export function useGoalRestCheck(params: { date: DateParam; timeFormat?: TimeFormat; streakOptions: GoalStreakOptions }): {
   passesHolidayCheck: boolean;
-  passesBreakCheck: boolean;
+  passesRestCheck: boolean;
 } {
   const { date, timeFormat, streakOptions } = params;
   const utcFormattedDate = timeFormat === 'utc' ? standardFormat(date) : utcFormat(date);
   const isHoliday = holidays.isHoliday(utcFormattedDate);
   const passesHolidayCheck = streakOptions.skipsHolidays && (typeof isHoliday === 'boolean' ? isHoliday : isHoliday.length > 0);
-  const passesBreakCheck = streakOptions.breaks
+  const passesRestCheck = streakOptions.rests
     .map(({ start, end }) => dayjs(utcFormattedDate).isBetween(dayjs(start), dayjs(end), 'day', '[]'))
     .includes(true);
-  return { passesHolidayCheck, passesBreakCheck };
+  return { passesHolidayCheck, passesRestCheck };
 }
 
-type StreakMetadataItem = { date: string; type: 'completed' | 'skipped' | 'incomplete' | 'break' };
+type StreakMetadataItem = { date: string; type: 'completed' | 'skipped' | 'incomplete' | 'rest' };
 export function getStreaks(params: { status: GoalStatus; streakOptions: GoalStreakOptions }): {
   streaks: GoalStreaks;
   latest: GoalStreakItem | null;
@@ -115,17 +115,17 @@ export function getStreaks(params: { status: GoalStatus; streakOptions: GoalStre
   const completed: StreakMetadataItem[] = Array.from(status.completed).map((date) => ({ date, type: 'completed' }));
   const skipped: StreakMetadataItem[] = Array.from(status.skipped).map((date) => ({ date, type: 'skipped' }));
   const incomplete: StreakMetadataItem[] = Array.from(status.incomplete).map((date) => ({ date, type: 'incomplete' }));
-  const breaks: StreakMetadataItem[] = Array.from(status.breaks).map((date) => ({ date, type: 'break' }));
-  let dates: StreakMetadataItem[] = [...completed, ...skipped, ...incomplete, ...breaks].sort((a, b) =>
+  const rests: StreakMetadataItem[] = Array.from(status.rests).map((date) => ({ date, type: 'rest' }));
+  let dates: StreakMetadataItem[] = [...completed, ...skipped, ...incomplete, ...rests].sort((a, b) =>
     dayjs(b.date).isAfter(a.date, 'day') ? -1 : 1
   );
   // console.debug('dates', dates);
   const goalStreaks: GoalStreaks = [];
   // start and end date doesn't really matter YET here I guess
   let currentStreak: GoalStreakItem = {
-    date: { start: dates[0]?.date ?? TODAY_DATE_FORMATTED, end: dates[0]?.date ?? TODAY_DATE_FORMATTED },
+    date: { start: dates[0]?.date ?? TODAY_DATE_UTC_FORMATTED, end: dates[0]?.date ?? TODAY_DATE_UTC_FORMATTED },
     skipped: new Set(),
-    breaks: new Set(),
+    rests: new Set(),
     length: 0,
   };
   let tolerantRange = [];
@@ -136,21 +136,21 @@ export function getStreaks(params: { status: GoalStatus; streakOptions: GoalStre
       dayjs(_d.date).endOf(streakOptions.skips.type !== 'none' ? streakOptions.skips.type : 'day'),
     ];
     tolerance = streakOptions.skips.frequency;
-    const { passesBreakCheck, passesHolidayCheck } = useGoalBreakCheck({ date: _d.date, streakOptions });
+    const { passesRestCheck, passesHolidayCheck } = useGoalRestCheck({ date: _d.date, streakOptions });
     switch (_d.type) {
       case 'completed':
-      case 'break':
+      case 'rest':
         if (currentStreak.length === 0) currentStreak.date.start = _d.date;
         currentStreak.date.end = _d.date;
         currentStreak.length++;
-        _d.type === 'break' && currentStreak.breaks.add(_d.date);
+        _d.type === 'rest' && currentStreak.rests.add(_d.date);
         break;
       case 'skipped':
       case 'incomplete':
-        if (passesHolidayCheck || passesBreakCheck || (tolerance > 0 && dayjs(_d.date).isBetween(tolerantRange[0], tolerantRange[1], 'day', '[]'))) {
+        if (passesHolidayCheck || passesRestCheck || (tolerance > 0 && dayjs(_d.date).isBetween(tolerantRange[0], tolerantRange[1], 'day', '[]'))) {
           if (currentStreak.length === 0) currentStreak.date.start = _d.date;
           currentStreak.date.end = _d.date;
-          !(passesHolidayCheck || passesBreakCheck) && tolerance > 0 && tolerance--;
+          !(passesHolidayCheck || passesRestCheck) && tolerance > 0 && tolerance--;
           currentStreak.length++;
           currentStreak.skipped.add(_d.date);
         } else {

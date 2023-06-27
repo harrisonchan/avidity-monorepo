@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { GoalCard, SideBar } from '@web/components';
 import useGoalStore from '@web/stores/useGoalStore';
 import dayjs, { Dayjs } from 'dayjs';
+import duration from 'dayjs/plugin/duration';
 import { TODAY_DATE, TODAY_DATE_FORMATTED, standardFormat } from '@shared/utils';
 import useUtilStore from '@web/stores/useUtilStore';
 import { daisyUIThemeArr } from '@web/types';
@@ -10,6 +11,9 @@ import { EMPTY_GOAL, EMPTY_GOAL_GROUP } from '@shared/helpers';
 import { IoChevronBack, IoChevronForward, IoRemoveCircle, IoRemoveCircleOutline } from 'react-icons/io5';
 import classNames from 'classnames';
 import { Link, useFetcher, useNavigate } from 'react-router-dom';
+import { DUMMY_GOALS_TO_SCHEDULE, DUMMY_GOALS_TO_SCHEDULE_2 } from '@web/data';
+
+dayjs.extend(duration);
 
 const TEST_DATA = [
   { title: 'test1', description: '' },
@@ -20,6 +24,7 @@ const TEST_DATA = [
 ];
 
 export default function Home() {
+  const test = dayjs.duration(123);
   const navigate = useNavigate();
   const { date, goals, groups } = useGoalStore.use.selectedDateData();
   const setSelectedDateData = useGoalStore.use.setSelectedDateData();
@@ -39,6 +44,10 @@ export default function Home() {
   );
   const [newGoalName, setNewGoalName] = useState('');
   const [newGroupName, setNewGroupName] = useState('');
+  useEffect(() => {
+    console.count('home screen rerender');
+    console.log('from home: ', date);
+  }, [date]);
   const renderGoals = () => (
     <div className="flex flex-col">
       <div className="flex flex-row items-center self-center mb-1">
@@ -56,10 +65,25 @@ export default function Home() {
       <button className="btn mt-1" onClick={() => setSelectedDateData({ date: TODAY_DATE })}>
         Go back to Today
       </button>
+      <button className="btn mt-2">
+        <Link to={`/schedule/${date}`}>Schedule Day</Link>
+      </button>
       <button
         className="btn mt-2"
-        onClick={() => addGoal({ goal: { ...EMPTY_GOAL, title: `TestMission ${Object.keys(stateGoals).length + 1}`, date } })}>
+        onClick={() =>
+          addGoal({
+            goal: {
+              ...EMPTY_GOAL,
+              title: `TestMission ${Object.keys(stateGoals).length + 1}`,
+              date,
+              duration: dayjs.duration({ hours: 1 }).toISOString(),
+            },
+          })
+        }>
         Add Goal
+      </button>
+      <button className="btn mt-2" onClick={() => DUMMY_GOALS_TO_SCHEDULE.forEach((goal) => addGoal({ goal }))}>
+        Add Dummy Goals for scheduling
       </button>
       <button className="btn mt-2 mb-3" onClick={clearStore}>
         Clear All

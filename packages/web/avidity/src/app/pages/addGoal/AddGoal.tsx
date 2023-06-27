@@ -1,6 +1,6 @@
 import { EMPTY_GOAL } from '@shared/helpers';
 import { AddForm, Goal, GoalRepeat, ioniconsArr } from '@shared/types';
-import { TODAY_DATE, TODAY_DATE_FORMATTED, WEEKDAYS, standardFormat } from '@shared/utils';
+import { WEEKDAYS, standardFormat } from '@shared/utils';
 import { SideBar } from '@web/components';
 import { useGoalStore } from '@web/stores';
 import { ErrorMessage, Field, FieldArray, Form, Formik, FormikHelpers } from 'formik';
