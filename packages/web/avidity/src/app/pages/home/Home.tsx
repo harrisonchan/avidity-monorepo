@@ -82,7 +82,7 @@ export default function Home() {
         }>
         Add Goal
       </button>
-      <button className="btn mt-2" onClick={() => DUMMY_GOALS_TO_SCHEDULE.forEach((goal) => addGoal({ goal }))}>
+      <button className="btn mt-2" onClick={() => DUMMY_GOALS_TO_SCHEDULE.forEach((goal) => addGoal({ goal: { ...goal, date } }))}>
         Add Dummy Goals for scheduling
       </button>
       <button className="btn mt-2 mb-3" onClick={clearStore}>
