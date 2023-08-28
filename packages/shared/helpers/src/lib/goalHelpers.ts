@@ -8,7 +8,7 @@ import * as isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import * as isBetween from 'dayjs/plugin/isBetween';
 import Holidays from 'date-holidays';
 import { DateParam, Goal, GoalStatus, GoalStreakItem, GoalStreakOptions, GoalStreaks, TimeFormat } from '@shared/types';
-import { TODAY_DATE_UTC_FORMATTED, standardDate, getStandardFormat, utcDate, utcFormat } from '@shared/utils';
+import { TODAY_DATE_UTC_FORMATTED, getStandardFormat, getUtcDate, getUtcFormat } from '@shared/utils';
 import { CachedGoal } from '@shared/stores';
 import { EMPTY_STREAK_ITEM } from './constants';
 
@@ -55,8 +55,8 @@ export function convertGoalToDateCacheGoal(params: { goal: Goal; date: DateParam
 
 export function checkValidRepeatDate(params: { goal: Goal; date: DateParam }): boolean {
   const { goal, date } = params;
-  const _d = standardDate(date);
-  const goalDate = standardDate(goal.date);
+  const _d = dayjs(date).startOf('day');
+  const goalDate = dayjs(goal.date).startOf('day');
   if (_d.isSame(goalDate)) return true;
   if (_d.isBefore(goalDate) || !goal.repeat || goal.repeat.type === 'none') return false;
 

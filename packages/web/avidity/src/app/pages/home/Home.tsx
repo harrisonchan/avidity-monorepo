@@ -3,7 +3,7 @@ import { GoalCard, SideBar } from '@web/components';
 import useGoalStore from '@web/stores/useGoalStore';
 import dayjs, { Dayjs } from 'dayjs';
 import duration from 'dayjs/plugin/duration';
-import { TODAY_DATE, TODAY_DATE_FORMATTED, getStandardFormat } from '@shared/utils';
+import { TODAY_DATE, TODAY_DATE_FORMATTED, TODAY_DATE_UTC, TODAY_DATE_UTC_FORMATTED, getStandardFormat } from '@shared/utils';
 import useUtilStore from '@web/stores/useUtilStore';
 import { daisyUIThemeArr } from '@web/types';
 import useTestStore from '@web/stores/useTestStore';
@@ -51,18 +51,19 @@ export default function Home() {
   const renderGoals = () => (
     <div className="flex flex-col">
       <div className="flex flex-row items-center self-center mb-1">
-        <button className="mr-2" onClick={() => setSelectedDateData({ date: dayjs(date).subtract(1, 'day') })}>
+        <button className="mr-2" onClick={() => setSelectedDateData({ date: dayjs(date).subtract(1, 'day'), timeFormat: 'utc' })}>
           <IoChevronBack className="text-3xl" />
         </button>
         <div className="flex-col text-center">
-          <p>{dayjs(date).isSame(TODAY_DATE, 'day') ? `Today (${dayjs(date).format('dddd')})` : dayjs(date).format('dddd')}</p>
+          <p>{dayjs(date).isSame(TODAY_DATE_UTC_FORMATTED, 'day') ? `Today (${dayjs(date).format('dddd')})` : dayjs(date).format('dddd')}</p>
           <p>{dayjs(date).format('MMM DD, YYYY')}</p>
         </div>
-        <button className="ml-2" onClick={() => setSelectedDateData({ date: dayjs(date).add(1, 'day') })}>
+        <button className="ml-2" onClick={() => setSelectedDateData({ date: dayjs(date).add(1, 'day'), timeFormat: 'utc' })}>
           <IoChevronForward className="text-3xl" />
         </button>
       </div>
-      <button className="btn mt-1" onClick={() => setSelectedDateData({ date: TODAY_DATE })}>
+      {/* <div>{date}</div> */}
+      <button className="btn mt-1" onClick={() => setSelectedDateData({ date: TODAY_DATE_UTC, timeFormat: 'utc' })}>
         Go back to Today
       </button>
       <button className="btn mt-2">
@@ -70,7 +71,7 @@ export default function Home() {
       </button>
       <button
         className="btn mt-2"
-        onClick={() =>
+        onClick={() => {
           addGoal({
             goal: {
               ...EMPTY_GOAL,
@@ -78,8 +79,10 @@ export default function Home() {
               date,
               duration: dayjs.duration({ hours: 1 }).toISOString(),
             },
-          })
-        }>
+            timeFormat: 'local',
+          });
+          // console.log(TODAY_DATE_FORMATTED);
+        }}>
         Add Goal
       </button>
       <button className="btn mt-2" onClick={() => DUMMY_GOALS_TO_SCHEDULE.forEach((goal) => addGoal({ goal: { ...goal, date } }))}>

@@ -93,7 +93,7 @@ export function formatDuration(duration: Duration | string, formatType: ('hours'
   return `${hours} ${minutes} ${seconds}`.trim();
 }
 
-export const TODAY_DATE = dayjs().startOf('day');
+export const TODAY_DATE = dayjs();
 export const TODAY_DATE_FORMATTED = getStandardFormat(dayjs());
 export const TODAY_DATE_UTC = getUtcDate(dayjs());
 export const TODAY_DATE_UTC_FORMATTED = getUtcFormat(dayjs());

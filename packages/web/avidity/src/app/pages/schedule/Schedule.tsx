@@ -1,6 +1,6 @@
 import { useGoalSchedule } from '@shared/helpers';
 import { Goal, ScheduledGoal } from '@shared/types';
-import { TODAY_DATE, formatDuration, hourTimeFormat, getStandardFormat, toTitleCase } from '@shared/utils';
+import { TODAY_DATE, formatDuration, getHourTimeFormat, getStandardFormat, toTitleCase } from '@shared/utils';
 import { useGoalStore } from '@web/stores';
 import * as dayjs from 'dayjs';
 import { Dayjs } from 'dayjs';
