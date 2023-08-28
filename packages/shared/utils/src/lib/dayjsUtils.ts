@@ -51,49 +51,44 @@ export function createWeekRangeStringArr(params: { date: Dayjs; range: number })
   return weekArr;
 }
 
-/** converts DateParam type to dayjs */
-export function standardDate(date: DateParam, getAsStartOfDay?: boolean): Dayjs {
-  if (getAsStartOfDay) {
-    return dayjs(date).startOf('day');
-  }
-  return dayjs(date);
+/** returns dayjs date with time at 00:00 */
+export function standardDate(date: DateParam): Dayjs {
+  return dayjs(date).startOf('day');
 }
 
-/** formats to YYYY-MM-DD string */
-export function standardFormat(date: DateParam, useStandardFormat?: boolean): string {
-  if (useStandardFormat) {
-    return dayjs(date).format(DAYJS_FORMAT_TYPE);
-  }
-  return dayjs(date).format();
+/**formats to YYYY-MM-DD string*/
+export function standardFormat(date: DateParam): string {
+  return dayjs(date).format(DAYJS_FORMAT_TYPE);
 }
 
 /** local to UTC string */
-export function utcFormat(date: DateParam, useStandardFormat?: boolean): string {
-  if (useStandardFormat) {
-    return dayjs(date).utc().format(DAYJS_FORMAT_TYPE);
-  }
-  return dayjs(date).utc().format();
+export function utcFormat(date: DateParam): string {
+  return standardDate(date).utc().format(DAYJS_FORMAT_TYPE);
 }
 
 /** local to utc date */
-export function utcDate(date: DateParam, getAsStartOfDay?: boolean): Dayjs {
-  if (getAsStartOfDay) {
-    return dayjs(date).utc().startOf('day');
-  }
+export function utcDate(date: DateParam): dayjs.Dayjs {
   return dayjs(date).utc();
 }
 
+/** local to UTC dayjs */
+export function standardUtcDate(date: DateParam): Dayjs {
+  return standardDate(date).utc();
+}
+
 /** utc to local string */
-export function localFormat(date: DateParam, useStandardFormat?: boolean): string {
-  if (useStandardFormat) {
-    return dayjs(date).local().format(DAYJS_FORMAT_TYPE);
-  }
-  return dayjs(date).local().format(DAYJS_FORMAT_TYPE);
+export function localFormat(date: DateParam): string {
+  return standardDate(date).local().format(DAYJS_FORMAT_TYPE);
 }
 
 /** utc to local date */
 export function localDate(date: DateParam): Dayjs {
   return dayjs(date).local();
+}
+
+/** utc to local dayjs */
+export function standardLocalDate(date: DateParam): Dayjs {
+  return standardDate(date).local();
 }
 
 export function hourTimeFormat(date: DateParam): string {
@@ -110,7 +105,7 @@ export function formatDuration(duration: Duration | string, formatType: ('hours'
   return `${hours} ${minutes} ${seconds}`.trim();
 }
 
-export const TODAY_DATE = standardDate(dayjs(), true);
-export const TODAY_DATE_FORMATTED = standardFormat(dayjs(), true);
-export const TODAY_DATE_UTC = utcDate(dayjs(), true);
-export const TODAY_DATE_UTC_FORMATTED = utcFormat(dayjs(), true);
+export const TODAY_DATE = standardDate(dayjs());
+export const TODAY_DATE_FORMATTED = standardFormat(dayjs());
+export const TODAY_DATE_UTC = utcDate(dayjs());
+export const TODAY_DATE_UTC_FORMATTED = utcFormat(dayjs());

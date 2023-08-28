@@ -3,16 +3,7 @@ import { isEqual } from 'lodash';
 import * as dayjs from 'dayjs';
 import * as isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import { DateParam, Goal, GoalGroup, TimeFormat } from '@shared/types';
-import {
-  TODAY_DATE_FORMATTED,
-  TODAY_DATE_UTC,
-  TODAY_DATE_UTC_FORMATTED,
-  localDate,
-  localFormat,
-  standardDate,
-  standardFormat,
-  utcFormat,
-} from '@shared/utils';
+import { TODAY_DATE_UTC, TODAY_DATE_UTC_FORMATTED, localDate, standardDate, standardFormat, utcFormat } from '@shared/utils';
 import {
   generateGoalId,
   generateGroupId,
@@ -43,6 +34,7 @@ export interface BaseGoalState {
   groups: GroupRecord;
   selectedDateData: {
     date: string;
+    localDate: string;
     goals: CachedGoal[];
     groups: GoalGroup[];
   };
@@ -79,13 +71,13 @@ const initialState: BaseGoalState = {
   dateCache: {},
   groups: {},
   selectedDateData: {
-    date: TODAY_DATE_FORMATTED,
+    date: TODAY_DATE_UTC_FORMATTED,
+    localDate: TODAY_DATE_UTC_FORMATTED,
     goals: [],
     groups: [],
   },
 };
 
-/* Anything that passes utc date needs to contain hours (and minutes) */
 const createGoalSlice: StateCreator<
   BaseGoalState & BaseGoalActions,
   [['zustand/persist', unknown], ['zustand/immer', never]],
@@ -160,11 +152,11 @@ const createGoalSlice: StateCreator<
     const _stateGoals = get().goals;
     const _stateGroups = get().groups;
     const { date, timeFormat, fillGoalsForSelectedDate } = params;
-    const formattedDate = timeFormat === 'utc' ? localFormat(date, true) : standardFormat(date, true);
-    let goals = Object.values(get().dateCache[formattedDate] ?? {});
+    const utcFormattedDate = timeFormat === 'utc' ? standardFormat(date) : utcFormat(date);
+    let goals = Object.values(get().dateCache[utcFormattedDate] ?? {});
     if (!goals || goals.length < 1) {
       if (fillGoalsForSelectedDate) {
-        const newGoalsForDate = get().fillGoalsForSelectedDate({ date: formattedDate, timeFormat: 'local' });
+        const newGoalsForDate = get().fillGoalsForSelectedDate({ date: utcFormattedDate, timeFormat: 'utc' });
         if (newGoalsForDate) goals = Object.values(newGoalsForDate);
       } else console.debug(`useGoalStore (getDateData): No goals found for ${standardFormat(date)}`);
     }
@@ -191,8 +183,8 @@ const createGoalSlice: StateCreator<
   },
   fillGoalsForSelectedDate: (params) => {
     const { date, timeFormat, skipChecks } = params;
-    // const utcFormattedDate = timeFormat === 'utc' ? standardFormat(date) : utcFormat(date);
-    // const utcDate = dayjs(utcFormattedDate);
+    const utcFormattedDate = timeFormat === 'utc' ? standardFormat(date) : utcFormat(date);
+    const utcDate = dayjs(utcFormattedDate);
     console.debug(`useGoalStore (fillGoalsForSelectedDate): Trying to create goals for ${utcFormattedDate} with params: ${JSON.stringify(params)}`);
     if (!skipChecks) {
       const goalsForDate = get().dateCache[utcFormattedDate];
