@@ -3,7 +3,7 @@ import { GoalCard, SideBar } from '@web/components';
 import useGoalStore from '@web/stores/useGoalStore';
 import dayjs, { Dayjs } from 'dayjs';
 import duration from 'dayjs/plugin/duration';
-import { TODAY_DATE, TODAY_DATE_FORMATTED, standardFormat } from '@shared/utils';
+import { TODAY_DATE, TODAY_DATE_FORMATTED, getStandardFormat } from '@shared/utils';
 import useUtilStore from '@web/stores/useUtilStore';
 import { daisyUIThemeArr } from '@web/types';
 import useTestStore from '@web/stores/useTestStore';
@@ -130,7 +130,7 @@ export default function Home() {
             <button className="btn" onClick={() => updateGoal({ goal: { id: goal.id, title: newGoalName } })}>
               Update goal
             </button>
-            <button className="btn" onClick={() => updateGoal({ goal: { id: goal.id, date: standardFormat(dayjs(goal.date).add(1, 'day')) } })}>
+            <button className="btn" onClick={() => updateGoal({ goal: { id: goal.id, date: getStandardFormat(dayjs(goal.date).add(1, 'day')) } })}>
               Change date
             </button>
             <button className="btn" onClick={() => updateGoal({ goal: { id: goal.id, repeat: { type: 'custom', frequency: 3 } } })}>

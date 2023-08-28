@@ -8,7 +8,7 @@ import * as isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import * as isBetween from 'dayjs/plugin/isBetween';
 import Holidays from 'date-holidays';
 import { DateParam, Goal, GoalStatus, GoalStreakItem, GoalStreakOptions, GoalStreaks, TimeFormat } from '@shared/types';
-import { TODAY_DATE_UTC_FORMATTED, standardDate, standardFormat, utcDate, utcFormat } from '@shared/utils';
+import { TODAY_DATE_UTC_FORMATTED, standardDate, getStandardFormat, utcDate, utcFormat } from '@shared/utils';
 import { CachedGoal } from '@shared/stores';
 import { EMPTY_STREAK_ITEM } from './constants';
 
@@ -22,7 +22,7 @@ const holidays = new Holidays('US');
 const UUID_NAMESPACE = 'c3a24e92-b09b-11ed-afa1-0242ac120002';
 export function generateGoalId(title: string, date: DateParam): string {
   const rightNow = dayjs().utc().toISOString();
-  return 'goal-' + uuidV5(`${rightNow}_${utcDate(date).toISOString()}_${title}`, UUID_NAMESPACE);
+  return 'goal-' + uuidV5(`${rightNow}_${getUtcDate(date).toISOString()}_${title}`, UUID_NAMESPACE);
 }
 export function generateGroupId(title: string): string {
   const rightNow = dayjs().utc().toISOString();
@@ -30,7 +30,7 @@ export function generateGroupId(title: string): string {
 }
 
 export function convertPartialGoalToDateCacheGoal(params: { goal: Partial<Goal> & Pick<Goal, 'id'>; date: DateParam }): Partial<CachedGoal> {
-  const formattedDate = standardFormat(params.date);
+  const formattedDate = getStandardFormat(params.date);
   const { status } = params.goal;
   return {
     ...params.goal,
@@ -45,7 +45,7 @@ export function convertPartialGoalToDateCacheGoal(params: { goal: Partial<Goal> 
 }
 
 export function convertGoalToDateCacheGoal(params: { goal: Goal; date: DateParam }): CachedGoal {
-  const formattedDate = standardFormat(params.date);
+  const formattedDate = getStandardFormat(params.date);
   const { status } = params.goal;
   return {
     ...params.goal,
@@ -94,7 +94,7 @@ export function useGoalRestCheck(params: { date: DateParam; timeFormat?: TimeFor
   passesRestCheck: boolean;
 } {
   const { date, timeFormat, streakOptions } = params;
-  const utcFormattedDate = timeFormat === 'utc' ? standardFormat(date) : utcFormat(date);
+  const utcFormattedDate = timeFormat === 'utc' ? getStandardFormat(date) : getUtcFormat(date);
   const isHoliday = holidays.isHoliday(utcFormattedDate);
   const passesHolidayCheck = streakOptions.skipsHolidays && (typeof isHoliday === 'boolean' ? isHoliday : isHoliday.length > 0);
   const passesRestCheck = streakOptions.rests
