@@ -6,7 +6,7 @@ import { Duration } from 'dayjs/plugin/duration';
 
 dayjs.extend(utc);
 
-export const DAYJS_FORMAT_TYPE = 'YYYY-MM-DD';
+export const DAYJS_STANDARD_FORMAT_TYPE = 'YYYY-MM-DD';
 
 export const WEEKDAYS: Weekdays[] = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 export const WEEKDAYS_MAP = { sunday: 0, monday: 1, tuesday: 2, wednesday: 3, thursday: 4, friday: 5, saturday: 6 };
@@ -57,13 +57,15 @@ export function standardDate(date: DateParam): Dayjs {
 }
 
 /**formats to YYYY-MM-DD string*/
-export function standardFormat(date: DateParam): string {
-  return dayjs(date).format(DAYJS_FORMAT_TYPE);
+export function standardFormat(date: DateParam, fullLength?: boolean): string {
+  if (fullLength) return dayjs(date).format();
+  return dayjs(date).format(DAYJS_STANDARD_FORMAT_TYPE);
 }
 
 /** local to UTC string */
-export function utcFormat(date: DateParam): string {
-  return standardDate(date).utc().format(DAYJS_FORMAT_TYPE);
+export function utcFormat(date: DateParam, fullLength?: boolean): string {
+  if (fullLength) return standardDate(date).utc().format();
+  return standardDate(date).utc().format(DAYJS_STANDARD_FORMAT_TYPE);
 }
 
 /** local to utc date */
@@ -77,8 +79,9 @@ export function standardUtcDate(date: DateParam): Dayjs {
 }
 
 /** utc to local string */
-export function localFormat(date: DateParam): string {
-  return standardDate(date).local().format(DAYJS_FORMAT_TYPE);
+export function localFormat(date: DateParam, fullLength?: boolean): string {
+  if (fullLength) return standardDate(date).local().format();
+  return standardDate(date).local().format(DAYJS_STANDARD_FORMAT_TYPE);
 }
 
 /** utc to local date */
