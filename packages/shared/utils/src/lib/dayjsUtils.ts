@@ -83,6 +83,13 @@ export function getHourTimeFormat(date: DateParam): string {
   return dayjs(date).format('HH:mm');
 }
 
+export function getLocalFromUtcStandardFormat(date: string): Dayjs {
+  const currentDate = getUtcDate(dayjs());
+  const hour = currentDate.get('hour');
+  const minute = currentDate.get('minute');
+  return getLocalDate(dayjs.utc(date).set('hour', hour).set('minute', minute));
+}
+
 export function formatDuration(duration: Duration | string, formatType: ('hours' | 'minutes' | 'seconds')[]): string {
   const _duration = typeof duration === 'string' ? dayjs.duration(duration) : duration;
   const hours = formatType.includes('hours') && _duration.hours() ? `${_duration.hours()} ${_duration.hours() > 1 ? 'hours' : 'hour'}` : '';
