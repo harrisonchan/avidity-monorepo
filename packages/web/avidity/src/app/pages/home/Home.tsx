@@ -2,8 +2,20 @@ import { useEffect, useState } from 'react';
 import { GoalCard, SideBar } from '@web/components';
 import useGoalStore from '@web/stores/useGoalStore';
 import dayjs, { Dayjs } from 'dayjs';
+import * as utc from 'dayjs/plugin/utc';
 import duration from 'dayjs/plugin/duration';
-import { TODAY_DATE, TODAY_DATE_FORMATTED, TODAY_DATE_UTC, TODAY_DATE_UTC_FORMATTED, getStandardFormat } from '@shared/utils';
+import {
+  TODAY_DATE,
+  TODAY_DATE_FORMATTED,
+  TODAY_DATE_UTC,
+  TODAY_DATE_UTC_FORMATTED,
+  getLocalDate,
+  getLocalFormat,
+  getLocalFromUtcStandardFormat,
+  getStandardFormat,
+  getUtcDate,
+  getUtcFormat,
+} from '@shared/utils';
 import useUtilStore from '@web/stores/useUtilStore';
 import { daisyUIThemeArr } from '@web/types';
 import useTestStore from '@web/stores/useTestStore';
@@ -14,6 +26,7 @@ import { Link, useFetcher, useNavigate } from 'react-router-dom';
 import { DUMMY_GOALS_TO_SCHEDULE, DUMMY_GOALS_TO_SCHEDULE_2 } from '@web/data';
 
 dayjs.extend(duration);
+dayjs.extend(utc);
 
 const TEST_DATA = [
   { title: 'test1', description: '' },
@@ -48,6 +61,7 @@ export default function Home() {
     console.count('home screen rerender');
     console.log('from home: ', date);
   }, [date]);
+  console.debug('hey biatch', getLocalFromUtcStandardFormat(date).format());
   const renderGoals = () => (
     <div className="flex flex-col">
       <div className="flex flex-row items-center self-center mb-1">
@@ -55,15 +69,32 @@ export default function Home() {
           <IoChevronBack className="text-3xl" />
         </button>
         <div className="flex-col text-center">
-          <p>{dayjs(date).isSame(TODAY_DATE_UTC_FORMATTED, 'day') ? `Today (${dayjs(date).format('dddd')})` : dayjs(date).format('dddd')}</p>
-          <p>{dayjs(date).format('MMM DD, YYYY')}</p>
+          {/* <p>{dayjs(date).isSame(getUtcFormattedFromLocal(dayjs()), 'day') ? `Today (${dayjs(date).format('dddd')})` : dayjs(date).format('dddd')}</p> */}
+          {/* <p>
+            {dayjs(date).isSame(dayjs(), 'day')
+              ? `Today (${getLocalFromUtcStandardFormat(date).format('dddd')})`
+              : getLocalFromUtcStandardFormat(date).format('dddd')}
+          </p> */}
+          <p>
+            {getLocalFromUtcStandardFormat(date).isSame(getUtcDate(dayjs()), 'day')
+              ? `Today (${getLocalFromUtcStandardFormat(date).format('dddd')})`
+              : getLocalFromUtcStandardFormat(date).format('dddd')}
+          </p>
+          <p>{getLocalFromUtcStandardFormat(date).format('MMM DD, YYYY')}</p>
+          {/* <p>{date}</p> */}
         </div>
         <button className="ml-2" onClick={() => setSelectedDateData({ date: dayjs(date).add(1, 'day'), timeFormat: 'utc' })}>
           <IoChevronForward className="text-3xl" />
         </button>
       </div>
       {/* <div>{date}</div> */}
-      <button className="btn mt-1" onClick={() => setSelectedDateData({ date: TODAY_DATE_UTC, timeFormat: 'utc' })}>
+      <button
+        className="btn mt-1"
+        onClick={() => {
+          // console.debug(getUtcDate(dayjs()));
+          // console.debug(dayjs().isSame(getUtcDate(dayjs()), 'day'));
+          setSelectedDateData({ date: getUtcDate(dayjs()), timeFormat: 'utc' });
+        }}>
         Go back to Today
       </button>
       <button className="btn mt-2">
@@ -79,7 +110,7 @@ export default function Home() {
               date,
               duration: dayjs.duration({ hours: 1 }).toISOString(),
             },
-            timeFormat: 'local',
+            timeFormat: 'utc',
           });
           // console.log(TODAY_DATE_FORMATTED);
         }}>
