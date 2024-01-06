@@ -9,8 +9,8 @@ import * as isBetween from 'dayjs/plugin/isBetween';
 import Holidays from 'date-holidays';
 import { DateParam, Goal, GoalStatus, GoalStreakItem, GoalStreakOptions, GoalStreaks, TimeFormat } from '@shared/types';
 import { TODAY_DATE_UTC_FORMATTED, getStandardFormat, getUtcDate, getUtcFormat } from '@shared/utils';
-import { CachedGoal } from '@shared/stores';
-import { EMPTY_STREAK_ITEM } from './constants';
+// import { CachedGoal } from '@shared/stores';
+// import { EMPTY_STREAK_ITEM } from './constants';
 
 dayjs.extend(utc);
 dayjs.extend(isSameOrBefore);
@@ -29,65 +29,65 @@ export function generateGroupId(title: string): string {
   return 'group-' + uuidV5(`${rightNow}_${title}`, UUID_NAMESPACE);
 }
 
-export function convertPartialGoalToDateCacheGoal(params: { goal: Partial<Goal> & Pick<Goal, 'id'>; date: DateParam }): Partial<CachedGoal> {
-  const formattedDate = getStandardFormat(params.date);
-  const { status } = params.goal;
-  return {
-    ...params.goal,
-    status: status
-      ? status.completed.has(formattedDate)
-        ? 'completed'
-        : status.skipped.has(formattedDate)
-        ? 'skipped'
-        : 'incomplete'
-      : 'incomplete',
-  };
-}
+// export function convertPartialGoalToDateCacheGoal(params: { goal: Partial<Goal> & Pick<Goal, 'id'>; date: DateParam }): Partial<CachedGoal> {
+//   const formattedDate = getStandardFormat(params.date);
+//   const { status } = params.goal;
+//   return {
+//     ...params.goal,
+//     status: status
+//       ? status.completed.has(formattedDate)
+//         ? 'completed'
+//         : status.skipped.has(formattedDate)
+//         ? 'skipped'
+//         : 'incomplete'
+//       : 'incomplete',
+//   };
+// }
 
-export function convertGoalToDateCacheGoal(params: { goal: Goal; date: DateParam }): CachedGoal {
-  const formattedDate = getStandardFormat(params.date);
-  const { status } = params.goal;
-  return {
-    ...params.goal,
-    status: status.completed.has(formattedDate) ? 'completed' : status.skipped.has(formattedDate) ? 'skipped' : 'incomplete',
-  };
-}
+// export function convertGoalToDateCacheGoal(params: { goal: Goal; date: DateParam }): CachedGoal {
+//   const formattedDate = getStandardFormat(params.date);
+//   const { status } = params.goal;
+//   return {
+//     ...params.goal,
+//     status: status.completed.has(formattedDate) ? 'completed' : status.skipped.has(formattedDate) ? 'skipped' : 'incomplete',
+//   };
+// }
 
-export function checkValidRepeatDate(params: { goal: Goal; date: DateParam }): boolean {
-  const { goal, date } = params;
-  const _d = dayjs(date).startOf('day');
-  const goalDate = dayjs(goal.date).startOf('day');
-  if (_d.isSame(goalDate)) return true;
-  if (_d.isBefore(goalDate) || !goal.repeat || goal.repeat.type === 'none') return false;
+// export function checkValidRepeatDate(params: { goal: Goal; date: DateParam }): boolean {
+//   const { goal, date } = params;
+//   const _d = dayjs(date).startOf('day');
+//   const goalDate = dayjs(goal.date).startOf('day');
+//   if (_d.isSame(goalDate)) return true;
+//   if (_d.isBefore(goalDate) || !goal.repeat || goal.repeat.type === 'none') return false;
 
-  const { type, end, frequency, weekdays } = goal.repeat;
-  if (end && dayjs(end).isBefore(goalDate) && _d.isAfter(end)) return false;
-  switch (type) {
-    case 'daily':
-      return true;
-    case 'weekly':
-      return goalDate.diff(_d, 'day') % 7 === 0;
-    case 'monthly':
-      return _d.get('date') === goalDate.get('date');
-    case 'yearly':
-      return _d.get('date') === goalDate.get('date') && _d.get('month') === goalDate.get('month');
-    case 'custom':
-      return !isUndefined(frequency) && goalDate.diff(_d, 'day') % frequency === 0;
-    case 'weekdays':
-      //@ts-ignore
-      return !isUndefined(weekdays) && weekdays.has(_d.format('dddd').toLowerCase());
-    default:
-      return false;
-  }
-}
+//   const { type, end, frequency, weekdays } = goal.repeat;
+//   if (end && dayjs(end).isBefore(goalDate) && _d.isAfter(end)) return false;
+//   switch (type) {
+//     case 'daily':
+//       return true;
+//     case 'weekly':
+//       return goalDate.diff(_d, 'day') % 7 === 0;
+//     case 'monthly':
+//       return _d.get('date') === goalDate.get('date');
+//     case 'yearly':
+//       return _d.get('date') === goalDate.get('date') && _d.get('month') === goalDate.get('month');
+//     case 'custom':
+//       return !isUndefined(frequency) && goalDate.diff(_d, 'day') % frequency === 0;
+//     case 'weekdays':
+//       //@ts-ignore
+//       return !isUndefined(weekdays) && weekdays.has(_d.format('dddd').toLowerCase());
+//     default:
+//       return false;
+//   }
+// }
 
-export function createValidRepeatDates(params: { goal: Goal; range: number }): Dayjs[] {
-  const { goal, range } = params;
-  return Array(range)
-    .fill(0)
-    .map((_, idx) => dayjs(goal.date).add(idx, 'day'))
-    .filter((date) => checkValidRepeatDate({ goal, date }));
-}
+// export function createValidRepeatDates(params: { goal: Goal; range: number }): Dayjs[] {
+//   const { goal, range } = params;
+//   return Array(range)
+//     .fill(0)
+//     .map((_, idx) => dayjs(goal.date).add(idx, 'day'))
+//     .filter((date) => checkValidRepeatDate({ goal, date }));
+// }
 
 export function useGoalRestCheck(params: { date: DateParam; timeFormat?: TimeFormat; streakOptions: GoalStreakOptions }): {
   passesHolidayCheck: boolean;
@@ -104,66 +104,66 @@ export function useGoalRestCheck(params: { date: DateParam; timeFormat?: TimeFor
 }
 
 type StreakMetadataItem = { date: string; type: 'completed' | 'skipped' | 'incomplete' | 'rest' };
-export function getStreaks(params: { status: GoalStatus; streakOptions: GoalStreakOptions }): {
-  streaks: GoalStreaks;
-  latest: GoalStreakItem | null;
-  longest: GoalStreakItem | null;
-  metadata: StreakMetadataItem[];
-} {
-  const { status, streakOptions } = params;
-  //remember to organize from [early...late]
-  const completed: StreakMetadataItem[] = Array.from(status.completed).map((date) => ({ date, type: 'completed' }));
-  const skipped: StreakMetadataItem[] = Array.from(status.skipped).map((date) => ({ date, type: 'skipped' }));
-  const incomplete: StreakMetadataItem[] = Array.from(status.incomplete).map((date) => ({ date, type: 'incomplete' }));
-  const rests: StreakMetadataItem[] = Array.from(status.rests).map((date) => ({ date, type: 'rest' }));
-  let dates: StreakMetadataItem[] = [...completed, ...skipped, ...incomplete, ...rests].sort((a, b) =>
-    dayjs(b.date).isAfter(a.date, 'day') ? -1 : 1
-  );
-  // console.debug('dates', dates);
-  const goalStreaks: GoalStreaks = [];
-  // start and end date doesn't really matter YET here I guess
-  let currentStreak: GoalStreakItem = {
-    date: { start: dates[0]?.date ?? TODAY_DATE_UTC_FORMATTED, end: dates[0]?.date ?? TODAY_DATE_UTC_FORMATTED },
-    skipped: new Set(),
-    rests: new Set(),
-    length: 0,
-  };
-  let tolerantRange = [];
-  let tolerance = 0;
-  dates.forEach((_d) => {
-    tolerantRange = [
-      dayjs(_d.date).startOf(streakOptions.skips.type !== 'none' ? streakOptions.skips.type : 'day'),
-      dayjs(_d.date).endOf(streakOptions.skips.type !== 'none' ? streakOptions.skips.type : 'day'),
-    ];
-    tolerance = streakOptions.skips.frequency;
-    const { passesRestCheck, passesHolidayCheck } = useGoalRestCheck({ date: _d.date, streakOptions });
-    switch (_d.type) {
-      case 'completed':
-      case 'rest':
-        if (currentStreak.length === 0) currentStreak.date.start = _d.date;
-        currentStreak.date.end = _d.date;
-        currentStreak.length++;
-        _d.type === 'rest' && currentStreak.rests.add(_d.date);
-        break;
-      case 'skipped':
-      case 'incomplete':
-        if (passesHolidayCheck || passesRestCheck || (tolerance > 0 && dayjs(_d.date).isBetween(tolerantRange[0], tolerantRange[1], 'day', '[]'))) {
-          if (currentStreak.length === 0) currentStreak.date.start = _d.date;
-          currentStreak.date.end = _d.date;
-          !(passesHolidayCheck || passesRestCheck) && tolerance > 0 && tolerance--;
-          currentStreak.length++;
-          currentStreak.skipped.add(_d.date);
-        } else {
-          currentStreak.length > 0 && goalStreaks.push(currentStreak);
-          currentStreak = { ...EMPTY_STREAK_ITEM, date: { start: _d.date, end: _d.date } };
-        }
-        break;
-    }
-  });
-  if (currentStreak.length > 0) goalStreaks.push(currentStreak);
-  //Get latest streak
-  const latest = goalStreaks.length > 0 ? goalStreaks.reduce((a, b) => (dayjs(a.date.end).isAfter(b.date.end, 'day') ? a : b)) : null;
-  //Get longest streak
-  const longest = goalStreaks.length > 0 ? goalStreaks.reduce((a, b) => (a.length > b.length ? a : b)) : null;
-  return { streaks: goalStreaks, latest, longest, metadata: dates };
-}
+// export function getStreaks(params: { status: GoalStatus; streakOptions: GoalStreakOptions }): {
+//   streaks: GoalStreaks;
+//   latest: GoalStreakItem | null;
+//   longest: GoalStreakItem | null;
+//   metadata: StreakMetadataItem[];
+// } {
+//   const { status, streakOptions } = params;
+//   //remember to organize from [early...late]
+//   const completed: StreakMetadataItem[] = Array.from(status.completed).map((date) => ({ date, type: 'completed' }));
+//   const skipped: StreakMetadataItem[] = Array.from(status.skipped).map((date) => ({ date, type: 'skipped' }));
+//   const incomplete: StreakMetadataItem[] = Array.from(status.incomplete).map((date) => ({ date, type: 'incomplete' }));
+//   const rests: StreakMetadataItem[] = Array.from(status.rests).map((date) => ({ date, type: 'rest' }));
+//   let dates: StreakMetadataItem[] = [...completed, ...skipped, ...incomplete, ...rests].sort((a, b) =>
+//     dayjs(b.date).isAfter(a.date, 'day') ? -1 : 1
+//   );
+//   // console.debug('dates', dates);
+//   const goalStreaks: GoalStreaks = [];
+//   // start and end date doesn't really matter YET here I guess
+//   let currentStreak: GoalStreakItem = {
+//     date: { start: dates[0]?.date ?? TODAY_DATE_UTC_FORMATTED, end: dates[0]?.date ?? TODAY_DATE_UTC_FORMATTED },
+//     skipped: new Set(),
+//     rests: new Set(),
+//     length: 0,
+//   };
+//   let tolerantRange = [];
+//   let tolerance = 0;
+//   dates.forEach((_d) => {
+//     tolerantRange = [
+//       dayjs(_d.date).startOf(streakOptions.skips.type !== 'none' ? streakOptions.skips.type : 'day'),
+//       dayjs(_d.date).endOf(streakOptions.skips.type !== 'none' ? streakOptions.skips.type : 'day'),
+//     ];
+//     tolerance = streakOptions.skips.frequency;
+//     const { passesRestCheck, passesHolidayCheck } = useGoalRestCheck({ date: _d.date, streakOptions });
+//     switch (_d.type) {
+//       case 'completed':
+//       case 'rest':
+//         if (currentStreak.length === 0) currentStreak.date.start = _d.date;
+//         currentStreak.date.end = _d.date;
+//         currentStreak.length++;
+//         _d.type === 'rest' && currentStreak.rests.add(_d.date);
+//         break;
+//       case 'skipped':
+//       case 'incomplete':
+//         if (passesHolidayCheck || passesRestCheck || (tolerance > 0 && dayjs(_d.date).isBetween(tolerantRange[0], tolerantRange[1], 'day', '[]'))) {
+//           if (currentStreak.length === 0) currentStreak.date.start = _d.date;
+//           currentStreak.date.end = _d.date;
+//           !(passesHolidayCheck || passesRestCheck) && tolerance > 0 && tolerance--;
+//           currentStreak.length++;
+//           currentStreak.skipped.add(_d.date);
+//         } else {
+//           currentStreak.length > 0 && goalStreaks.push(currentStreak);
+//           currentStreak = { ...EMPTY_STREAK_ITEM, date: { start: _d.date, end: _d.date } };
+//         }
+//         break;
+//     }
+//   });
+//   if (currentStreak.length > 0) goalStreaks.push(currentStreak);
+//   //Get latest streak
+//   const latest = goalStreaks.length > 0 ? goalStreaks.reduce((a, b) => (dayjs(a.date.end).isAfter(b.date.end, 'day') ? a : b)) : null;
+//   //Get longest streak
+//   const longest = goalStreaks.length > 0 ? goalStreaks.reduce((a, b) => (a.length > b.length ? a : b)) : null;
+//   return { streaks: goalStreaks, latest, longest, metadata: dates };
+// }
