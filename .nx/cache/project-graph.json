@@ -448,6 +448,60 @@
         "implicitDependencies": []
       }
     },
+    "shared-types": {
+      "name": "shared-types",
+      "type": "lib",
+      "data": {
+        "name": "shared-types",
+        "root": "packages/shared/types",
+        "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+        "sourceRoot": "packages/shared/types/src",
+        "projectType": "library",
+        "targets": {
+          "build": {
+            "dependsOn": [
+              "^build"
+            ],
+            "inputs": [
+              "production",
+              "^production"
+            ],
+            "executor": "@nx/js:tsc",
+            "outputs": [
+              "{options.outputPath}"
+            ],
+            "options": {
+              "outputPath": "dist/packages/shared/types",
+              "main": "packages/shared/types/src/index.ts",
+              "tsConfig": "packages/shared/types/tsconfig.lib.json",
+              "assets": [
+                "packages/shared/types/*.md"
+              ]
+            },
+            "configurations": {}
+          },
+          "lint": {
+            "inputs": [
+              "default",
+              "{workspaceRoot}/.eslintrc.json",
+              "{workspaceRoot}/.eslintignore"
+            ],
+            "executor": "@nx/linter:eslint",
+            "outputs": [
+              "{options.outputFile}"
+            ],
+            "options": {
+              "lintFilePatterns": [
+                "packages/shared/types/**/*.ts"
+              ]
+            },
+            "configurations": {}
+          }
+        },
+        "tags": [],
+        "implicitDependencies": []
+      }
+    },
     "shared-utils": {
       "name": "shared-utils",
       "type": "lib",
@@ -517,60 +571,6 @@
                 "codeCoverage": true
               }
             }
-          }
-        },
-        "tags": [],
-        "implicitDependencies": []
-      }
-    },
-    "shared-types": {
-      "name": "shared-types",
-      "type": "lib",
-      "data": {
-        "name": "shared-types",
-        "root": "packages/shared/types",
-        "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-        "sourceRoot": "packages/shared/types/src",
-        "projectType": "library",
-        "targets": {
-          "build": {
-            "dependsOn": [
-              "^build"
-            ],
-            "inputs": [
-              "production",
-              "^production"
-            ],
-            "executor": "@nx/js:tsc",
-            "outputs": [
-              "{options.outputPath}"
-            ],
-            "options": {
-              "outputPath": "dist/packages/shared/types",
-              "main": "packages/shared/types/src/index.ts",
-              "tsConfig": "packages/shared/types/tsconfig.lib.json",
-              "assets": [
-                "packages/shared/types/*.md"
-              ]
-            },
-            "configurations": {}
-          },
-          "lint": {
-            "inputs": [
-              "default",
-              "{workspaceRoot}/.eslintrc.json",
-              "{workspaceRoot}/.eslintignore"
-            ],
-            "executor": "@nx/linter:eslint",
-            "outputs": [
-              "{options.outputFile}"
-            ],
-            "options": {
-              "lintFilePatterns": [
-                "packages/shared/types/**/*.ts"
-              ]
-            },
-            "configurations": {}
           }
         },
         "tags": [],
@@ -18035,6 +18035,18 @@
         "type": "static"
       }
     ],
+    "shared-types": [
+      {
+        "source": "shared-types",
+        "target": "npm:dayjs",
+        "type": "static"
+      },
+      {
+        "source": "shared-types",
+        "target": "shared-utils",
+        "type": "static"
+      }
+    ],
     "shared-utils": [
       {
         "source": "shared-utils",
@@ -18049,18 +18061,6 @@
       {
         "source": "shared-utils",
         "target": "npm:rrule",
-        "type": "static"
-      }
-    ],
-    "shared-types": [
-      {
-        "source": "shared-types",
-        "target": "npm:dayjs",
-        "type": "static"
-      },
-      {
-        "source": "shared-types",
-        "target": "shared-utils",
         "type": "static"
       }
     ],
