@@ -1,0 +1,21 @@
+{
+  "run": {
+    "command": "nx serve web-avidity",
+    "startTime": "2024-01-06T10:26:06.209Z",
+    "endTime": "2024-01-19T09:54:20.841Z",
+    "inner": false
+  },
+  "tasks": [
+    {
+      "taskId": "web-avidity:serve:development",
+      "target": "serve",
+      "projectName": "web-avidity",
+      "hash": "15305915844034486703",
+      "startTime": "2024-01-06T10:26:06.219Z",
+      "endTime": "2024-01-19T09:54:20.827Z",
+      "params": "",
+      "cacheStatus": "cache-miss",
+      "status": 1
+    }
+  ]
+}

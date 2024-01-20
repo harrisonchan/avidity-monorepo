@@ -1,14 +1,9 @@
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
 import { immer } from 'zustand/middleware/immer';
-import * as dayjs from 'dayjs';
-import * as duration from 'dayjs/plugin/duration';
 import { BaseGoalState, BaseGoalActions, createGoalSlice, goalStorageReviver, goalStorageReplacer } from '@shared/stores';
 import { createSelectors } from '@shared/helpers';
 import { useEffect, useState } from 'react';
-import { Goal } from '@shared/types';
-
-dayjs.extend(duration);
 
 const useGoalStore = create(
   persist(

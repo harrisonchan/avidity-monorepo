@@ -9,17 +9,17 @@ import { useGoalStore, useGoalStoreHydration } from './stores';
 
 export function App() {
   const theme = useUtilStore.use.theme();
-  const runDailyTasks = useGoalStore.use.runDailyTasks();
+  // const runDailyTasks = useGoalStore.use.runDailyTasks();
   const hasHydrated = useGoalStoreHydration();
   useEffect(() => {
     console.debug('hydration change', hasHydrated);
     if (hasHydrated) {
-      runDailyTasks({
-        dateCachePruneOptions: {
-          pastDates: { enable: true },
-          futureDates: { enable: true },
-        },
-      });
+      // runDailyTasks({
+      //   dateCachePruneOptions: {
+      //     pastDates: { enable: true },
+      //     futureDates: { enable: true },
+      //   },
+      // });
     }
   }, [hasHydrated]);
   return (

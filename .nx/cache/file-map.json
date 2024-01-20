@@ -1,0 +1,1594 @@
+{
+  "version": "6.0",
+  "nxVersion": "16.7.4",
+  "deps": {
+    "@googlemaps/google-maps-services-js": "^3.3.31",
+    "@react-native-async-storage/async-storage": "1.19.3",
+    "@react-navigation/bottom-tabs": "^6.5.8",
+    "@react-navigation/native": "^6.1.7",
+    "@react-navigation/native-stack": "^6.9.13",
+    "@react-navigation/stack": "^6.3.17",
+    "@shopify/flash-list": "^1.5.0",
+    "@shopify/restyle": "^2.4.2",
+    "@swc/helpers": "~0.5.0",
+    "@types/uuid": "^9.0.2",
+    "axios": "^1.4.0",
+    "classnames": "^2.3.2",
+    "daisyui": "^3.1.1",
+    "date-holidays": "^3.21.5",
+    "dayjs": "^1.11.9",
+    "express": "^4.18.1",
+    "formik": "^2.4.3",
+    "immer": "^10.0.2",
+    "lodash": "^4.17.21",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-icons": "^4.9.0",
+    "react-native": "0.72.3",
+    "react-native-calendars": "^1.1300.0",
+    "react-native-date-picker": "^4.2.14",
+    "react-native-encrypted-storage": "^4.0.3",
+    "react-native-gesture-handler": "^2.12.1",
+    "react-native-keyboard-aware-scroll-view": "^0.9.5",
+    "react-native-pager-view": "^6.2.1",
+    "react-native-reanimated": "^3.4.2",
+    "react-native-redash": "^18.1.0",
+    "react-native-safe-area-context": "^4.7.1",
+    "react-native-screens": "^3.25.0",
+    "react-native-size-matters": "^0.4.0",
+    "react-native-vector-icons": "^10.0.0",
+    "react-router-dom": "6.11.2",
+    "rrule": "^2.8.1",
+    "tslib": "^2.3.0",
+    "uuid": "^9.0.0",
+    "victory-native": "^36.6.11",
+    "yup": "^1.2.0",
+    "zustand": "^4.4.1",
+    "@babel/core": "^7.14.5",
+    "@babel/preset-react": "^7.14.5",
+    "@nx/cypress": "16.7.4",
+    "@nx/detox": "16.7.4",
+    "@nx/eslint-plugin": "16.7.4",
+    "@nx/express": "^16.7.4",
+    "@nx/jest": "16.7.4",
+    "@nx/js": "16.7.4",
+    "@nx/linter": "16.7.4",
+    "@nx/node": "16.7.4",
+    "@nx/react": "^16.7.4",
+    "@nx/react-native": "^16.7.4",
+    "@nx/webpack": "16.7.3",
+    "@nx/workspace": "16.3.2",
+    "@pmmmwh/react-refresh-webpack-plugin": "^0.5.7",
+    "@react-native-community/cli": "11.3.5",
+    "@react-native-community/cli-platform-android": "11.3.5",
+    "@react-native-community/cli-platform-ios": "11.3.5",
+    "@react-native/metro-config": "^0.72.9",
+    "@shopify/eslint-plugin": "^42.1.0",
+    "@svgr/webpack": "^8.0.1",
+    "@swc/cli": "~0.1.62",
+    "@swc/core": "~1.3.51",
+    "@testing-library/jest-dom": "5.16.5",
+    "@testing-library/jest-native": "5.4.2",
+    "@testing-library/react": "14.0.0",
+    "@testing-library/react-native": "12.1.2",
+    "@types/express": "4.17.13",
+    "@types/jest": "^29.4.0",
+    "@types/lodash": "^4.14.195",
+    "@types/node": "18.14.4",
+    "@types/react": "18.2.14",
+    "@types/react-dom": "18.2.6",
+    "@types/react-native": "0.72.2",
+    "@types/react-native-vector-icons": "^6.4.14",
+    "@typescript-eslint/eslint-plugin": "^5.60.1",
+    "@typescript-eslint/parser": "^5.60.1",
+    "autoprefixer": "^10.4.14",
+    "babel-jest": "^29.4.1",
+    "cypress": "^12.16.0",
+    "detox": "^20.11.1",
+    "eslint": "~8.46.0",
+    "eslint-config-prettier": "8.1.0",
+    "eslint-plugin-cypress": "^2.13.4",
+    "eslint-plugin-import": "2.27.5",
+    "eslint-plugin-jsx-a11y": "6.7.1",
+    "eslint-plugin-react": "7.32.2",
+    "eslint-plugin-react-hooks": "4.6.0",
+    "jest": "^29.4.1",
+    "jest-circus": "^29.4.1",
+    "jest-environment-jsdom": "^29.4.1",
+    "jest-environment-node": "^29.4.1",
+    "jest-react-native": "18.0.0",
+    "metro": "0.76.7",
+    "metro-babel-register": "0.76.7",
+    "metro-config": "0.76.7",
+    "metro-react-native-babel-preset": "0.76.7",
+    "metro-react-native-babel-transformer": "0.76.7",
+    "metro-resolver": "0.76.7",
+    "nx": "16.7.4",
+    "nx-cloud": "latest",
+    "postcss": "^8.4.24",
+    "prettier": "^2.6.2",
+    "react-native-svg": "^13.13.0",
+    "react-native-svg-transformer": "1.0.0",
+    "react-refresh": "^0.10.0",
+    "react-test-renderer": "18.2.0",
+    "tailwindcss": "^3.3.2",
+    "ts-jest": "^29.1.0",
+    "ts-node": "10.9.1",
+    "typescript": "~5.1.3",
+    "url-loader": "^4.1.1"
+  },
+  "pathMappings": {
+    "@shared/helpers": [
+      "packages/shared/helpers/src/index.ts"
+    ],
+    "@shared/stores": [
+      "packages/shared/stores/src/index.ts"
+    ],
+    "@shared/types": [
+      "packages/shared/types/src/index.ts"
+    ],
+    "@shared/utils": [
+      "packages/shared/utils/src/index.ts"
+    ],
+    "@web/*": [
+      "packages/web/avidity/src/app/*"
+    ]
+  },
+  "nxJsonPlugins": [],
+  "projectFileMap": {
+    "mobile-avidity-e2e": [
+      {
+        "file": "packages/mobile/avidity-e2e/.babelrc",
+        "hash": "13020124393823981135"
+      },
+      {
+        "file": "packages/mobile/avidity-e2e/.detoxrc.json",
+        "hash": "17536583149643801331"
+      },
+      {
+        "file": "packages/mobile/avidity-e2e/.eslintrc.json",
+        "hash": "15946965712701950674"
+      },
+      {
+        "file": "packages/mobile/avidity-e2e/jest.config.json",
+        "hash": "17021311799062449128"
+      },
+      {
+        "file": "packages/mobile/avidity-e2e/project.json",
+        "hash": "14015374903706931166"
+      },
+      {
+        "file": "packages/mobile/avidity-e2e/src/app.spec.ts",
+        "hash": "4412911221720346132",
+        "deps": [
+          "npm:detox"
+        ]
+      },
+      {
+        "file": "packages/mobile/avidity-e2e/test-setup.ts",
+        "hash": "891269836898640451",
+        "deps": [
+          "npm:detox"
+        ]
+      },
+      {
+        "file": "packages/mobile/avidity-e2e/tsconfig.e2e.json",
+        "hash": "8664226138149994452"
+      },
+      {
+        "file": "packages/mobile/avidity-e2e/tsconfig.json",
+        "hash": "14652319087978333387"
+      }
+    ],
+    "shared-utils": [
+      {
+        "file": "packages/shared/utils/.eslintrc.json",
+        "hash": "5415343759066179758"
+      },
+      {
+        "file": "packages/shared/utils/README.md",
+        "hash": "4867776221816429465"
+      },
+      {
+        "file": "packages/shared/utils/jest.config.ts",
+        "hash": "17480129416265097128"
+      },
+      {
+        "file": "packages/shared/utils/package.json",
+        "hash": "2989259854907374715"
+      },
+      {
+        "file": "packages/shared/utils/project.json",
+        "hash": "13481545107907960860"
+      },
+      {
+        "file": "packages/shared/utils/src/index.ts",
+        "hash": "14428353282588746736"
+      },
+      {
+        "file": "packages/shared/utils/src/lib/SharedUtils.spec.ts",
+        "hash": "17142166017379555900"
+      },
+      {
+        "file": "packages/shared/utils/src/lib/SharedUtils.ts",
+        "hash": "393383238747502460"
+      },
+      {
+        "file": "packages/shared/utils/src/lib/arrayUtils.ts",
+        "hash": "6384522127416793957"
+      },
+      {
+        "file": "packages/shared/utils/src/lib/dayjsUtils.ts",
+        "hash": "18137505907150858125",
+        "deps": [
+          "shared-types",
+          "npm:dayjs"
+        ]
+      },
+      {
+        "file": "packages/shared/utils/src/lib/index.ts",
+        "hash": "2511086189225687783"
+      },
+      {
+        "file": "packages/shared/utils/src/lib/mapUtils.ts",
+        "hash": "14101944265865772866"
+      },
+      {
+        "file": "packages/shared/utils/src/lib/stringUtils.ts",
+        "hash": "16392803586993193557"
+      },
+      {
+        "file": "packages/shared/utils/tsconfig.json",
+        "hash": "1098465750514412960"
+      },
+      {
+        "file": "packages/shared/utils/tsconfig.lib.json",
+        "hash": "5554291030212586824"
+      },
+      {
+        "file": "packages/shared/utils/tsconfig.spec.json",
+        "hash": "9110660443763673899"
+      },
+      {
+        "file": "packages/shared/utils/src/lib/dayjsRRule.ts",
+        "hash": "14391641286649439638",
+        "deps": [
+          "npm:rrule",
+          "npm:dayjs",
+          "shared-types"
+        ]
+      }
+    ],
+    "server-e2e": [
+      {
+        "file": "packages/server-e2e/.eslintrc.json",
+        "hash": "8709851544463005581"
+      },
+      {
+        "file": "packages/server-e2e/jest.config.ts",
+        "hash": "14212190043399416865"
+      },
+      {
+        "file": "packages/server-e2e/project.json",
+        "hash": "16937146049724248892"
+      },
+      {
+        "file": "packages/server-e2e/src/server/server.spec.ts",
+        "hash": "4579662685003779048",
+        "deps": [
+          "npm:axios"
+        ]
+      },
+      {
+        "file": "packages/server-e2e/src/support/global-setup.ts",
+        "hash": "2568409276037275290"
+      },
+      {
+        "file": "packages/server-e2e/src/support/global-teardown.ts",
+        "hash": "5275447082211835490"
+      },
+      {
+        "file": "packages/server-e2e/src/support/test-setup.ts",
+        "hash": "10984585515912236441",
+        "deps": [
+          "npm:axios"
+        ]
+      },
+      {
+        "file": "packages/server-e2e/tsconfig.json",
+        "hash": "15443990093475294480"
+      },
+      {
+        "file": "packages/server-e2e/tsconfig.spec.json",
+        "hash": "14954872453723519891"
+      }
+    ],
+    "shared-stores": [
+      {
+        "file": "packages/shared/stores/.eslintrc.json",
+        "hash": "9703569748258640057"
+      },
+      {
+        "file": "packages/shared/stores/README.md",
+        "hash": "9410590322897760008"
+      },
+      {
+        "file": "packages/shared/stores/jest.config.ts",
+        "hash": "14962804551542158611"
+      },
+      {
+        "file": "packages/shared/stores/package.json",
+        "hash": "8344040156979037535"
+      },
+      {
+        "file": "packages/shared/stores/project.json",
+        "hash": "6410039809754109333"
+      },
+      {
+        "file": "packages/shared/stores/src/index.ts",
+        "hash": "14428353282588746736"
+      },
+      {
+        "file": "packages/shared/stores/src/lib/SharedStores.spec.ts",
+        "hash": "13454570303391023948"
+      },
+      {
+        "file": "packages/shared/stores/src/lib/SharedStores.ts",
+        "hash": "17133673366245923653"
+      },
+      {
+        "file": "packages/shared/stores/src/lib/goalStore/createGoalSlice.ts",
+        "hash": "17138636767421145032",
+        "deps": [
+          "npm:zustand",
+          "npm:lodash",
+          "shared-types",
+          "shared-utils",
+          "shared-helpers"
+        ]
+      },
+      {
+        "file": "packages/shared/stores/src/lib/goalStore/createGoalSliceV2.ts",
+        "hash": "17965722167199728895",
+        "deps": [
+          "npm:zustand",
+          "npm:lodash",
+          "npm:dayjs",
+          "shared-types",
+          "shared-utils",
+          "shared-helpers"
+        ]
+      },
+      {
+        "file": "packages/shared/stores/src/lib/goalStore/createGoalSliceV3.ts",
+        "hash": "4149387323374512043",
+        "deps": [
+          "npm:zustand",
+          "npm:lodash",
+          "npm:dayjs",
+          "shared-types",
+          "shared-utils",
+          "shared-helpers"
+        ]
+      },
+      {
+        "file": "packages/shared/stores/src/lib/goalStore/index.ts",
+        "hash": "6820094263354506409"
+      },
+      {
+        "file": "packages/shared/stores/src/lib/goalStore/reviverReplacer.ts",
+        "hash": "11089630026794383786",
+        "deps": [
+          "npm:dayjs",
+          "npm:lodash"
+        ]
+      },
+      {
+        "file": "packages/shared/stores/src/lib/index.ts",
+        "hash": "2980830568153251074"
+      },
+      {
+        "file": "packages/shared/stores/tsconfig.json",
+        "hash": "1098465750514412960"
+      },
+      {
+        "file": "packages/shared/stores/tsconfig.lib.json",
+        "hash": "5554291030212586824"
+      },
+      {
+        "file": "packages/shared/stores/tsconfig.spec.json",
+        "hash": "12999169761713108731"
+      }
+    ],
+    "web-avidity": [
+      {
+        "file": "packages/web/avidity/.babelrc",
+        "hash": "13020124393823981135"
+      },
+      {
+        "file": "packages/web/avidity/.eslintrc.json",
+        "hash": "15946965712701950674"
+      },
+      {
+        "file": "packages/web/avidity/jest.config.ts",
+        "hash": "2936656381998018353"
+      },
+      {
+        "file": "packages/web/avidity/postcss.config.js",
+        "hash": "2759402739052110475",
+        "deps": [
+          "npm:path"
+        ]
+      },
+      {
+        "file": "packages/web/avidity/project.json",
+        "hash": "13638624265213792861"
+      },
+      {
+        "file": "packages/web/avidity/src/app/App.module.css",
+        "hash": "8887387885984320532"
+      },
+      {
+        "file": "packages/web/avidity/src/app/app.spec.tsx",
+        "hash": "5238530238232168344",
+        "deps": [
+          "npm:@testing-library/react"
+        ]
+      },
+      {
+        "file": "packages/web/avidity/src/app/components/goalCard/GoalCard.tsx",
+        "hash": "4196229919170439412",
+        "deps": [
+          "shared-types"
+        ]
+      },
+      {
+        "file": "packages/web/avidity/src/app/components/goalCard/index.ts",
+        "hash": "4236903904345678800"
+      },
+      {
+        "file": "packages/web/avidity/src/app/components/index.ts",
+        "hash": "3378546661604722497"
+      },
+      {
+        "file": "packages/web/avidity/src/app/components/sideBar/SideBar.tsx",
+        "hash": "18418440563216731241",
+        "deps": [
+          "npm:react",
+          "npm:react-router-dom",
+          "npm:react-icons",
+          "shared-utils"
+        ]
+      },
+      {
+        "file": "packages/web/avidity/src/app/components/sideBar/index.ts",
+        "hash": "3037537912628780309"
+      },
+      {
+        "file": "packages/web/avidity/src/app/data/index.ts",
+        "hash": "4023525012818242546"
+      },
+      {
+        "file": "packages/web/avidity/src/app/index.tsx",
+        "hash": "3881300992302513446",
+        "deps": [
+          "npm:react-router-dom",
+          "npm:react"
+        ]
+      },
+      {
+        "file": "packages/web/avidity/src/app/pages/home/Home.tsx",
+        "hash": "9402860796418643020",
+        "deps": [
+          "shared-utils",
+          "npm:dayjs",
+          "npm:react-icons",
+          "shared-stores"
+        ]
+      },
+      {
+        "file": "packages/web/avidity/src/app/pages/home/index.ts",
+        "hash": "17325453861831153407"
+      },
+      {
+        "file": "packages/web/avidity/src/app/pages/index.ts",
+        "hash": "18321801364502340018"
+      },
+      {
+        "file": "packages/web/avidity/src/app/router/index.ts",
+        "hash": "9046522683104343621"
+      },
+      {
+        "file": "packages/web/avidity/src/app/router/router.tsx",
+        "hash": "5155139897497395354",
+        "deps": [
+          "npm:react-router-dom"
+        ]
+      },
+      {
+        "file": "packages/web/avidity/src/app/stores/index.ts",
+        "hash": "4040559443134986086"
+      },
+      {
+        "file": "packages/web/avidity/src/app/stores/useGoalStore.ts",
+        "hash": "7143755350318528285",
+        "deps": [
+          "npm:zustand",
+          "shared-stores",
+          "shared-helpers",
+          "npm:react"
+        ]
+      },
+      {
+        "file": "packages/web/avidity/src/app/stores/useTestStore.ts",
+        "hash": "7424010646623035452",
+        "deps": [
+          "shared-helpers",
+          "npm:zustand"
+        ]
+      },
+      {
+        "file": "packages/web/avidity/src/app/stores/useUtilStore.ts",
+        "hash": "12332806279815866736",
+        "deps": [
+          "shared-helpers",
+          "npm:immer",
+          "npm:lodash",
+          "npm:zustand"
+        ]
+      },
+      {
+        "file": "packages/web/avidity/src/app/types/index.ts",
+        "hash": "10325889194214589364"
+      },
+      {
+        "file": "packages/web/avidity/src/app/types/themeTypes.ts",
+        "hash": "7424661965819238326"
+      },
+      {
+        "file": "packages/web/avidity/src/assets/.gitkeep",
+        "hash": "3244421341483603138"
+      },
+      {
+        "file": "packages/web/avidity/src/environments/environment.prod.ts",
+        "hash": "10220522844224226756"
+      },
+      {
+        "file": "packages/web/avidity/src/environments/environment.ts",
+        "hash": "11309522437153898482"
+      },
+      {
+        "file": "packages/web/avidity/src/favicon.ico",
+        "hash": "9303420814833116677"
+      },
+      {
+        "file": "packages/web/avidity/src/index.html",
+        "hash": "14289761474987325975"
+      },
+      {
+        "file": "packages/web/avidity/src/main.tsx",
+        "hash": "15526357478195231060",
+        "deps": [
+          "npm:react",
+          "npm:react-dom",
+          "npm:immer"
+        ]
+      },
+      {
+        "file": "packages/web/avidity/src/styles.css",
+        "hash": "9540575453073076294"
+      },
+      {
+        "file": "packages/web/avidity/tailwind.config.js",
+        "hash": "15534047433418465549",
+        "deps": [
+          "npm:@nx/react",
+          "npm:path",
+          "npm:daisyui"
+        ]
+      },
+      {
+        "file": "packages/web/avidity/tsconfig.app.json",
+        "hash": "278595912003397289"
+      },
+      {
+        "file": "packages/web/avidity/tsconfig.json",
+        "hash": "6688172226496934105"
+      },
+      {
+        "file": "packages/web/avidity/tsconfig.spec.json",
+        "hash": "9847306665379573533"
+      },
+      {
+        "file": "packages/web/avidity/webpack.config.js",
+        "hash": "1043731587818967490",
+        "deps": [
+          "npm:@nx/webpack",
+          "npm:@nx/react"
+        ]
+      }
+    ],
+    "shared-types": [
+      {
+        "file": "packages/shared/types/.eslintrc.json",
+        "hash": "9703569748258640057"
+      },
+      {
+        "file": "packages/shared/types/README.md",
+        "hash": "13984268598373994613"
+      },
+      {
+        "file": "packages/shared/types/package.json",
+        "hash": "12705418237662693911"
+      },
+      {
+        "file": "packages/shared/types/project.json",
+        "hash": "2340242008732933228"
+      },
+      {
+        "file": "packages/shared/types/src/index.ts",
+        "hash": "14428353282588746736"
+      },
+      {
+        "file": "packages/shared/types/src/lib/baseTypes.ts",
+        "hash": "5409522656293046964",
+        "deps": [
+          "npm:dayjs"
+        ]
+      },
+      {
+        "file": "packages/shared/types/src/lib/componentTypes/categoryTypes.ts",
+        "hash": "8502565566687948256"
+      },
+      {
+        "file": "packages/shared/types/src/lib/componentTypes/goalCardTypes.ts",
+        "hash": "1667809563163783509"
+      },
+      {
+        "file": "packages/shared/types/src/lib/componentTypes/illustrationTypes.ts",
+        "hash": "8938152414332383421"
+      },
+      {
+        "file": "packages/shared/types/src/lib/componentTypes/index.ts",
+        "hash": "14038481708752195948"
+      },
+      {
+        "file": "packages/shared/types/src/lib/componentTypes/rn-iconTypes.ts",
+        "hash": "2963037099506513015"
+      },
+      {
+        "file": "packages/shared/types/src/lib/formTypes/addFormTypes.ts",
+        "hash": "3397907564016899940",
+        "deps": [
+          "npm:dayjs"
+        ]
+      },
+      {
+        "file": "packages/shared/types/src/lib/formTypes/index.ts",
+        "hash": "6691053117791542771"
+      },
+      {
+        "file": "packages/shared/types/src/lib/goalTypes.ts",
+        "hash": "14045667557109878077",
+        "deps": [
+          "npm:dayjs"
+        ]
+      },
+      {
+        "file": "packages/shared/types/src/lib/goalTypesV2.ts",
+        "hash": "591451162837421687",
+        "deps": [
+          "shared-utils"
+        ]
+      },
+      {
+        "file": "packages/shared/types/src/lib/index.ts",
+        "hash": "7754238190570473472"
+      },
+      {
+        "file": "packages/shared/types/tsconfig.json",
+        "hash": "11362601880824838265"
+      },
+      {
+        "file": "packages/shared/types/tsconfig.lib.json",
+        "hash": "5554291030212586824"
+      }
+    ],
+    "mobile-avidity": [
+      {
+        "file": "packages/mobile/avidity/.eslintrc.json",
+        "hash": "12045782407883736785"
+      },
+      {
+        "file": "packages/mobile/avidity/Gemfile",
+        "hash": "18401619577538077782"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/build.gradle",
+        "hash": "10978870278838865536"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/debug.keystore",
+        "hash": "5037686243849261810"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/proguard-rules.pro",
+        "hash": "13814197385154279786"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/androidTest/java/com/avidity/DetoxTest.java",
+        "hash": "16007438609171119145"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/debug/AndroidManifest.xml",
+        "hash": "16997767733914164177"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/debug/java/com/avidity/ReactNativeFlipper.java",
+        "hash": "18185888923422133625"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/main/AndroidManifest.xml",
+        "hash": "7079440948961830635"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/main/assets/fonts/Roboto-Black.ttf",
+        "hash": "7491435733589274410"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/main/assets/fonts/Roboto-BlackItalic.ttf",
+        "hash": "6367488612617151901"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/main/assets/fonts/Roboto-Bold.ttf",
+        "hash": "11118875498363073866"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/main/assets/fonts/Roboto-BoldItalic.ttf",
+        "hash": "18208016290686678219"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/main/assets/fonts/Roboto-Italic.ttf",
+        "hash": "2871797822062044145"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/main/assets/fonts/Roboto-Light.ttf",
+        "hash": "11743008747391677234"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/main/assets/fonts/Roboto-LightItalic.ttf",
+        "hash": "7345932088123158190"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/main/assets/fonts/Roboto-Medium.ttf",
+        "hash": "12534942947226036357"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/main/assets/fonts/Roboto-MediumItalic.ttf",
+        "hash": "10354767113262496729"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/main/assets/fonts/Roboto-Regular.ttf",
+        "hash": "9500555408324524103"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/main/assets/fonts/Roboto-Thin.ttf",
+        "hash": "16494021493287799544"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/main/assets/fonts/Roboto-ThinItalic.ttf",
+        "hash": "8572171983110193039"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/main/java/com/avidity/MainActivity.java",
+        "hash": "17498998963103481107"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/main/java/com/avidity/MainApplication.java",
+        "hash": "6451094523122630724"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/main/res/drawable/rn_edit_text_material.xml",
+        "hash": "617140720749664772"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/main/res/mipmap-hdpi/ic_launcher.png",
+        "hash": "10788509195642110029"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.png",
+        "hash": "14348562046770238248"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/main/res/mipmap-mdpi/ic_launcher.png",
+        "hash": "328692529308011025"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.png",
+        "hash": "11802043336826859502"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png",
+        "hash": "13006206334539413900"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png",
+        "hash": "1812825738055967771"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
+        "hash": "6104457872863500683"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png",
+        "hash": "2478168592410677995"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+        "hash": "12283149652938275290"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png",
+        "hash": "7126668675123994836"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/main/res/values/strings.xml",
+        "hash": "13204733306768967330"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/main/res/values/styles.xml",
+        "hash": "14052910750539201041"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/main/res/xml/network_security_config.xml",
+        "hash": "7470100900868657300"
+      },
+      {
+        "file": "packages/mobile/avidity/android/app/src/release/java/com/avidity/ReactNativeFlipper.java",
+        "hash": "1004615485409942722"
+      },
+      {
+        "file": "packages/mobile/avidity/android/build.gradle",
+        "hash": "15784805952569049714"
+      },
+      {
+        "file": "packages/mobile/avidity/android/gradle.properties",
+        "hash": "13135622246796849421"
+      },
+      {
+        "file": "packages/mobile/avidity/android/gradle/wrapper/gradle-wrapper.jar",
+        "hash": "11064621541907778082"
+      },
+      {
+        "file": "packages/mobile/avidity/android/gradle/wrapper/gradle-wrapper.properties",
+        "hash": "2303248026073298933"
+      },
+      {
+        "file": "packages/mobile/avidity/android/gradlew",
+        "hash": "10638153001440534383"
+      },
+      {
+        "file": "packages/mobile/avidity/android/gradlew.bat",
+        "hash": "18278234324834608139"
+      },
+      {
+        "file": "packages/mobile/avidity/android/link-assets-manifest.json",
+        "hash": "5425869593920275298"
+      },
+      {
+        "file": "packages/mobile/avidity/android/settings.gradle",
+        "hash": "7602887038372028629"
+      },
+      {
+        "file": "packages/mobile/avidity/app.json",
+        "hash": "8204201260710773859"
+      },
+      {
+        "file": "packages/mobile/avidity/babel.config.json",
+        "hash": "342140665667840562"
+      },
+      {
+        "file": "packages/mobile/avidity/ios/.xcode.env",
+        "hash": "12704946661619936455"
+      },
+      {
+        "file": "packages/mobile/avidity/ios/Avidity.xcodeproj/project.pbxproj",
+        "hash": "7538279501980925786"
+      },
+      {
+        "file": "packages/mobile/avidity/ios/Avidity.xcodeproj/xcshareddata/xcschemes/Avidity.xcscheme",
+        "hash": "17910418643895389239"
+      },
+      {
+        "file": "packages/mobile/avidity/ios/Avidity.xcworkspace/contents.xcworkspacedata",
+        "hash": "1798767160792694586"
+      },
+      {
+        "file": "packages/mobile/avidity/ios/Avidity.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist",
+        "hash": "12722229457274558422"
+      },
+      {
+        "file": "packages/mobile/avidity/ios/Avidity/AppDelegate.h",
+        "hash": "4105548683868581501"
+      },
+      {
+        "file": "packages/mobile/avidity/ios/Avidity/AppDelegate.mm",
+        "hash": "11473787516895296314"
+      },
+      {
+        "file": "packages/mobile/avidity/ios/Avidity/Images.xcassets/AppIcon.appiconset/Contents.json",
+        "hash": "11595540762170193386"
+      },
+      {
+        "file": "packages/mobile/avidity/ios/Avidity/Images.xcassets/Contents.json",
+        "hash": "16272710630576636421"
+      },
+      {
+        "file": "packages/mobile/avidity/ios/Avidity/Info.plist",
+        "hash": "8672503374597367569"
+      },
+      {
+        "file": "packages/mobile/avidity/ios/Avidity/LaunchScreen.storyboard",
+        "hash": "13853613947694925528"
+      },
+      {
+        "file": "packages/mobile/avidity/ios/Avidity/main.m",
+        "hash": "3932908704591016568"
+      },
+      {
+        "file": "packages/mobile/avidity/ios/AvidityTests/AvidityTests.m",
+        "hash": "11486713468066533565"
+      },
+      {
+        "file": "packages/mobile/avidity/ios/AvidityTests/Info.plist",
+        "hash": "490535150174461673"
+      },
+      {
+        "file": "packages/mobile/avidity/ios/Podfile",
+        "hash": "15717271728384875993"
+      },
+      {
+        "file": "packages/mobile/avidity/ios/Podfile.lock",
+        "hash": "16450012875992686103"
+      },
+      {
+        "file": "packages/mobile/avidity/ios/link-assets-manifest.json",
+        "hash": "5425869593920275298"
+      },
+      {
+        "file": "packages/mobile/avidity/jest.config.ts",
+        "hash": "18149253983012625536"
+      },
+      {
+        "file": "packages/mobile/avidity/metro.config.js",
+        "hash": "5365908645546752773",
+        "deps": [
+          "npm:@nx/react-native",
+          "npm:@react-native/metro-config",
+          "npm:metro-config",
+          "npm:react-native-svg-transformer"
+        ]
+      },
+      {
+        "file": "packages/mobile/avidity/package.json",
+        "hash": "362914546943012869",
+        "deps": [
+          "npm:@react-native/metro-config",
+          "npm:@testing-library/jest-native",
+          "npm:@testing-library/react-native",
+          "npm:react",
+          "npm:react-native",
+          "npm:react-native-svg",
+          "npm:metro-config",
+          "npm:react-native-svg-transformer",
+          "npm:react-native-vector-icons",
+          "npm:@react-native-async-storage/async-storage",
+          "npm:@react-navigation/bottom-tabs",
+          "npm:@react-navigation/native",
+          "npm:@react-navigation/native-stack",
+          "npm:@react-navigation/stack",
+          "npm:@shopify/flash-list",
+          "npm:@shopify/restyle",
+          "npm:date-holidays",
+          "npm:dayjs",
+          "npm:formik",
+          "npm:immer",
+          "npm:react-native-calendars",
+          "npm:react-native-date-picker",
+          "npm:react-native-gesture-handler",
+          "npm:react-native-keyboard-aware-scroll-view",
+          "npm:react-native-pager-view",
+          "npm:react-native-reanimated",
+          "npm:react-native-redash",
+          "npm:react-native-safe-area-context",
+          "npm:react-native-screens",
+          "npm:react-native-size-matters",
+          "npm:victory-native"
+        ]
+      },
+      {
+        "file": "packages/mobile/avidity/project.json",
+        "hash": "1073427175301452184"
+      },
+      {
+        "file": "packages/mobile/avidity/react-native.config.js",
+        "hash": "17667096336428908482"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/App.spec.tsx",
+        "hash": "3379911321437688186",
+        "deps": [
+          "npm:react",
+          "npm:@testing-library/react-native"
+        ]
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/App.tsx",
+        "hash": "2088067975390385599",
+        "deps": [
+          "npm:react-native",
+          "npm:react-native-vector-icons"
+        ]
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/fonts/Roboto-Black.ttf",
+        "hash": "7491435733589274410"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/fonts/Roboto-BlackItalic.ttf",
+        "hash": "6367488612617151901"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/fonts/Roboto-Bold.ttf",
+        "hash": "11118875498363073866"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/fonts/Roboto-BoldItalic.ttf",
+        "hash": "18208016290686678219"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/fonts/Roboto-Italic.ttf",
+        "hash": "2871797822062044145"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/fonts/Roboto-Light.ttf",
+        "hash": "11743008747391677234"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/fonts/Roboto-LightItalic.ttf",
+        "hash": "7345932088123158190"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/fonts/Roboto-Medium.ttf",
+        "hash": "12534942947226036357"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/fonts/Roboto-MediumItalic.ttf",
+        "hash": "10354767113262496729"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/fonts/Roboto-Regular.ttf",
+        "hash": "9500555408324524103"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/fonts/Roboto-Thin.ttf",
+        "hash": "16494021493287799544"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/fonts/Roboto-ThinItalic.ttf",
+        "hash": "8572171983110193039"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_animal.svg",
+        "hash": "15976652774598124286"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_bad_gateway.svg",
+        "hash": "530404161829777217"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_bored.svg",
+        "hash": "1702148449738576102"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_business_plan.svg",
+        "hash": "3000745346068751239"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_business_travel.svg",
+        "hash": "6011378534169306503"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_car_drifting.svg",
+        "hash": "17046859310443728591"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_come_back_later.svg",
+        "hash": "15385698034044765988"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_connection_lost.svg",
+        "hash": "15543048115499708682"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_cool_guy.svg",
+        "hash": "6733694471094861826"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_couple.svg",
+        "hash": "1698637080725978912"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_delete_confirmation.svg",
+        "hash": "17170694323768139072"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_deleted.svg",
+        "hash": "5154416535241730746"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_delivery.svg",
+        "hash": "8266149651273534359"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_done.svg",
+        "hash": "5269762287403478652"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_downloading.svg",
+        "hash": "10463096964015786301"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_e_commerce.svg",
+        "hash": "14395115708302689121"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_error.svg",
+        "hash": "5937138825190965300"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_explore.svg",
+        "hash": "13712954017160229564"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_failure.svg",
+        "hash": "9859969114878175219"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_family.svg",
+        "hash": "16764500322457494156"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_fashion.svg",
+        "hash": "6300849360850705077"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_finances.svg",
+        "hash": "2634408355936990838"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_food.svg",
+        "hash": "6299101184129673606"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_freedom.svg",
+        "hash": "14819264925670914620"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_friends.svg",
+        "hash": "13965021852900653821"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_globe.svg",
+        "hash": "13463847385449642603"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_growth.svg",
+        "hash": "16683940409273250465"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_hangout.svg",
+        "hash": "4620186106561656185"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_health_research.svg",
+        "hash": "17954022264440334734"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_hello.svg",
+        "hash": "7467180463087131851"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_landscape.svg",
+        "hash": "16758476252645451441"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_list_is_empty.svg",
+        "hash": "12298652623087961630"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_loading.svg",
+        "hash": "8893082970645648990"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_location.svg",
+        "hash": "16083828826368445939"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_medicine.svg",
+        "hash": "17528799819124623185"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_message_sent.svg",
+        "hash": "4093553586823404813"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_mind_blowing.svg",
+        "hash": "15364642327462352462"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_mother_nature.svg",
+        "hash": "11736922105103060402"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_music.svg",
+        "hash": "6377263540500491937"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_navigate.svg",
+        "hash": "11441861445778503710"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_news.svg",
+        "hash": "5108304768569922953"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_no_comments.svg",
+        "hash": "7373279872406839693"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_no_messages.svg",
+        "hash": "14893468189343198269"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_no_results.svg",
+        "hash": "6704009975748998876"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_order_placed.svg",
+        "hash": "10891690162242595714"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_painter.svg",
+        "hash": "7093474086619098896"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_portrait.svg",
+        "hash": "9549880593931728021"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_relationship.svg",
+        "hash": "5707259941721164657"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_relax.svg",
+        "hash": "17352035282105912145"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_run.svg",
+        "hash": "14138178811358961764"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_safe_box.svg",
+        "hash": "15655183194921235904"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_science.svg",
+        "hash": "3684081745760609106"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_searching.svg",
+        "hash": "9560868007074426046"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_security.svg",
+        "hash": "393778504932464554"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_settings.svg",
+        "hash": "2606614860175210230"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_sign_in.svg",
+        "hash": "12502093391807309316"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_sign_out.svg",
+        "hash": "3510483328006571476"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_sign_up.svg",
+        "hash": "3396684118574989018"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_social_distancing.svg",
+        "hash": "9342809493387860576"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_soulful.svg",
+        "hash": "16746134394071290969"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_sports.svg",
+        "hash": "12285088780876046010"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_tasks.svg",
+        "hash": "3355013178992971404"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_technology.svg",
+        "hash": "3546643432368186788"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_travel.svg",
+        "hash": "9588655644586510170"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_under_construction.svg",
+        "hash": "5790507872346029580"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_unsubscribed.svg",
+        "hash": "6301407906527829187"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_upgrading.svg",
+        "hash": "433251244171712723"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_victory.svg",
+        "hash": "14259256537664880402"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_video_call.svg",
+        "hash": "10164470443892479206"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_virus.svg",
+        "hash": "8530783803178477133"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_wear_a_mask.svg",
+        "hash": "5866355422120594965"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_welcome.svg",
+        "hash": "7644774214678383704"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_work_from_home.svg",
+        "hash": "6328136454971510741"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_workflow.svg",
+        "hash": "3707225307171195834"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/illustration_writing.svg",
+        "hash": "8467443828403376328"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/illustrations/index.ts",
+        "hash": "13822750013833829834"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/assets/index.ts",
+        "hash": "7835494841329194076"
+      },
+      {
+        "file": "packages/mobile/avidity/src/app/types/declaration.d.ts",
+        "hash": "3354311636493595016",
+        "deps": [
+          "npm:react",
+          "npm:react-native-svg"
+        ]
+      },
+      {
+        "file": "packages/mobile/avidity/src/main.tsx",
+        "hash": "4703592302550328477",
+        "deps": [
+          "npm:react-native"
+        ]
+      },
+      {
+        "file": "packages/mobile/avidity/test-setup.ts",
+        "hash": "9919311210714806624",
+        "deps": [
+          "npm:@testing-library/jest-native"
+        ]
+      },
+      {
+        "file": "packages/mobile/avidity/tsconfig.app.json",
+        "hash": "15870457732686368424"
+      },
+      {
+        "file": "packages/mobile/avidity/tsconfig.json",
+        "hash": "1754873082611176780"
+      },
+      {
+        "file": "packages/mobile/avidity/tsconfig.spec.json",
+        "hash": "622485232520597903"
+      }
+    ],
+    "shared-helpers": [
+      {
+        "file": "packages/shared/helpers/.eslintrc.json",
+        "hash": "9703569748258640057"
+      },
+      {
+        "file": "packages/shared/helpers/README.md",
+        "hash": "2497875519422677425"
+      },
+      {
+        "file": "packages/shared/helpers/jest.config.ts",
+        "hash": "11600587243757260259"
+      },
+      {
+        "file": "packages/shared/helpers/package.json",
+        "hash": "255822138439834550"
+      },
+      {
+        "file": "packages/shared/helpers/project.json",
+        "hash": "7407425176946101985"
+      },
+      {
+        "file": "packages/shared/helpers/src/index.ts",
+        "hash": "14428353282588746736"
+      },
+      {
+        "file": "packages/shared/helpers/src/lib/constants.ts",
+        "hash": "3490265402728115206"
+      },
+      {
+        "file": "packages/shared/helpers/src/lib/createSelectors.ts",
+        "hash": "3785187008002027149",
+        "deps": [
+          "npm:zustand"
+        ]
+      },
+      {
+        "file": "packages/shared/helpers/src/lib/goalHelpers.spec.ts",
+        "hash": "6801247685161410546"
+      },
+      {
+        "file": "packages/shared/helpers/src/lib/goalHelpers.ts",
+        "hash": "2449459277353417162",
+        "deps": [
+          "npm:lodash",
+          "npm:uuid",
+          "npm:dayjs",
+          "npm:date-holidays",
+          "shared-types",
+          "shared-utils",
+          "shared-stores"
+        ]
+      },
+      {
+        "file": "packages/shared/helpers/src/lib/index.ts",
+        "hash": "2493537854522257980"
+      },
+      {
+        "file": "packages/shared/helpers/src/lib/scheduleHelpers.ts",
+        "hash": "5096344863059010544",
+        "deps": [
+          "shared-types",
+          "shared-utils",
+          "npm:axios",
+          "npm:dayjs",
+          "npm:lodash",
+          "npm:react"
+        ]
+      },
+      {
+        "file": "packages/shared/helpers/tsconfig.json",
+        "hash": "1098465750514412960"
+      },
+      {
+        "file": "packages/shared/helpers/tsconfig.lib.json",
+        "hash": "5554291030212586824"
+      },
+      {
+        "file": "packages/shared/helpers/tsconfig.spec.json",
+        "hash": "9110660443763673899"
+      }
+    ],
+    "web-avidity-e2e": [
+      {
+        "file": "packages/web/avidity-e2e/.eslintrc.json",
+        "hash": "7973176717762084071"
+      },
+      {
+        "file": "packages/web/avidity-e2e/cypress.config.ts",
+        "hash": "15414076024138857470",
+        "deps": [
+          "npm:cypress",
+          "npm:@nx/cypress"
+        ]
+      },
+      {
+        "file": "packages/web/avidity-e2e/project.json",
+        "hash": "5359979069623858063"
+      },
+      {
+        "file": "packages/web/avidity-e2e/src/e2e/app.cy.ts",
+        "hash": "13462555020157221948"
+      },
+      {
+        "file": "packages/web/avidity-e2e/src/fixtures/example.json",
+        "hash": "11614668686582597233"
+      },
+      {
+        "file": "packages/web/avidity-e2e/src/support/app.po.ts",
+        "hash": "11157016311132186162"
+      },
+      {
+        "file": "packages/web/avidity-e2e/src/support/commands.ts",
+        "hash": "7314691991044890572"
+      },
+      {
+        "file": "packages/web/avidity-e2e/src/support/e2e.ts",
+        "hash": "3666078656922506009"
+      },
+      {
+        "file": "packages/web/avidity-e2e/tsconfig.json",
+        "hash": "7790126871106100160"
+      }
+    ],
+    "server": [
+      {
+        "file": "packages/server/.eslintrc.json",
+        "hash": "13800677001662881425"
+      },
+      {
+        "file": "packages/server/jest.config.ts",
+        "hash": "3995731105931845579"
+      },
+      {
+        "file": "packages/server/project.json",
+        "hash": "4866606774901253507"
+      },
+      {
+        "file": "packages/server/src/assets/.gitkeep",
+        "hash": "3244421341483603138"
+      },
+      {
+        "file": "packages/server/src/main.ts",
+        "hash": "10278849143939227291",
+        "deps": [
+          "npm:express",
+          "npm:path"
+        ]
+      },
+      {
+        "file": "packages/server/tsconfig.app.json",
+        "hash": "6758816428596401805"
+      },
+      {
+        "file": "packages/server/tsconfig.json",
+        "hash": "3490524966360018312"
+      },
+      {
+        "file": "packages/server/tsconfig.spec.json",
+        "hash": "11550347367511341917"
+      },
+      {
+        "file": "packages/server/webpack.config.js",
+        "hash": "10619490397189790225",
+        "deps": [
+          "npm:@nx/webpack"
+        ]
+      }
+    ]
+  }
+}

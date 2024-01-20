@@ -1,4 +1,4 @@
-import { DateParam, Weekdays } from '@shared/types';
+import { DateParam } from '@shared/types';
 import * as dayjs from 'dayjs';
 import { Dayjs } from 'dayjs';
 import * as utc from 'dayjs/plugin/utc';
@@ -8,6 +8,7 @@ dayjs.extend(utc);
 
 export const DAYJS_STANDARD_FORMAT_TYPE = 'YYYY-MM-DD';
 
+type Weekdays = 'sunday' | 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday';
 export const WEEKDAYS: Weekdays[] = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
 export const WEEKDAYS_MAP = { sunday: 0, monday: 1, tuesday: 2, wednesday: 3, thursday: 4, friday: 5, saturday: 6 };
 
