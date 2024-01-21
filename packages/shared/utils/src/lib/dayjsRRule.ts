@@ -6,41 +6,80 @@ import { getStandardFormat } from './dayjsUtils';
 export type RecurrenceRule = {
   frequency: 'yearly' | 'monthly' | 'weekly' | 'daily' | 'hourly';
   start?: DateParam; //recurrence start
-  timezone?: string;
+  timeZone?: string;
   until?: DateParam;
-  count: number;
+  count?: number;
   interval?: number;
+  byweekday?: ('monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday')[];
 };
 
 function createRecurrenceRule(params: { recurrenceRule: RecurrenceRule }) {
   const recurrenceRule = params.recurrenceRule;
-  let frequency = 0;
+  let frequency = RRule.DAILY;
   switch (recurrenceRule.frequency) {
     case 'yearly':
-      frequency = 0;
+      frequency = RRule.YEARLY;
       break;
     case 'monthly':
-      frequency = 1;
+      frequency = RRule.MONTHLY;
       break;
     case 'weekly':
-      frequency = 2;
+      frequency = RRule.WEEKLY;
       break;
     case 'daily':
-      frequency = 3;
+      frequency = RRule.DAILY;
       break;
     case 'hourly':
-      frequency = 4;
+      frequency = RRule.HOURLY;
       break;
     default:
-      frequency = 0;
+      frequency = RRule.DAILY;
+  }
+  let byweekday: ('MO' | 'TU' | 'WE' | 'TH' | 'FR' | 'SA' | 'SU')[] | null = null;
+  if (recurrenceRule.byweekday) {
+    recurrenceRule.byweekday.forEach((_w) => {
+      let weekday: ('MO' | 'TU' | 'WE' | 'TH' | 'FR' | 'SA' | 'SU') | null = null;
+      switch (_w) {
+        case 'monday':
+          weekday = 'MO';
+          break;
+        case 'tuesday':
+          weekday = 'TU';
+          break;
+        case 'wednesday':
+          weekday = 'WE';
+          break;
+        case 'thursday':
+          weekday = 'TH';
+          break;
+        case 'friday':
+          weekday = 'FR';
+          break;
+        case 'saturday':
+          weekday = 'SA';
+          break;
+        case 'sunday':
+          weekday = 'SU';
+          break;
+        default:
+          weekday = null;
+      }
+      if (weekday) {
+        if (!byweekday) {
+          byweekday = [];
+        }
+        byweekday.push(weekday);
+      }
+    });
   }
   return new RRule({
     freq: frequency,
     dtstart: recurrenceRule.start ? dayjs(recurrenceRule.start).toDate() : null,
-    tzid: recurrenceRule.timezone ?? null,
+    tzid: recurrenceRule.timeZone ?? null,
     until: recurrenceRule.until ? dayjs(recurrenceRule.until).toDate() : null,
     count: recurrenceRule.count,
     interval: recurrenceRule.interval ?? 1,
+    byweekday,
   });
 }
 

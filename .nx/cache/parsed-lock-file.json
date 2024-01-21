@@ -6062,9 +6062,9 @@
       "type": "npm",
       "name": "npm:classnames",
       "data": {
-        "version": "2.3.2",
+        "version": "2.5.1",
         "packageName": "classnames",
-        "hash": "sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw=="
+        "hash": "sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow=="
       }
     },
     "npm:clean-stack": {

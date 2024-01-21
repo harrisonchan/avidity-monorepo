@@ -136,6 +136,81 @@
         ]
       }
     },
+    "shared-helpers": {
+      "name": "shared-helpers",
+      "type": "lib",
+      "data": {
+        "name": "shared-helpers",
+        "root": "packages/shared/helpers",
+        "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+        "sourceRoot": "packages/shared/helpers/src",
+        "projectType": "library",
+        "targets": {
+          "build": {
+            "dependsOn": [
+              "^build"
+            ],
+            "inputs": [
+              "production",
+              "^production"
+            ],
+            "executor": "@nx/js:tsc",
+            "outputs": [
+              "{options.outputPath}"
+            ],
+            "options": {
+              "outputPath": "dist/packages/shared/helpers",
+              "main": "packages/shared/helpers/src/index.ts",
+              "tsConfig": "packages/shared/helpers/tsconfig.lib.json",
+              "assets": [
+                "packages/shared/helpers/*.md"
+              ]
+            },
+            "configurations": {}
+          },
+          "lint": {
+            "inputs": [
+              "default",
+              "{workspaceRoot}/.eslintrc.json",
+              "{workspaceRoot}/.eslintignore"
+            ],
+            "executor": "@nx/linter:eslint",
+            "outputs": [
+              "{options.outputFile}"
+            ],
+            "options": {
+              "lintFilePatterns": [
+                "packages/shared/helpers/**/*.ts"
+              ]
+            },
+            "configurations": {}
+          },
+          "test": {
+            "inputs": [
+              "default",
+              "^production",
+              "{workspaceRoot}/jest.preset.js"
+            ],
+            "executor": "@nx/jest:jest",
+            "outputs": [
+              "{workspaceRoot}/coverage/{projectRoot}"
+            ],
+            "options": {
+              "jestConfig": "packages/shared/helpers/jest.config.ts",
+              "passWithNoTests": true
+            },
+            "configurations": {
+              "ci": {
+                "ci": true,
+                "codeCoverage": true
+              }
+            }
+          }
+        },
+        "tags": [],
+        "implicitDependencies": []
+      }
+    },
     "mobile-avidity": {
       "name": "mobile-avidity",
       "type": "app",
@@ -298,81 +373,6 @@
         "implicitDependencies": []
       }
     },
-    "shared-helpers": {
-      "name": "shared-helpers",
-      "type": "lib",
-      "data": {
-        "name": "shared-helpers",
-        "root": "packages/shared/helpers",
-        "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-        "sourceRoot": "packages/shared/helpers/src",
-        "projectType": "library",
-        "targets": {
-          "build": {
-            "dependsOn": [
-              "^build"
-            ],
-            "inputs": [
-              "production",
-              "^production"
-            ],
-            "executor": "@nx/js:tsc",
-            "outputs": [
-              "{options.outputPath}"
-            ],
-            "options": {
-              "outputPath": "dist/packages/shared/helpers",
-              "main": "packages/shared/helpers/src/index.ts",
-              "tsConfig": "packages/shared/helpers/tsconfig.lib.json",
-              "assets": [
-                "packages/shared/helpers/*.md"
-              ]
-            },
-            "configurations": {}
-          },
-          "lint": {
-            "inputs": [
-              "default",
-              "{workspaceRoot}/.eslintrc.json",
-              "{workspaceRoot}/.eslintignore"
-            ],
-            "executor": "@nx/linter:eslint",
-            "outputs": [
-              "{options.outputFile}"
-            ],
-            "options": {
-              "lintFilePatterns": [
-                "packages/shared/helpers/**/*.ts"
-              ]
-            },
-            "configurations": {}
-          },
-          "test": {
-            "inputs": [
-              "default",
-              "^production",
-              "{workspaceRoot}/jest.preset.js"
-            ],
-            "executor": "@nx/jest:jest",
-            "outputs": [
-              "{workspaceRoot}/coverage/{projectRoot}"
-            ],
-            "options": {
-              "jestConfig": "packages/shared/helpers/jest.config.ts",
-              "passWithNoTests": true
-            },
-            "configurations": {
-              "ci": {
-                "ci": true,
-                "codeCoverage": true
-              }
-            }
-          }
-        },
-        "tags": [],
-        "implicitDependencies": []
-      }
-    },
     "shared-stores": {
       "name": "shared-stores",
       "type": "lib",
@@ -448,60 +448,6 @@
         "implicitDependencies": []
       }
     },
-    "shared-types": {
-      "name": "shared-types",
-      "type": "lib",
-      "data": {
-        "name": "shared-types",
-        "root": "packages/shared/types",
-        "$schema": "../../../node_modules/nx/schemas/project-schema.json",
-        "sourceRoot": "packages/shared/types/src",
-        "projectType": "library",
-        "targets": {
-          "build": {
-            "dependsOn": [
-              "^build"
-            ],
-            "inputs": [
-              "production",
-              "^production"
-            ],
-            "executor": "@nx/js:tsc",
-            "outputs": [
-              "{options.outputPath}"
-            ],
-            "options": {
-              "outputPath": "dist/packages/shared/types",
-              "main": "packages/shared/types/src/index.ts",
-              "tsConfig": "packages/shared/types/tsconfig.lib.json",
-              "assets": [
-                "packages/shared/types/*.md"
-              ]
-            },
-            "configurations": {}
-          },
-          "lint": {
-            "inputs": [
-              "default",
-              "{workspaceRoot}/.eslintrc.json",
-              "{workspaceRoot}/.eslintignore"
-            ],
-            "executor": "@nx/linter:eslint",
-            "outputs": [
-              "{options.outputFile}"
-            ],
-            "options": {
-              "lintFilePatterns": [
-                "packages/shared/types/**/*.ts"
-              ]
-            },
-            "configurations": {}
-          }
-        },
-        "tags": [],
-        "implicitDependencies": []
-      }
-    },
     "shared-utils": {
       "name": "shared-utils",
       "type": "lib",
@@ -571,6 +517,60 @@
                 "codeCoverage": true
               }
             }
+          }
+        },
+        "tags": [],
+        "implicitDependencies": []
+      }
+    },
+    "shared-types": {
+      "name": "shared-types",
+      "type": "lib",
+      "data": {
+        "name": "shared-types",
+        "root": "packages/shared/types",
+        "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+        "sourceRoot": "packages/shared/types/src",
+        "projectType": "library",
+        "targets": {
+          "build": {
+            "dependsOn": [
+              "^build"
+            ],
+            "inputs": [
+              "production",
+              "^production"
+            ],
+            "executor": "@nx/js:tsc",
+            "outputs": [
+              "{options.outputPath}"
+            ],
+            "options": {
+              "outputPath": "dist/packages/shared/types",
+              "main": "packages/shared/types/src/index.ts",
+              "tsConfig": "packages/shared/types/tsconfig.lib.json",
+              "assets": [
+                "packages/shared/types/*.md"
+              ]
+            },
+            "configurations": {}
+          },
+          "lint": {
+            "inputs": [
+              "default",
+              "{workspaceRoot}/.eslintrc.json",
+              "{workspaceRoot}/.eslintignore"
+            ],
+            "executor": "@nx/linter:eslint",
+            "outputs": [
+              "{options.outputFile}"
+            ],
+            "options": {
+              "lintFilePatterns": [
+                "packages/shared/types/**/*.ts"
+              ]
+            },
+            "configurations": {}
           }
         },
         "tags": [],
@@ -6917,9 +6917,9 @@
       "type": "npm",
       "name": "npm:classnames",
       "data": {
-        "version": "2.3.2",
+        "version": "2.5.1",
         "packageName": "classnames",
-        "hash": "sha512-CSbhY4cFEJRe6/GQzIk5qXZ4Jeg5pcsP7b5peFSDpffpe1cqjASH/n9UTjBwOp6XpMSTwQ8Za2K5V02ueA7Tmw=="
+        "hash": "sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow=="
       }
     },
     "npm:clean-stack": {
@@ -17789,6 +17789,58 @@
         "type": "static"
       }
     ],
+    "shared-helpers": [
+      {
+        "source": "shared-helpers",
+        "target": "npm:zustand",
+        "type": "static"
+      },
+      {
+        "source": "shared-helpers",
+        "target": "npm:lodash",
+        "type": "static"
+      },
+      {
+        "source": "shared-helpers",
+        "target": "npm:uuid",
+        "type": "static"
+      },
+      {
+        "source": "shared-helpers",
+        "target": "npm:dayjs",
+        "type": "static"
+      },
+      {
+        "source": "shared-helpers",
+        "target": "npm:date-holidays",
+        "type": "static"
+      },
+      {
+        "source": "shared-helpers",
+        "target": "shared-types",
+        "type": "static"
+      },
+      {
+        "source": "shared-helpers",
+        "target": "shared-utils",
+        "type": "static"
+      },
+      {
+        "source": "shared-helpers",
+        "target": "shared-stores",
+        "type": "static"
+      },
+      {
+        "source": "shared-helpers",
+        "target": "npm:axios",
+        "type": "static"
+      },
+      {
+        "source": "shared-helpers",
+        "target": "npm:react",
+        "type": "static"
+      }
+    ],
     "mobile-avidity": [
       {
         "source": "mobile-avidity",
@@ -17951,58 +18003,6 @@
         "type": "static"
       }
     ],
-    "shared-helpers": [
-      {
-        "source": "shared-helpers",
-        "target": "npm:zustand",
-        "type": "static"
-      },
-      {
-        "source": "shared-helpers",
-        "target": "npm:lodash",
-        "type": "static"
-      },
-      {
-        "source": "shared-helpers",
-        "target": "npm:uuid",
-        "type": "static"
-      },
-      {
-        "source": "shared-helpers",
-        "target": "npm:dayjs",
-        "type": "static"
-      },
-      {
-        "source": "shared-helpers",
-        "target": "npm:date-holidays",
-        "type": "static"
-      },
-      {
-        "source": "shared-helpers",
-        "target": "shared-types",
-        "type": "static"
-      },
-      {
-        "source": "shared-helpers",
-        "target": "shared-utils",
-        "type": "static"
-      },
-      {
-        "source": "shared-helpers",
-        "target": "shared-stores",
-        "type": "static"
-      },
-      {
-        "source": "shared-helpers",
-        "target": "npm:axios",
-        "type": "static"
-      },
-      {
-        "source": "shared-helpers",
-        "target": "npm:react",
-        "type": "static"
-      }
-    ],
     "shared-stores": [
       {
         "source": "shared-stores",
@@ -18035,6 +18035,23 @@
         "type": "static"
       }
     ],
+    "shared-utils": [
+      {
+        "source": "shared-utils",
+        "target": "npm:rrule",
+        "type": "static"
+      },
+      {
+        "source": "shared-utils",
+        "target": "npm:dayjs",
+        "type": "static"
+      },
+      {
+        "source": "shared-utils",
+        "target": "shared-types",
+        "type": "static"
+      }
+    ],
     "shared-types": [
       {
         "source": "shared-types",
@@ -18044,23 +18061,6 @@
       {
         "source": "shared-types",
         "target": "shared-utils",
-        "type": "static"
-      }
-    ],
-    "shared-utils": [
-      {
-        "source": "shared-utils",
-        "target": "shared-types",
-        "type": "static"
-      },
-      {
-        "source": "shared-utils",
-        "target": "npm:dayjs",
-        "type": "static"
-      },
-      {
-        "source": "shared-utils",
-        "target": "npm:rrule",
         "type": "static"
       }
     ],
@@ -18097,12 +18097,22 @@
       },
       {
         "source": "web-avidity",
+        "target": "npm:formik",
+        "type": "static"
+      },
+      {
+        "source": "web-avidity",
         "target": "npm:dayjs",
         "type": "static"
       },
       {
         "source": "web-avidity",
         "target": "shared-stores",
+        "type": "static"
+      },
+      {
+        "source": "web-avidity",
+        "target": "npm:classnames",
         "type": "static"
       },
       {

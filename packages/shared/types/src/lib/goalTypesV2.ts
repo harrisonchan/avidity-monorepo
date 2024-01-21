@@ -26,7 +26,7 @@ export type GoalDateTimeEntry = {
 export type Goal = {
   id: string;
   title: string;
-  description?: string;
+  description: string | null;
   icon: GoalIcon;
   dateTimeData: {
     start: GoalDateTimeEntry;
@@ -43,7 +43,7 @@ export type Goal = {
 export type GoalGroup = {
   id: string;
   title: string;
-  description?: string;
+  description: string | null;
   illustration: GoalIllustration;
   goals: Set<string>; //goal ids
   date: { start: string; end: string } | null;
