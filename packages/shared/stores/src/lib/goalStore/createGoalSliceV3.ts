@@ -5,7 +5,7 @@ import * as utc from 'dayjs/plugin/utc';
 import * as tz from 'dayjs/plugin/timezone';
 import { DateParam, Goal, GoalDateTimeEntry, GoalGroup, GoalStatus, TimeFormat } from '@shared/types';
 import { getRecurrenceDates, getStandardFormat } from '@shared/utils';
-import { generateGoalId, generateGroupId } from '@shared/helpers';
+import { generateGoalId, generateGroupId, getStreakData } from '@shared/helpers';
 
 dayjs.extend(utc);
 dayjs.extend(tz);
@@ -98,11 +98,13 @@ const createGoalSlice: StateCreator<
     const goals: CachedGoal[] = Object.values(get().dateCache[newSelectedDate]);
     const groups: GoalGroup[] = [];
     const prevDayGoals: CachedGoal[] = Object.values(get().dateCache[getStandardFormat(dayjs(newSelectedDate).subtract(1, 'day'))]);
+    console.log(prevDayGoals);
     prevDayGoals.forEach((_g) => {
       const goal = get().goals[_g.id];
       const start = dayjs(goal.dateTimeData.start.date).tz(goal.dateTimeData.start.timeZone);
       const end = dayjs(goal.dateTimeData.end.date).tz(goal.dateTimeData.end.timeZone);
-      if (start.diff(end, 'day') > 0) {
+      console.log('diff', start.diff(end, 'day'));
+      if (start.diff(end, 'day') < 0) {
         goals.unshift(_g);
       }
     });
@@ -331,6 +333,9 @@ const createGoalSlice: StateCreator<
               `useGoalStore >> updateGoalStatus: Tried updating goal status for a goal not stored in date cache for selected date. However, was not able to find goal in previous day either. Oops`
             );
         }
+        const streakData = getStreakData(state.goals[id]);
+        console.log(streakData);
+        state.goals[id].streakData = streakData;
       });
 
       //update selected date data if needed

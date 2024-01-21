@@ -23,6 +23,11 @@ export type GoalDateTimeEntry = {
   timeZone?: string;
 };
 
+export type GoalStreakData = {
+  streaks: { dates: string[]; length: number; skips: string[] | null; holidays: string[] | null }[];
+  incomplete: string[];
+};
+
 export type Goal = {
   id: string;
   title: string;
@@ -33,6 +38,7 @@ export type Goal = {
     end: GoalDateTimeEntry;
     status: Record<string, GoalStatus>;
   };
+  streakData: GoalStreakData | null;
   // time: { start: string; end: string } | null;
   // duration: string | null;
   recurrence: RecurrenceRule | null;

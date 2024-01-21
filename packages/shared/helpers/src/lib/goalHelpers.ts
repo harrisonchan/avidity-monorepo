@@ -7,8 +7,8 @@ import * as isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import * as isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import * as isBetween from 'dayjs/plugin/isBetween';
 import Holidays from 'date-holidays';
-import { DateParam, Goal, GoalStatus, TimeFormat } from '@shared/types';
-import { TODAY_DATE_UTC_FORMATTED, getStandardFormat, getUtcDate, getUtcFormat } from '@shared/utils';
+import { DateParam, Goal, GoalStatus, GoalStreakData, TimeFormat } from '@shared/types';
+import { TODAY_DATE_UTC_FORMATTED, getRecurrenceDates, getStandardFormat, getUtcDate, getUtcFormat } from '@shared/utils';
 import { CachedGoal } from '@shared/stores';
 // import { EMPTY_STREAK_ITEM } from './constants';
 
@@ -27,6 +27,91 @@ export function generateGoalId(title: string, date: DateParam): string {
 export function generateGroupId(title: string): string {
   const rightNow = dayjs().utc().toISOString();
   return 'group-' + uuidV5(`${rightNow}_${title}`, UUID_NAMESPACE);
+}
+
+function getGoalStatusStreakValidity(goalStatus: GoalStatus): boolean {
+  switch (goalStatus) {
+    case 'incomplete':
+      return false;
+    default:
+      return true;
+  }
+}
+
+export function getStreakData(goal: Goal, getLatestOnly: boolean = false): GoalStreakData | null {
+  if (!goal.recurrence && !goal.streakData) return null;
+  else if (!goal.recurrence && goal.streakData) return goal.streakData;
+  // else if (goal.recurrence && goal.streakData && getLatestOnly) {
+  //   const goalStatusEntries = Object.entries(goal.dateTimeData.status);
+  //   const orderedGoalStatusDates: string[] = goalStatusEntries
+  //     .map((entry) => entry[0])
+  //     .sort((_d1, _d2) => {
+  //       if (dayjs(_d1).isAfter(_d2)) return 0;
+  //       else return -1;
+  //     });
+  //   const earliestStatusDate = orderedGoalStatusDates[0];
+  //   const latestStatusDate = orderedGoalStatusDates[orderedGoalStatusDates.length - 1];
+  //   const recurrentDates = getRecurrenceDates({ recurrenceRule: { ...goal.recurrence, start: earliestStatusDate, until: latestStatusDate } });
+  //   if (recurrentDates.length >= 2) {
+  //     const latest = recurrentDates[recurrentDates.length - 1];
+  //     const secondLatest = recurrentDates[recurrentDates.length - 2];
+  //     if (getGoalStatusStreakValidity(goal.dateTimeData.status[latest]) && getGoalStatusStreakValidity(goal.dateTimeData.status[secondLatest])) {
+  //     }
+  //   }
+  //   // const streakData: GoalStreakData = {
+  //   //   streaks: [],
+  //   //   incomplete: [],
+  //   // };
+  // }
+  else if (goal.recurrence) {
+    const goalStatusEntries = Object.entries(goal.dateTimeData.status);
+    const orderedGoalStatusDates: string[] = goalStatusEntries
+      .map((entry) => entry[0])
+      .sort((_d1, _d2) => {
+        if (dayjs(_d1).isAfter(_d2)) return 0;
+        else return -1;
+      });
+    const earliestStatusDate = orderedGoalStatusDates[0];
+    const latestStatusDate = orderedGoalStatusDates[orderedGoalStatusDates.length - 1];
+    const recurrentDates = getRecurrenceDates({ recurrenceRule: { ...goal.recurrence, start: earliestStatusDate, until: latestStatusDate } });
+    const streakData: GoalStreakData = {
+      streaks: [],
+      incomplete: [],
+    };
+    const { streaks, incomplete } = streakData;
+    recurrentDates.forEach((date) => {
+      const goalStatus = goal.dateTimeData.status[date];
+      if (goalStatus !== 'incomplete') {
+        if (streaks.length === 0) {
+          streaks.push({
+            dates: [date],
+            skips: goalStatus === 'skip' ? [date] : null,
+            holidays: goalStatus === 'holiday' ? [date] : null,
+            length: 1,
+          });
+        } else {
+          const prevStreak = streaks[streaks.length - 1];
+          prevStreak.dates.push(date);
+          if (goalStatus === 'skip') prevStreak.skips !== null ? prevStreak.skips.push(date) : (prevStreak.skips = [date]);
+          else if (goalStatus === 'holiday') prevStreak.holidays !== null ? prevStreak.holidays.push(date) : (prevStreak.holidays = [date]);
+          prevStreak.length++;
+          streaks[streaks.length - 1] = prevStreak;
+        }
+      } else {
+        incomplete.push(date);
+        //push extra one to streak
+        streaks.push({
+          dates: [],
+          skips: null,
+          holidays: null,
+          length: 0,
+        });
+      }
+    });
+    //remove "extra" item from streaks arr if empty
+    if (streaks[streaks.length - 1].dates.length === 0) streaks.pop();
+    return { streaks, incomplete };
+  } else return null;
 }
 
 // export function convertPartialGoalToDateCacheGoal(params: { goal: Partial<Goal> & Pick<Goal, 'id'>; date: DateParam }): Partial<CachedGoal> {
