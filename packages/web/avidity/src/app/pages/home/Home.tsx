@@ -3,13 +3,16 @@ import { useGoalStore } from '@web/stores';
 import dayjs from 'dayjs';
 import utc from 'dayjs/plugin/utc';
 import timezone from 'dayjs/plugin/timezone';
+import duration from 'dayjs/plugin/duration';
 import { IoAdd, IoAddCircle, IoChevronBack, IoChevronForward, IoRemoveCircleOutline } from 'react-icons/io5';
 import { NewGoal } from '@shared/stores';
 import classNames from 'classnames';
 import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 dayjs.extend(utc);
 dayjs.extend(timezone);
+dayjs.extend(duration);
 
 export default function Home() {
   // const selectedDateData = useGoalStore.use.selectedDateData
@@ -48,13 +51,16 @@ export default function Home() {
         Go to Today
       </button>
       <button className="btn mt-2">Add Goal</button>
+      <button className="btn mt-2">
+        <Link to={`/schedule/${date}`}>Schedule Day</Link>
+      </button>
       <button className="btn mt-2" onClick={clearStore}>
         Clear All
       </button>
     </div>
   );
   const renderGoals = () => (
-    <div className="flex flex-col">
+    <div className="flex flex-col mt-2">
       {goals.map((goal) => (
         <div
           key={goal.id}
@@ -112,11 +118,23 @@ export default function Home() {
       ))}
     </div>
   );
+  const d1 = dayjs.duration({ hours: 1 });
+  const d2 = dayjs.duration({ hours: 2 });
   return (
     <div className="ml-5">
       {renderDateControl()}
       {renderMenu()}
       {renderGoals()}
+      <button
+        className="btn mt-2"
+        onClick={() => {
+          console.log(d1);
+          console.log(d2);
+          console.log(d1.asMilliseconds());
+          console.log(d2.asMilliseconds());
+        }}>
+        Test duration
+      </button>
       {/* <h1>hello world</h1>
       <button
         onClick={() => {

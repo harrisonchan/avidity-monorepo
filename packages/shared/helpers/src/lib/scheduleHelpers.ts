@@ -1,11 +1,20 @@
-import { Goal } from '@shared/types';
-import { TODAY_DATE, shuffleArray } from '@shared/utils';
+import { DateParam, Goal, GoalCategory, GoalDuration, GoalStatus } from '@shared/types';
+import { TODAY_DATE, compareDuration, getStandardFormat, shuffleArray, sortDateArray } from '@shared/utils';
 import axios from 'axios';
 import * as dayjs from 'dayjs';
 import { Dayjs } from 'dayjs';
 import { isNil } from 'lodash';
 // import { EMPTY_GOAL } from './constants';
 import { useEffect, useState } from 'react';
+import * as duration from 'dayjs/plugin/duration';
+import * as isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+import { getGoalDuration } from './goalHelpers';
+
+dayjs.extend(duration);
+dayjs.extend(isSameOrBefore);
+
+const test = dayjs.duration({ months: 1 });
+type boop = duration.Duration;
 
 const MINUTES_IN_HOUR = 60;
 const MINUTES_IN_DAY = 24 * MINUTES_IN_HOUR;
@@ -14,6 +23,228 @@ export type TimeSlot = {
   start: Dayjs;
   end: Dayjs;
 };
+
+/** Sort goals by importance:
+ * Goals with defined start and end times 1st
+ * Goals with duration defined 2nd
+ * Goals without any of the above defined last
+ * ----
+ * If there are goals with time conflicts and check time conflicts option is on, implement option to either pick from most or least time consuming (duration)
+ * ----
+ * Goals with start and end times defined always get scheduled if possible
+ * Goals won't be schedule during respites if disallowed by options
+ * blocked respites in options cannot have goals scheduled (other than goals with start and end times defined)
+ * ----
+ * Schedules can be over 24 hours or extend into or from other days if goals extend into other days
+ **/
+
+type ScheduledGoal = {
+  id: string;
+  start: string; // date time
+  end: string; // date time
+  goalStart: string;
+  goalEnd: string;
+  commute?: {
+    start: string;
+    end: string;
+  };
+  respite?: {
+    start: string;
+    end: string;
+  };
+};
+
+type GoalSchedule = {
+  schedule: ScheduledGoal[];
+  unscheduled: Goal[];
+};
+
+type ScheduleOptions = {
+  scheduleStart?: DateParam;
+  scheduleEnd?: DateParam;
+  sortByMostTimeConsuming?: boolean;
+  checkTimeConflicts?: boolean;
+  scheduleRespiteOptions?: {
+    respites: { start: DateParam; end: DateParam }[];
+    blockedRespites: { start: DateParam; end: DateParam }[]; //for sleeping zzz...or other stuff
+    allowedDuringRespites?: GoalCategory[];
+    allowUncategorizedDuringRespites?: boolean;
+  };
+};
+
+function convertGoalToScheduledGoal(
+  goal: Goal & {
+    dateTimeData: {
+      start: { date: string; dateTime: string; timeZone?: string };
+      end: { date: string; dateTime: string; timeZone?: string };
+      status: Record<string, GoalStatus>;
+    };
+  }
+): ScheduledGoal {
+  // const { commute, respite, duration } = goal
+  let start = dayjs();
+  let end = dayjs();
+  let commute = goal.commute
+    ? {
+        start: dayjs(),
+        end: dayjs(),
+      }
+    : null;
+  let respite = goal.respite
+    ? {
+        start: dayjs(),
+        end: dayjs(),
+      }
+    : null;
+  const goalStart = goal.dateTimeData.start.dateTime;
+  const goalEnd = goal.dateTimeData.end.dateTime;
+  if (goal.commute && commute) {
+    const commuteStart = dayjs(goalStart).subtract(getGoalDuration(goal.commute));
+    start = commuteStart;
+    commute.start = commuteStart;
+    commute.end = dayjs(goalStart);
+  }
+  if (goal.respite && respite) {
+    const respiteStart = dayjs(goalEnd);
+    end = respiteStart;
+    respite.start = respiteStart;
+    respite.end = dayjs(goalEnd).add(getGoalDuration(goal.respite));
+  }
+  return {
+    id: goal.id,
+    start: start.format(),
+    end: end.format(),
+    goalStart,
+    goalEnd,
+    commute: commute
+      ? {
+          start: commute.start.format(),
+          end: commute.end.format(),
+        }
+      : undefined,
+    respite: respite
+      ? {
+          start: respite.start.format(),
+          end: respite.end.format(),
+        }
+      : undefined,
+  };
+}
+
+function createSchedule(params: { date: DateParam; goals: Goal[]; scheduleOptions?: ScheduleOptions }): GoalSchedule {
+  const { date, goals } = params;
+  const scheduleOptions: ScheduleOptions = {
+    scheduleStart: dayjs(params.scheduleOptions?.scheduleStart) ?? dayjs(getStandardFormat(date)).set('hour', 8),
+    scheduleEnd: dayjs(params.scheduleOptions?.scheduleStart) ?? null,
+    sortByMostTimeConsuming: true,
+    checkTimeConflicts: true, // Change to false later. Just testing for now
+    scheduleRespiteOptions: {
+      respites: params.scheduleOptions?.scheduleRespiteOptions?.respites ?? [],
+      blockedRespites: params.scheduleOptions?.scheduleRespiteOptions?.blockedRespites ?? [
+        { start: dayjs(getStandardFormat(date)).set('hour', 22), end: dayjs(getStandardFormat(date)).add(1, 'day').set('hour', 6).set('minute', 30) },
+      ],
+      allowedDuringRespites: params.scheduleOptions?.scheduleRespiteOptions?.allowedDuringRespites ?? ['entertainment', 'food', 'lifestyle'],
+      allowUncategorizedDuringRespites: params.scheduleOptions?.scheduleRespiteOptions?.allowUncategorizedDuringRespites ?? true,
+      // ^change to false later. just testing it as true for now
+    },
+  };
+  //Split goals into 3 arrays of importance
+  const goalsWithTime: (Goal & {
+    dateTimeData: {
+      start: { date: string; dateTime: string; timeZone?: string };
+      end: { date: string; dateTime: string; timeZone?: string };
+      status: Record<string, GoalStatus>;
+    };
+  })[] = [];
+  const goalsWithDuration: Goal[] = [];
+  const goalsWithoutTime: Goal[] = [];
+  goals.forEach((goal) => {
+    const start = goal.dateTimeData.start.dateTime;
+    const end = goal.dateTimeData.end.dateTime;
+    if (start && end && dayjs(end).diff(start, 'minute') > 0) {
+      // I'm stupid and typescript is annoying
+      goalsWithTime.push({
+        ...goal,
+        dateTimeData: {
+          start: {
+            ...goal.dateTimeData.start,
+            dateTime: goal.dateTimeData.start.dateTime!,
+          },
+          end: {
+            ...goal.dateTimeData.end,
+            dateTime: goal.dateTimeData.end.dateTime!,
+          },
+          status: goal.dateTimeData.status,
+        },
+      });
+    } else if (goal.duration) goalsWithDuration.push(goal);
+    else goalsWithoutTime.push(goal);
+  });
+  //Sort all 3 arrays by either starting time or duration (based on scheduleOptions)
+  const sortedGoalsWithTime = goalsWithTime.sort((_g1, _g2) => {
+    const dateTime1 = _g1.dateTimeData.start.dateTime!;
+    const dateTime2 = _g2.dateTimeData.start.dateTime!;
+    if (dayjs(dateTime1).isSameOrBefore(dayjs(dateTime2), 'minute')) return -1;
+    return 1;
+  });
+  const sortedGoalsWithDuration = goalsWithDuration.sort((_g1, _g2) => {
+    const duration1 = getGoalDuration(_g1.duration!);
+    const duration2 = getGoalDuration(_g2.duration!);
+    if (scheduleOptions.sortByMostTimeConsuming) {
+      if (compareDuration(duration2, duration1)) return 1;
+      return -1;
+    } else {
+      if (compareDuration(duration2, duration1)) return 1;
+      return -1;
+    }
+  });
+  //sorted by "work" (disallowed during respites) first
+  const allowedCategoriesDuringRespites = scheduleOptions.scheduleRespiteOptions?.allowedDuringRespites!;
+  const sortedGoalsWithoutTime = goalsWithoutTime.sort((_g1, _g2) => {
+    if (_g1.category && allowedCategoriesDuringRespites.includes(_g1.category)) return 1;
+    return -1;
+  });
+  // Start scheduling
+  const unscheduled: Goal[] = [];
+  // Schedule by importance
+  // Start by finding those with time conflicts if time conflict option is on
+  // If there is a time conflict remove from goalsWithTime array according to schedule options. Then add those removed to unscheduled array
+  if (scheduleOptions.checkTimeConflicts) {
+    goalsWithTime.forEach((_g1, _i1) => {
+      goalsWithTime.forEach((_g2, _i2) => {
+        const dateTime1 = dayjs(_g1.dateTimeData.start.dateTime!);
+        const dateTime2 = dayjs(_g2.dateTimeData.start.dateTime!);
+        if (dateTime1.isSame(dateTime2, 'minute') && _g1.id !== _g2.id) {
+          const duration1 = dayjs.duration(dateTime1.diff(dayjs(_g1.dateTimeData.end.dateTime!)));
+          const duration2 = dayjs.duration(dateTime2.diff(dayjs(_g2.dateTimeData.end.dateTime!)));
+          if (scheduleOptions.sortByMostTimeConsuming) {
+            if (compareDuration(duration1, duration2)) {
+              goalsWithTime.splice(_i2, 1);
+              unscheduled.push(_g2);
+            } else {
+              goalsWithTime.splice(_i1, 1);
+              unscheduled.push(_g1);
+            }
+          } else {
+            if (compareDuration(duration1, duration2)) {
+              goalsWithTime.splice(_i1, 1);
+              unscheduled.push(_g1);
+            } else {
+              goalsWithTime.splice(_i2, 1);
+              unscheduled.push(_g2);
+            }
+          }
+        }
+      });
+    });
+  }
+  const schedule: ScheduledGoal[] = goalsWithTime.map((_g) => convertGoalToScheduledGoal(_g));
+
+  return {
+    schedule: [],
+    unscheduled: [],
+  };
+}
 
 // // Sorts schedule by time
 // function sortSchedule(params: { schedule: Schedule }): Schedule {

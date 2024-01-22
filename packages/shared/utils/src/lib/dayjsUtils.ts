@@ -2,9 +2,13 @@ import { DateParam } from '@shared/types';
 import * as dayjs from 'dayjs';
 import { Dayjs } from 'dayjs';
 import * as utc from 'dayjs/plugin/utc';
+import * as duration from 'dayjs/plugin/duration';
 import { Duration } from 'dayjs/plugin/duration';
+import * as isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 
 dayjs.extend(utc);
+dayjs.extend(duration);
+dayjs.extend(isSameOrBefore);
 
 export const DAYJS_STANDARD_FORMAT_TYPE = 'YYYY-MM-DD';
 
@@ -22,6 +26,36 @@ export function dayjsArrayToString(params: { array: Dayjs[]; getISOString?: bool
 export function stringArrayToDayjs(params: { array: string[] }): Dayjs[] {
   const array = params.array;
   return array.map((item) => dayjs(item));
+}
+
+export function sortDateArray(params: {
+  dateArray: DateParam[];
+  sortType: 'minute' | 'hour' | 'day' | 'month' | 'year';
+  sortByDescending?: boolean;
+}): string[] {
+  const { dateArray, sortType, sortByDescending } = params;
+  return dateArray
+    .sort((_d1, _d2) => {
+      if (dayjs(_d1).isSameOrBefore(dayjs(_d2, sortType))) {
+        if (sortByDescending) return 1;
+        return -1;
+      } else if (sortByDescending) return -1;
+      return 1;
+    })
+    .map((_d) => getStandardFormat(_d));
+}
+
+/**
+ *
+ * @param duration1 dayjs.duration Object
+ * @param duration2 dayjs.duration Object
+ * @returns null if equal and true if duration1 is longer than duration2. Else returns false
+ */
+export function compareDuration(duration1: Duration, duration2: Duration): boolean | null {
+  const d1 = duration1.asMilliseconds();
+  const d2 = duration2.asMilliseconds();
+  if (d1 === d2) return null;
+  else return d1 > d2;
 }
 
 /** creates weekRange Dayjs[] */

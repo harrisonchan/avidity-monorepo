@@ -109,7 +109,9 @@ const createGoalSlice: StateCreator<
       }
     });
     //Finds if statuses have been updated. Returns true if there are new statuses
-    const goalStatusUpdatesCheck = selectedDateData.goals.some((goal) => goal.status !== get().goals[goal.id].dateTimeData.status[newSelectedDate]);
+    const goalStatusUpdatesCheck = selectedDateData.goals.some(
+      (goal) => get().goals[goal.id] && goal.status !== get().goals[goal.id].dateTimeData.status[newSelectedDate]
+    );
     const shouldUpdateCurrent =
       selectedDate !== newSelectedDate ||
       (selectedDate === newSelectedDate && (selectedDateData.goals.length !== goals.length || goalStatusUpdatesCheck));
@@ -335,7 +337,7 @@ const createGoalSlice: StateCreator<
         }
         const streakData = getStreakData(state.goals[id]);
         console.log(streakData);
-        state.goals[id].streakData = streakData;
+        if (streakData) state.goals[id].streakData = streakData.streakData;
       });
 
       //update selected date data if needed
@@ -352,7 +354,7 @@ const createGoalSlice: StateCreator<
     get().removeGoalFromGroup({ id });
 
     // update selected date data if needed
-    get().updateSelectedDateData({ newDate: { date: goal.dateTimeData.start.date, timeZone: goal.dateTimeData.start.timeZone } });
+    get().updateSelectedDateData({ newDate: { date: get().selectedDateData.date, timeZone: goal.dateTimeData.start.timeZone } });
   },
   addGroup: (params) => {
     const group = params.group;

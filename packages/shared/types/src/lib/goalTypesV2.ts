@@ -24,9 +24,59 @@ export type GoalDateTimeEntry = {
 };
 
 export type GoalStreakData = {
-  streaks: { dates: string[]; length: number; skips: string[] | null; holidays: string[] | null }[];
+  streaks: { dates: string[]; length: number; incomplete: string[] | null; skips: string[] | null; holidays: string[] | null }[];
   incomplete: string[];
+  skips: string[];
+  holidays: string[];
+  streakOptions: GoalStreakOptions | null;
 };
+
+export type GoalStreakOptions = {
+  tolerateIncomplete: boolean;
+  tolerateSkip: boolean;
+  tolerateHoliday: boolean;
+};
+
+export type GoalDuration = {
+  minutes?: number;
+  hours?: number;
+  days?: number;
+  months?: number;
+  years?: number;
+};
+
+export type GoalCategory =
+  | 'business'
+  | 'education'
+  | 'entertainment'
+  | 'finance'
+  | 'food'
+  | 'health'
+  | 'lifestyle'
+  | 'news'
+  | 'productivity'
+  | 'shopping'
+  | 'social'
+  | 'sports'
+  | 'travel'
+  | 'utilities';
+
+export const goalCategoryArr: GoalCategory[] = [
+  'business',
+  'education',
+  'entertainment',
+  'finance',
+  'food',
+  'health',
+  'lifestyle',
+  'news',
+  'productivity',
+  'shopping',
+  'social',
+  'sports',
+  'travel',
+  'utilities',
+];
 
 export type Goal = {
   id: string;
@@ -39,11 +89,13 @@ export type Goal = {
     status: Record<string, GoalStatus>;
   };
   streakData: GoalStreakData | null;
-  // time: { start: string; end: string } | null;
-  // duration: string | null;
   recurrence: RecurrenceRule | null;
   groupId: string;
-  // location: string | LatLng | null;
+  duration: GoalDuration | null;
+  commute: GoalDuration | null;
+  respite: GoalDuration | null;
+  location: string | LatLng | null;
+  category: GoalCategory | null;
 };
 
 export type GoalGroup = {

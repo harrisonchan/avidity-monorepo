@@ -6,8 +6,9 @@ import * as utc from 'dayjs/plugin/utc';
 import * as isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 import * as isSameOrAfter from 'dayjs/plugin/isSameOrAfter';
 import * as isBetween from 'dayjs/plugin/isBetween';
+import * as duration from 'dayjs/plugin/duration';
 import Holidays from 'date-holidays';
-import { DateParam, Goal, GoalStatus, GoalStreakData, TimeFormat } from '@shared/types';
+import { DateParam, Goal, GoalDuration, GoalStatus, GoalStreakData, GoalStreakOptions, TimeFormat } from '@shared/types';
 import { TODAY_DATE_UTC_FORMATTED, getRecurrenceDates, getStandardFormat, getUtcDate, getUtcFormat } from '@shared/utils';
 import { CachedGoal } from '@shared/stores';
 // import { EMPTY_STREAK_ITEM } from './constants';
@@ -16,6 +17,7 @@ dayjs.extend(utc);
 dayjs.extend(isSameOrBefore);
 dayjs.extend(isSameOrAfter);
 dayjs.extend(isBetween);
+dayjs.extend(duration);
 
 const holidays = new Holidays('US');
 
@@ -29,18 +31,58 @@ export function generateGroupId(title: string): string {
   return 'group-' + uuidV5(`${rightNow}_${title}`, UUID_NAMESPACE);
 }
 
-function getGoalStatusStreakValidity(goalStatus: GoalStatus): boolean {
+function getGoalStatusStreakValidity(params: { goalStatus: GoalStatus; streakOptions?: GoalStreakOptions | null }): boolean {
+  const goalStatus = params.goalStatus;
+  const streakOptions = params.streakOptions ?? {
+    tolerateIncomplete: false,
+    tolerateSkip: true,
+    tolerateHoliday: true,
+  };
   switch (goalStatus) {
     case 'incomplete':
+      if (streakOptions.tolerateIncomplete) return true;
+      return false;
+    case 'skip':
+      if (streakOptions.tolerateSkip) return true;
+      return false;
+    case 'holiday':
+      if (streakOptions.tolerateHoliday) return true;
+      return false;
+    case null:
+      return false;
+    case undefined:
       return false;
     default:
       return true;
   }
 }
 
-export function getStreakData(goal: Goal, getLatestOnly: boolean = false): GoalStreakData | null {
+function getStreakDataStats(streakData: GoalStreakData): { current: string[]; longest: string[][] } {
+  if (streakData.streaks.length > 0) {
+    const current = streakData.streaks[streakData.streaks.length - 1].dates;
+    const streakLengths = streakData.streaks.map((_s) => _s.length);
+    let longest: string[][] = [];
+    let currentMax = 0;
+    streakLengths.forEach((_l, _idx) => {
+      if (_l > currentMax) {
+        currentMax = _l;
+        longest = [];
+        longest.push(streakData.streaks[_idx].dates);
+      } else if (_l === currentMax) longest.push(streakData.streaks[_idx].dates);
+    });
+    return { current, longest };
+  } else return { current: [], longest: [] };
+}
+
+export function getStreakData(
+  goal: Goal,
+  getLatestOnly: boolean = false
+): { streakData: GoalStreakData; current: string[]; longest: string[][] } | null {
   if (!goal.recurrence && !goal.streakData) return null;
-  else if (!goal.recurrence && goal.streakData) return goal.streakData;
+  else if (!goal.recurrence && goal.streakData) {
+    const { current, longest } = getStreakDataStats(goal.streakData);
+    return { streakData: goal.streakData, current, longest };
+  }
   // else if (goal.recurrence && goal.streakData && getLatestOnly) {
   //   const goalStatusEntries = Object.entries(goal.dateTimeData.status);
   //   const orderedGoalStatusDates: string[] = goalStatusEntries
@@ -77,14 +119,20 @@ export function getStreakData(goal: Goal, getLatestOnly: boolean = false): GoalS
     const streakData: GoalStreakData = {
       streaks: [],
       incomplete: [],
+      skips: [],
+      holidays: [],
+      streakOptions: goal.streakData?.streakOptions ?? null,
     };
-    const { streaks, incomplete } = streakData;
+    const { streaks, incomplete, skips, holidays, streakOptions } = streakData;
     recurrentDates.forEach((date) => {
-      const goalStatus = goal.dateTimeData.status[date];
-      if (goalStatus !== 'incomplete') {
+      console.log(date, goal.dateTimeData.status[date]);
+      const goalStatus = goal.dateTimeData.status[date] ?? 'incomplete';
+      console.log(goalStatus);
+      if (getGoalStatusStreakValidity({ goalStatus, streakOptions })) {
         if (streaks.length === 0) {
           streaks.push({
             dates: [date],
+            incomplete: goalStatus === 'incomplete' ? [date] : null,
             skips: goalStatus === 'skip' ? [date] : null,
             holidays: goalStatus === 'holiday' ? [date] : null,
             length: 1,
@@ -92,26 +140,42 @@ export function getStreakData(goal: Goal, getLatestOnly: boolean = false): GoalS
         } else {
           const prevStreak = streaks[streaks.length - 1];
           prevStreak.dates.push(date);
-          if (goalStatus === 'skip') prevStreak.skips !== null ? prevStreak.skips.push(date) : (prevStreak.skips = [date]);
+          if (goalStatus === 'incomplete') prevStreak.incomplete !== null ? prevStreak.incomplete.push(date) : (prevStreak.incomplete = [date]);
+          else if (goalStatus === 'skip') prevStreak.skips !== null ? prevStreak.skips.push(date) : (prevStreak.skips = [date]);
           else if (goalStatus === 'holiday') prevStreak.holidays !== null ? prevStreak.holidays.push(date) : (prevStreak.holidays = [date]);
           prevStreak.length++;
           streaks[streaks.length - 1] = prevStreak;
         }
       } else {
-        incomplete.push(date);
-        //push extra one to streak
-        streaks.push({
-          dates: [],
-          skips: null,
-          holidays: null,
-          length: 0,
-        });
+        if (!goalStatus || goalStatus === 'incomplete') incomplete.push(date);
+        else if (goalStatus === 'skip') skips.push(date);
+        else if (goalStatus === 'holiday') holidays.push(date);
+        //push extra one to streak if prev wasn't already empty
+        if (streaks.length > 0 && streaks[streaks.length - 1].dates.length !== 0) {
+          streaks.push({
+            dates: [],
+            incomplete: null,
+            skips: null,
+            holidays: null,
+            length: 0,
+          });
+        }
       }
     });
     //remove "extra" item from streaks arr if empty
     if (streaks[streaks.length - 1].dates.length === 0) streaks.pop();
-    return { streaks, incomplete };
+    const { current, longest } = getStreakDataStats({ streaks, incomplete, skips, holidays, streakOptions });
+    return { streakData: { streaks, incomplete, skips, holidays, streakOptions }, current, longest };
   } else return null;
+}
+
+export function getGoalDuration(goalDuration: GoalDuration): duration.Duration {
+  const minutes = goalDuration.minutes ?? 0;
+  const hours = goalDuration.hours ?? 0;
+  const days = goalDuration.days ?? 0;
+  const months = goalDuration.months ?? 0;
+  const years = goalDuration.years ?? 0;
+  return dayjs.duration({ minutes, hours, days, months, years });
 }
 
 // export function convertPartialGoalToDateCacheGoal(params: { goal: Partial<Goal> & Pick<Goal, 'id'>; date: DateParam }): Partial<CachedGoal> {
