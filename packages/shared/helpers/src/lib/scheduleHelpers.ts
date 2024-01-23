@@ -8,10 +8,12 @@ import { isNil } from 'lodash';
 import { useEffect, useState } from 'react';
 import * as duration from 'dayjs/plugin/duration';
 import * as isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+import * as isBetween from 'dayjs/plugin/isBetween';
 import { getGoalDuration } from './goalHelpers';
 
 dayjs.extend(duration);
 dayjs.extend(isSameOrBefore);
+dayjs.extend(isBetween);
 
 const test = dayjs.duration({ months: 1 });
 type boop = duration.Duration;
@@ -40,6 +42,8 @@ export type TimeSlot = {
 
 type ScheduledGoal = {
   id: string;
+  title: string;
+  description?: string;
   start: string; // date time
   end: string; // date time
   goalStart: string;
@@ -70,6 +74,7 @@ type ScheduleOptions = {
     allowedDuringRespites?: GoalCategory[];
     allowUncategorizedDuringRespites?: boolean;
   };
+  defaultGoalDuration?: GoalDuration;
 };
 
 function convertGoalToScheduledGoal(
@@ -82,8 +87,8 @@ function convertGoalToScheduledGoal(
   }
 ): ScheduledGoal {
   // const { commute, respite, duration } = goal
-  let start = dayjs();
-  let end = dayjs();
+  let start = dayjs(goal.dateTimeData.start.dateTime);
+  let end = dayjs(goal.dateTimeData.end.dateTime);
   let commute = goal.commute
     ? {
         start: dayjs(),
@@ -112,6 +117,8 @@ function convertGoalToScheduledGoal(
   }
   return {
     id: goal.id,
+    title: goal.title,
+    description: goal.description ?? undefined,
     start: start.format(),
     end: end.format(),
     goalStart,
@@ -131,11 +138,13 @@ function convertGoalToScheduledGoal(
   };
 }
 
-function createSchedule(params: { date: DateParam; goals: Goal[]; scheduleOptions?: ScheduleOptions }): GoalSchedule {
+export function createSchedule(params: { date: DateParam; goals: Goal[]; scheduleOptions?: ScheduleOptions }): GoalSchedule {
   const { date, goals } = params;
+  console.log(getStandardFormat(date));
+  console.log(dayjs(getStandardFormat(date)));
   const scheduleOptions: ScheduleOptions = {
-    scheduleStart: dayjs(params.scheduleOptions?.scheduleStart) ?? dayjs(getStandardFormat(date)).set('hour', 8),
-    scheduleEnd: dayjs(params.scheduleOptions?.scheduleStart) ?? null,
+    scheduleStart: dayjs(params.scheduleOptions?.scheduleStart ?? dayjs(getStandardFormat(date)).set('hour', 8)),
+    scheduleEnd: params.scheduleOptions?.scheduleEnd ? dayjs(params.scheduleOptions?.scheduleEnd) : dayjs(getStandardFormat(date)).add(1, 'day'),
     sortByMostTimeConsuming: true,
     checkTimeConflicts: true, // Change to false later. Just testing for now
     scheduleRespiteOptions: {
@@ -147,7 +156,9 @@ function createSchedule(params: { date: DateParam; goals: Goal[]; scheduleOption
       allowUncategorizedDuringRespites: params.scheduleOptions?.scheduleRespiteOptions?.allowUncategorizedDuringRespites ?? true,
       // ^change to false later. just testing it as true for now
     },
+    defaultGoalDuration: params.scheduleOptions?.defaultGoalDuration ?? { minutes: 30 },
   };
+  console.log('SCHEDULE OPTIONS: ', scheduleOptions);
   //Split goals into 3 arrays of importance
   const goalsWithTime: (Goal & {
     dateTimeData: {
@@ -156,7 +167,7 @@ function createSchedule(params: { date: DateParam; goals: Goal[]; scheduleOption
       status: Record<string, GoalStatus>;
     };
   })[] = [];
-  const goalsWithDuration: Goal[] = [];
+  const goalsWithDuration: (Goal & { duration: GoalDuration })[] = [];
   const goalsWithoutTime: Goal[] = [];
   goals.forEach((goal) => {
     const start = goal.dateTimeData.start.dateTime;
@@ -177,9 +188,13 @@ function createSchedule(params: { date: DateParam; goals: Goal[]; scheduleOption
           status: goal.dateTimeData.status,
         },
       });
-    } else if (goal.duration) goalsWithDuration.push(goal);
+    } else if (goal.duration) goalsWithDuration.push({ ...goal, duration: goal.duration });
     else goalsWithoutTime.push(goal);
   });
+  console.log('---- LOGGING GOAL ARRAYS ----');
+  console.log(goalsWithTime);
+  console.log(goalsWithDuration);
+  console.log(goalsWithoutTime);
   //Sort all 3 arrays by either starting time or duration (based on scheduleOptions)
   const sortedGoalsWithTime = goalsWithTime.sort((_g1, _g2) => {
     const dateTime1 = _g1.dateTimeData.start.dateTime!;
@@ -200,10 +215,17 @@ function createSchedule(params: { date: DateParam; goals: Goal[]; scheduleOption
   });
   //sorted by "work" (disallowed during respites) first
   const allowedCategoriesDuringRespites = scheduleOptions.scheduleRespiteOptions?.allowedDuringRespites!;
-  const sortedGoalsWithoutTime = goalsWithoutTime.sort((_g1, _g2) => {
-    if (_g1.category && allowedCategoriesDuringRespites.includes(_g1.category)) return 1;
-    return -1;
-  });
+  const sortedGoalsWithoutTime = goalsWithoutTime
+    .sort((_g1, _g2) => {
+      if (_g1.category && allowedCategoriesDuringRespites.includes(_g1.category)) return 1;
+      return -1;
+    })
+    //add duration using defaultGoalDuration
+    .map((goal) => ({ ...goal, duration: scheduleOptions.defaultGoalDuration! }));
+  console.log('---- LOGGING SORTED GOAL ARRAYS ----');
+  console.log(sortedGoalsWithTime);
+  console.log(sortedGoalsWithDuration);
+  console.log(sortedGoalsWithoutTime);
   // Start scheduling
   const unscheduled: Goal[] = [];
   // Schedule by importance
@@ -215,8 +237,8 @@ function createSchedule(params: { date: DateParam; goals: Goal[]; scheduleOption
         const dateTime1 = dayjs(_g1.dateTimeData.start.dateTime!);
         const dateTime2 = dayjs(_g2.dateTimeData.start.dateTime!);
         if (dateTime1.isSame(dateTime2, 'minute') && _g1.id !== _g2.id) {
-          const duration1 = dayjs.duration(dateTime1.diff(dayjs(_g1.dateTimeData.end.dateTime!)));
-          const duration2 = dayjs.duration(dateTime2.diff(dayjs(_g2.dateTimeData.end.dateTime!)));
+          const duration1 = dayjs.duration(dateTime1.diff(dayjs(_g1.dateTimeData.end.dateTime!), 'minute'));
+          const duration2 = dayjs.duration(dateTime2.diff(dayjs(_g2.dateTimeData.end.dateTime!), 'minute'));
           if (scheduleOptions.sortByMostTimeConsuming) {
             if (compareDuration(duration1, duration2)) {
               goalsWithTime.splice(_i2, 1);
@@ -238,11 +260,150 @@ function createSchedule(params: { date: DateParam; goals: Goal[]; scheduleOption
       });
     });
   }
-  const schedule: ScheduledGoal[] = goalsWithTime.map((_g) => convertGoalToScheduledGoal(_g));
-
+  const schedule: ScheduledGoal[] = sortedGoalsWithTime.map((_g) => convertGoalToScheduledGoal(_g));
+  let availableTimeSlots: TimeSlot[] = [];
+  if (schedule.length > 0 && dayjs(schedule[0].start).isAfter(dayjs(scheduleOptions.scheduleStart!), 'minute'))
+    availableTimeSlots.push({ start: dayjs(scheduleOptions.scheduleStart!), end: dayjs(schedule[0].start) });
+  const blockedRespites: TimeSlot[] = scheduleOptions
+    .scheduleRespiteOptions!.blockedRespites!.map((item) => ({
+      start: dayjs(item.start),
+      end: dayjs(item.end),
+    }))
+    .sort((a, b) => {
+      if (a.end.isBefore(b.end, 'minute')) return -1;
+      return 1;
+    });
+  //create time slots using goalsWithTime
+  console.log('BLOCKED RESPITES: ', blockedRespites);
+  if (schedule.length !== 0) {
+    schedule.forEach((_g, idx) => {
+      const start = dayjs(_g.end);
+      if (schedule[idx + 1]) {
+        const end = dayjs(schedule[idx + 1].start);
+        let blockedRespiteCheck = false;
+        blockedRespites.forEach((blockedRespite) => {
+          if (blockedRespite.start.isBetween(start, end, 'minute', '[]')) {
+            availableTimeSlots.push({ start, end: blockedRespite.start });
+            blockedRespiteCheck = true;
+          }
+          if (blockedRespite.end.isBetween(start, end, 'minute', '[]')) {
+            availableTimeSlots.push({ start: blockedRespite.end, end });
+            blockedRespiteCheck = true;
+          }
+        });
+        if (!blockedRespiteCheck) {
+          const timeSlot: TimeSlot = {
+            start: dayjs(_g.end),
+            end: dayjs(schedule[idx + 1].start),
+          };
+          availableTimeSlots.push(timeSlot);
+        }
+      }
+      //last item in arr
+      else {
+        blockedRespites.forEach((blockedRespite, _i) => {
+          if (
+            start.isBefore(scheduleOptions.scheduleEnd, 'minute') &&
+            blockedRespite.start.isBetween(start, scheduleOptions.scheduleEnd, 'minute', '[]')
+          )
+            availableTimeSlots.push({ start, end: blockedRespite.start });
+          if (
+            _i == blockedRespites.length - 1 &&
+            dayjs(_g.end).isBefore(scheduleOptions.scheduleEnd, 'minute') &&
+            blockedRespite.end.isBefore(scheduleOptions.scheduleEnd, 'minute')
+          )
+            availableTimeSlots.push({ start: blockedRespite.end, end: dayjs(scheduleOptions.scheduleEnd) });
+        });
+      }
+    });
+    console.log('CURRENT SCHEDULE', [...schedule]);
+  } else {
+    const scheduleStart = dayjs(scheduleOptions.scheduleStart);
+    const scheduleEnd = dayjs(scheduleOptions.scheduleEnd);
+    blockedRespites.forEach((blockedRespite, idx) => {
+      // TODO:
+      // will fail if blockedRespites has two with same starting time?
+      if (scheduleStart.isBetween(scheduleOptions.scheduleStart, blockedRespite.start, 'minute', '[]') && availableTimeSlots.length === 0)
+        availableTimeSlots.push({ start: scheduleStart, end: blockedRespite.start });
+      else if (
+        idx !== blockedRespites.length - 1 &&
+        blockedRespite.end.isBetween(scheduleStart, scheduleEnd, 'minute', '[]') &&
+        blockedRespites[idx + 1].start.diff(blockedRespite.end, 'minute') > 0
+      )
+        availableTimeSlots.push({ start: blockedRespite.end, end: blockedRespites[idx + 1].start });
+      else if (blockedRespite.end.isBetween(scheduleStart, scheduleEnd, 'minute', '[]'))
+        availableTimeSlots.push({ start: blockedRespite.end, end: scheduleEnd });
+    });
+  }
+  console.log('TIMESLOTS: ', availableTimeSlots);
+  // console.log(schedule);
+  // console.log(unscheduled);
+  // console.log(availableTimeSlots);
+  //now that we have time slots we can start scheduling
+  const addToScheduleWithTimeSlots = (goals: (Goal & { duration: GoalDuration })[]) => {
+    availableTimeSlots.forEach((timeSlot, _i) => {
+      goals.forEach((goal, idx) => {
+        console.log(goal.title);
+        const timeSlotDuration = availableTimeSlots[_i].end.diff(availableTimeSlots[_i].start, 'millisecond');
+        const goalDuration = getGoalDuration(goal.duration).asMilliseconds();
+        console.log('currentTimeSlot: ', availableTimeSlots[_i]);
+        console.log('timeSlotDuration', timeSlotDuration);
+        console.log('goalDuration', goalDuration);
+        if (timeSlotDuration >= goalDuration) {
+          const { start, end, status } = goal.dateTimeData;
+          schedule.push(
+            convertGoalToScheduledGoal({
+              ...goal,
+              dateTimeData: {
+                start: { date: start.date, dateTime: availableTimeSlots[_i].start.format() },
+                end: { date: start.date, dateTime: availableTimeSlots[_i].start.add(goalDuration, 'millisecond').format() },
+                status,
+              },
+            })
+          );
+          console.log('before splice', goals);
+          goals.splice(idx, 1);
+          console.log(goals);
+          const newTimeSlot: TimeSlot = { start: availableTimeSlots[_i].start.add(goalDuration, 'millisecond'), end: availableTimeSlots[_i].end };
+          availableTimeSlots[_i] = newTimeSlot;
+        }
+      });
+    });
+  };
+  addToScheduleWithTimeSlots(sortedGoalsWithDuration);
+  sortedGoalsWithDuration.forEach((goal) => unscheduled.push(goal));
+  addToScheduleWithTimeSlots(sortedGoalsWithoutTime);
+  sortedGoalsWithoutTime.forEach((goal) => unscheduled.push(goal));
+  console.log('TIMELSOTS LEFT', availableTimeSlots);
+  // sortedGoalsWithDuration.forEach((goal, idx) => {
+  //   availableTimeSlots.forEach((timeSlot, _i) => {
+  //     const timeSlotDuration = timeSlot.end.diff(timeSlot.end, 'millisecond');
+  //     const goalDuration = getGoalDuration(goal.duration).asMilliseconds();
+  //     if (timeSlotDuration >= goalDuration) {
+  //       const { start, end, status } = goal.dateTimeData;
+  //       schedule.push(
+  //         convertGoalToScheduledGoal({
+  //           ...goal,
+  //           dateTimeData: {
+  //             start: { date: start.date, dateTime: timeSlot.start.format() },
+  //             end: { date: start.date, dateTime: timeSlot.start.add(goalDuration, 'millisecond').format() },
+  //             status,
+  //           },
+  //         })
+  //       );
+  //       sortedGoalsWithDuration.splice(idx, 1);
+  //       const newTimeSlot: TimeSlot = { start: timeSlot.start.add(goalDuration, 'millisecond'), end: timeSlot.end };
+  //       availableTimeSlots[_i] = newTimeSlot;
+  //     }
+  //   });
+  // });
+  schedule.sort((a, b) => {
+    if (dayjs(a.start).isBefore(dayjs(b.start), 'minute')) return -1;
+    return 1;
+  });
   return {
-    schedule: [],
-    unscheduled: [],
+    schedule,
+    unscheduled,
   };
 }
 

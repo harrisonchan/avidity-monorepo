@@ -11,8 +11,9 @@ dayjs.extend(utc);
 dayjs.extend(tz);
 
 export default function AddGoal() {
-  const { addGoal } = useGoalStore((state) => ({
+  const { addGoal, selectedDateData } = useGoalStore((state) => ({
     addGoal: state.addGoal,
+    selectedDateData: state.selectedDateData,
   }));
   const navigate = useNavigate();
   const initialValues: {
@@ -32,6 +33,7 @@ export default function AddGoal() {
     };
     icon: { name: string; backgroundColor: string; iconColor: string };
     recurrence: RecurrenceRule & { type: 'yearly' | 'monthly' | 'weekly' | 'daily' | 'weekday' | 'custom' | 'none' };
+    duration: number;
   } = {
     title: '',
     description: '',
@@ -58,6 +60,7 @@ export default function AddGoal() {
       interval: 0,
       byweekday: [],
     },
+    duration: 0,
   };
   return (
     <div className="flex flex-col ml-5">
@@ -65,7 +68,7 @@ export default function AddGoal() {
         initialValues={initialValues}
         onSubmit={(values) => {
           //   console.log(values);
-          const { title, description, dateTime, icon, recurrence } = values;
+          const { title, description, dateTime, icon, recurrence, duration } = values;
           const timeZone = dayjs.tz.guess();
           let newGoalRecurrence: RecurrenceRule | null = null;
           switch (recurrence.type) {
@@ -94,13 +97,13 @@ export default function AddGoal() {
             description: description !== '' ? description : null,
             dateTimeData: {
               start: {
-                date: getStandardFormat(dateTime.start.date),
-                dateTime: dateTime.start.date,
+                date: getStandardFormat(dateTime.start.date !== '' ? dateTime.start.date : selectedDateData.date),
+                dateTime: dateTime.start.date !== '' ? dateTime.start.date : undefined,
                 timeZone,
               },
               end: {
-                date: getStandardFormat(dateTime.end.date),
-                dateTime: dateTime.end.date,
+                date: getStandardFormat(dateTime.end.date !== '' ? dateTime.end.date : selectedDateData.date),
+                dateTime: dateTime.end.date !== '' ? dateTime.end.date : undefined,
                 timeZone,
               },
               status: {},
@@ -112,6 +115,7 @@ export default function AddGoal() {
               iconColor: 'white',
             },
             recurrence: newGoalRecurrence,
+            duration: duration !== 0 ? { minutes: duration } : null,
           };
           //   console.log(newGoal);
           addGoal({ goal: newGoal });
@@ -196,6 +200,14 @@ export default function AddGoal() {
                     </label>
                   </td>
                 </>
+              ) : (
+                <></>
+              )}
+              {values.dateTime.start.date === '' && values.dateTime.end.date === '' ? (
+                <label>
+                  Duration (minutes)
+                  <Field type="number" name="duration" className="input border-primary w-full max-w-xs" />
+                </label>
               ) : (
                 <></>
               )}
