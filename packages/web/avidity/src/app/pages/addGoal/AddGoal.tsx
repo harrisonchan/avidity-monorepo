@@ -1,4 +1,4 @@
-import { DateParam, Goal, ioniconsArr } from '@shared/types';
+import { DateParam, Goal, GoalCategory, goalCategoryArr, ioniconsArr } from '@shared/types';
 import { RecurrenceRule, WEEKDAYS, getStandardFormat } from '@shared/utils';
 import { Field, Form, Formik } from 'formik';
 import dayjs from 'dayjs';
@@ -34,6 +34,7 @@ export default function AddGoal() {
     icon: { name: string; backgroundColor: string; iconColor: string };
     recurrence: RecurrenceRule & { type: 'yearly' | 'monthly' | 'weekly' | 'daily' | 'weekday' | 'custom' | 'none' };
     duration: number;
+    category: GoalCategory | null;
   } = {
     title: '',
     description: '',
@@ -61,6 +62,7 @@ export default function AddGoal() {
       byweekday: [],
     },
     duration: 0,
+    category: null,
   };
   return (
     <div className="flex flex-col ml-5">
@@ -68,7 +70,7 @@ export default function AddGoal() {
         initialValues={initialValues}
         onSubmit={(values) => {
           //   console.log(values);
-          const { title, description, dateTime, icon, recurrence, duration } = values;
+          const { title, description, dateTime, icon, recurrence, duration, category } = values;
           const timeZone = dayjs.tz.guess();
           let newGoalRecurrence: RecurrenceRule | null = null;
           switch (recurrence.type) {
@@ -116,6 +118,7 @@ export default function AddGoal() {
             },
             recurrence: newGoalRecurrence,
             duration: duration !== 0 ? { minutes: duration } : null,
+            category,
           };
           //   console.log(newGoal);
           addGoal({ goal: newGoal });
@@ -211,6 +214,19 @@ export default function AddGoal() {
               ) : (
                 <></>
               )}
+              <label>
+                Category
+                <select
+                  onChange={(evt) => {
+                    const value = evt.target.value;
+                    value === 'none' ? setFieldValue('category', null) : setFieldValue('category', value);
+                  }}>
+                  <option disabled>Select a category</option>
+                  {[...goalCategoryArr, 'none'].map((_c) => (
+                    <option>{_c}</option>
+                  ))}
+                </select>
+              </label>
               {/* {values.repeat.type === 'custom' ? (
                 <div className="join items-center mt-2">
                   <label className="mr-3">Every</label>
