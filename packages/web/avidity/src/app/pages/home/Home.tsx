@@ -16,16 +16,20 @@ dayjs.extend(duration);
 
 export default function Home() {
   // const selectedDateData = useGoalStore.use.selectedDateData
-  const { selectedDateData, updateSelectedDateData, addGoal, updateGoalStatus, updateGoal, deleteGoal, clearStore } = useGoalStore((state) => ({
-    selectedDateData: state.selectedDateData,
-    updateSelectedDateData: state.updateSelectedDateData,
-    addGoal: state.addGoal,
-    updateGoal: state.updateGoal,
-    updateGoalStatus: state.updateGoalStatus,
-    deleteGoal: state.deleteGoal,
-    clearStore: state.clearStore,
-  }));
+  const { selectedDateData, updateSelectedDateData, addGoal, updateGoalStatus, updateGoal, deleteGoal, deleteGroup, clearStore } = useGoalStore(
+    (state) => ({
+      selectedDateData: state.selectedDateData,
+      updateSelectedDateData: state.updateSelectedDateData,
+      addGoal: state.addGoal,
+      updateGoal: state.updateGoal,
+      updateGoalStatus: state.updateGoalStatus,
+      deleteGoal: state.deleteGoal,
+      deleteGroup: state.deleteGroup,
+      clearStore: state.clearStore,
+    })
+  );
   const { date, goals, groups } = selectedDateData;
+  const navigate = useNavigate();
   const [goalName, setGoalName] = useState('');
   useEffect(() => {
     console.log(goals);
@@ -43,6 +47,9 @@ export default function Home() {
         onClick={() => updateSelectedDateData({ newDate: { date: dayjs(selectedDateData.date).add(1, 'day'), timeZone: dayjs.tz.guess() } })}>
         <IoChevronForward className="text-3xl" />
       </button>
+      <label>
+        <input type="date" value={date} onChange={(evt) => updateSelectedDateData({ newDate: { date: dayjs(evt.target.value) } })} />
+      </label>
     </div>
   );
   const renderMenu = () => (
@@ -99,15 +106,24 @@ export default function Home() {
               Mark incomplete
             </button>
           </div>
-          <form className="mt-2 flex flex-col">
+          <div className="mt-2 flex flex-col">
             <label>
               New goal name
               <input type="text" placeholder="Enter new name" onChange={(evt) => setGoalName(evt.target.value)} />
             </label>
-            <button type="submit" className="btn mt-2" onClick={() => updateGoal({ goal: { id: goal.id, title: goalName } })}>
+            <button
+              className="btn mt-2"
+              onClick={() => {
+                // console.log('new goal name: ', goalName);
+                // updateGoal({ goal: { id: goal.id, title: goalName } });
+                navigate('/edit-goal', { state: { editType: 'update', goalId: goal.id } });
+              }}>
               Update goal
             </button>
-          </form>
+            <button className="btn mt-2" onClick={() => navigate(`/goal/${goal.id}`)}>
+              Go to Goal
+            </button>
+          </div>
           {/* <button className="btn" onClick={() => updateGoal({ goal: { id: goal.id, date: standardFormat(dayjs(goal.date).add(1, 'day')) } })}>
               Change date
             </button>
@@ -121,20 +137,26 @@ export default function Home() {
   const d1 = dayjs.duration({ hours: 1 });
   const d2 = dayjs.duration({ hours: 2 });
   return (
-    <div className="ml-5">
-      {renderDateControl()}
-      {renderMenu()}
-      {renderGoals()}
-      <button
-        className="btn mt-2"
-        onClick={() => {
-          console.log(d1);
-          console.log(d2);
-          console.log(d1.asMilliseconds());
-          console.log(d2.asMilliseconds());
-        }}>
-        Test duration
-      </button>
+    <div className="ml-5 flex flex-row">
+      <div className="flex flex-col">
+        {renderDateControl()}
+        {renderMenu()}
+        {renderGoals()}
+      </div>
+      <div>
+        {groups.map((group) => (
+          <div>
+            <button onClick={() => deleteGroup({ id: group.id })}>
+              <IoRemoveCircleOutline className="text-xl text-primary" />
+            </button>
+            <button
+              className="rounded-md card-bordered mb-1 p-3 bg-violet-500 hover:bg-violet-600 active:bg-violet-700"
+              onClick={() => navigate(`/group/${group.id}`)}>
+              {group.title}
+            </button>
+          </div>
+        ))}
+      </div>
       {/* <h1>hello world</h1>
       <button
         onClick={() => {

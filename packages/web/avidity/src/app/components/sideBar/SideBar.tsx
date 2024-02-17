@@ -10,14 +10,16 @@ interface SideBarItemProps {
   onClick?: () => void;
   isSelected?: boolean;
   link: string;
+  state?: any;
 }
 
 function SideBarItem(props: SideBarItemProps) {
   const onClick = () => {
     props.onClick && props.onClick();
   };
+  const state = props.state ?? null;
   return (
-    <Link to={'/' + props.link}>
+    <Link to={'/' + props.link} state={state}>
       <button
         onClick={onClick}
         className={`p-2 transition-colors rounded-lg text-primary-content shadow-xl bg-primary hover:bg-secondary hover:text-white focus:outline-none focus:ring focus:ring-secondary-focus focus:ring-offset-secondary-content focus:ring-offset-2 ${
@@ -35,13 +37,14 @@ interface SideBarProps {
 
 type TabItem = {
   link: string;
+  state?: any;
   icon: React.ReactNode;
   subItems?: TabItem[];
 };
 
 const TABS: TabItem[] = [
   { link: 'home', icon: <IoHome className="text-3xl rounded-full cursor-pointer" /> },
-  { link: 'add-goal', icon: <IoAdd className="text-3xl rounded-full cursor-pointer" /> },
+  { link: 'add', icon: <IoAdd className="text-3xl rounded-full cursor-pointer" /> },
   {
     link: 'settings',
     icon: <IoSettings className="text-3xl rounded-full cursor-pointer" />,
@@ -72,7 +75,13 @@ export default function SideBar(props: SideBarProps) {
           <div className="items-center">
             {TABS.map((item, idx) => (
               <div className={`self-center ${idx !== TABS.length - 1 && 'mb-3'}`}>
-                <SideBarItem icon={item.icon} isSelected={currentTab === item.link} onClick={() => onItemClick(item)} link={item.link} />
+                <SideBarItem
+                  icon={item.icon}
+                  isSelected={currentTab === item.link}
+                  onClick={() => onItemClick(item)}
+                  link={item.link}
+                  state={item.state}
+                />
               </div>
             ))}
           </div>

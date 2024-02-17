@@ -1,20 +1,31 @@
-import { DateParam, Goal, GoalCategory, goalCategoryArr, ioniconsArr } from '@shared/types';
-import { RecurrenceRule, WEEKDAYS, getStandardFormat } from '@shared/utils';
+import { Goal, GoalCategory, GoalRecurrenceRule, IONICONS_ARRAY, goalCategoryArr } from '@shared/types';
+import { getStandardFormat } from '@shared/utils';
 import { Field, Form, Formik } from 'formik';
 import dayjs from 'dayjs';
 import * as utc from 'dayjs/plugin/utc';
 import * as tz from 'dayjs/plugin/timezone';
 import { useGoalStore } from '@web/stores';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { getGoalDuration } from '@shared/helpers';
 
 dayjs.extend(utc);
 dayjs.extend(tz);
 
-export default function AddGoal() {
-  const { addGoal, selectedDateData } = useGoalStore((state) => ({
+type EditGoalLocationState = {
+  editType: 'add' | 'update';
+  goalId?: string;
+};
+
+export default function EditGoal() {
+  // const location = useLocation();
+  const { addGoal, updateGoal, goals, selectedDateData } = useGoalStore((state) => ({
     addGoal: state.addGoal,
+    updateGoal: state.updateGoal,
+    goals: state.goals,
     selectedDateData: state.selectedDateData,
   }));
+  const locationState = useLocation().state as EditGoalLocationState;
+  const goal = locationState && locationState.editType === 'update' && locationState.goalId ? goals[locationState.goalId] : null;
   const navigate = useNavigate();
   const initialValues: {
     title: string;
@@ -23,47 +34,83 @@ export default function AddGoal() {
       start: {
         date: string;
         dateTime?: string;
-        timeZone?: string;
+        timeZone: string;
       };
       end: {
         date: string;
         dateTime?: string;
-        timeZone?: string;
+        timeZone: string;
       };
     };
     icon: { name: string; backgroundColor: string; iconColor: string };
-    recurrence: RecurrenceRule & { type: 'yearly' | 'monthly' | 'weekly' | 'daily' | 'weekday' | 'custom' | 'none' };
+    recurrence: GoalRecurrenceRule & { type: 'yearly' | 'monthly' | 'weekly' | 'daily' | 'hourly' | 'weekday' | 'custom' | 'none' };
     duration: number;
     category: GoalCategory | null;
-  } = {
-    title: '',
-    description: '',
-    dateTime: {
-      start: {
-        date: '',
-        dateTime: '',
-        timeZone: '',
-      },
-      end: {
-        date: '',
-        dateTime: '',
-        timeZone: '',
-      },
-    },
-    icon: { name: 'accessibility', backgroundColor: '', iconColor: '' },
-    recurrence: {
-      type: 'none',
-      frequency: 'daily',
-      start: '',
-      timeZone: '',
-      until: '',
-      count: 0,
-      interval: 0,
-      byweekday: [],
-    },
-    duration: 0,
-    category: null,
-  };
+  } = goal
+    ? {
+        title: goal.title,
+        description: goal.description ?? '',
+        dateTime: {
+          start: {
+            date: dayjs(goal.dateTimeData.start.date).format('YYYY-MM-DDTHH:mm'),
+            dateTime: goal.dateTimeData.start.dateTime ? dayjs(goal.dateTimeData.start.dateTime).format() : '',
+            timeZone: goal.dateTimeData.start.timeZone,
+          },
+          end: {
+            date: dayjs(goal.dateTimeData.end.date).format('YYYY-MM-DDTHH:mm'),
+            dateTime: goal.dateTimeData.end.dateTime ? dayjs(goal.dateTimeData.end.dateTime).format() : '',
+            timeZone: goal.dateTimeData.end.timeZone,
+          },
+        },
+        icon: {
+          name: goal.icon.name,
+          iconColor: JSON.stringify(goal.icon.iconColor),
+          backgroundColor: JSON.stringify(goal.icon.backgroundColor),
+        },
+        recurrence: goal.recurrence
+          ? { ...goal.recurrence, type: goal.recurrence.byweekday ? 'weekday' : goal.recurrence.frequency }
+          : {
+              type: 'none',
+              frequency: 'daily',
+              start: '',
+              timeZone: goal.dateTimeData.start.timeZone,
+              until: '',
+              count: 0,
+              interval: 0,
+              byweekday: [],
+            },
+        duration: goal.duration ? getGoalDuration(goal.duration).asMinutes() : 0,
+        category: goal.category,
+      }
+    : {
+        title: '',
+        description: '',
+        dateTime: {
+          start: {
+            date: '',
+            dateTime: '',
+            timeZone: '',
+          },
+          end: {
+            date: '',
+            dateTime: '',
+            timeZone: '',
+          },
+        },
+        icon: { name: 'accessibility', backgroundColor: '', iconColor: '' },
+        recurrence: {
+          type: 'none',
+          frequency: 'daily',
+          start: '',
+          timeZone: dayjs.tz.guess(),
+          until: '',
+          count: 0,
+          interval: 0,
+          byweekday: [],
+        },
+        duration: 0,
+        category: null,
+      };
   return (
     <div className="flex flex-col ml-5">
       <Formik
@@ -72,26 +119,33 @@ export default function AddGoal() {
           //   console.log(values);
           const { title, description, dateTime, icon, recurrence, duration, category } = values;
           const timeZone = dayjs.tz.guess();
-          let newGoalRecurrence: RecurrenceRule | null = null;
+          let newGoalRecurrence: GoalRecurrenceRule | null = null;
+          const startDate = dateTime.start.date !== '' ? dateTime.start.date : dayjs(selectedDateData.date).format();
           switch (recurrence.type) {
             case 'none':
               newGoalRecurrence = null;
               break;
             case 'weekday':
               newGoalRecurrence = {
+                start: startDate,
                 frequency: 'weekly',
                 byweekday: recurrence.byweekday,
+                timeZone: recurrence.timeZone,
               };
               break;
             case 'custom':
               newGoalRecurrence = {
+                start: startDate,
                 frequency: 'daily',
                 interval: recurrence.interval,
+                timeZone: recurrence.timeZone,
               };
               break;
             default:
               newGoalRecurrence = {
+                start: startDate,
                 frequency: recurrence.type,
+                timeZone: recurrence.timeZone,
               };
           }
           const newGoal: Omit<Goal, 'id' | 'groupId'> = {
@@ -121,7 +175,8 @@ export default function AddGoal() {
             category,
           };
           //   console.log(newGoal);
-          addGoal({ goal: newGoal });
+          if (locationState && locationState.editType === 'update' && goal) updateGoal({ goal: { ...newGoal, id: goal.id } });
+          else addGoal({ goal: newGoal });
           navigate('/');
         }}>
         {({ values, errors, touched, handleChange, handleBlur, handleSubmit, isSubmitting, setFieldValue }) => {
@@ -137,9 +192,29 @@ export default function AddGoal() {
               {/* <ErrorMessage name="description" component="div" /> */}
               <label>Date</label>
               <label>Start</label>
-              <Field type="datetime-local" name="dateTime.start.date" className="input border-primary w-full max-w-xs" />
+              <Field
+                type="datetime-local"
+                name="dateTime.start.date"
+                className="input border-primary w-full max-w-xs"
+                onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
+                  const value = evt.target.value;
+                  setFieldValue('dateTime.start.date', value);
+                  if (values.dateTime.end.date !== '' && !dayjs(value).isSame(dayjs(values.dateTime.end.date), 'minute'))
+                    setFieldValue('duration', 0);
+                }}
+              />
               <label>End</label>
-              <Field type="datetime-local" name="dateTime.end.date" className="input border-primary w-full max-w-xs" />
+              <Field
+                type="datetime-local"
+                name="dateTime.end.date"
+                className="input border-primary w-full max-w-xs"
+                onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
+                  const value = evt.target.value;
+                  setFieldValue('dateTime.end.date', value);
+                  if (values.dateTime.start.date !== '' && !dayjs(value).isSame(dayjs(values.dateTime.start.date), 'minute'))
+                    setFieldValue('duration', 0);
+                }}
+              />
               <label>
                 Icon<span className="text-error">*</span>
               </label>
@@ -148,15 +223,17 @@ export default function AddGoal() {
                 onChange={(evt) => setFieldValue('icon.name', evt.target.value)}
                 onBlur={handleBlur}
                 className="select border-primary w-full max-w-xs"
+                value={values.icon.name}
                 defaultValue={'Select an icon'}>
                 <option disabled>Select an icon</option>
-                {ioniconsArr.map((_i) => (
+                {IONICONS_ARRAY.map((_i) => (
                   <option key={_i}>{_i}</option>
                 ))}
               </select>
               <label>Frequency</label>
               <select
                 onChange={(evt) => setFieldValue('recurrence.type', evt.target.value)}
+                value={values.recurrence.type}
                 defaultValue={'Select the recurrence type'}
                 className="select border-primary w-full max-w-xs">
                 <option disabled>Select the recurrence type</option>
@@ -206,10 +283,28 @@ export default function AddGoal() {
               ) : (
                 <></>
               )}
-              {values.dateTime.start.date === '' && values.dateTime.end.date === '' ? (
+              {(values.dateTime.start.date === '' && values.dateTime.end.date === '') ||
+              dayjs(values.dateTime.start.date).isSame(dayjs(values.dateTime.end.date), 'minute') ? (
                 <label>
                   Duration (minutes)
-                  <Field type="number" name="duration" className="input border-primary w-full max-w-xs" />
+                  <Field
+                    type="number"
+                    name="duration"
+                    className="input border-primary w-full max-w-xs"
+                    onChange={(evt: React.ChangeEvent<HTMLInputElement>) => {
+                      // console.log(evt)
+                      const value = evt.target.value;
+                      setFieldValue('duration', value);
+                      if (parseInt(value) > 0) {
+                        setFieldValue('dateTime.start.date', '');
+                        setFieldValue('dateTime.end.date', '');
+                      }
+                    }}>
+                    {/* <input
+                      type="number"
+                      
+                    /> */}
+                  </Field>
                 </label>
               ) : (
                 <></>

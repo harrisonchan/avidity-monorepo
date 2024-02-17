@@ -1339,7 +1339,7 @@ export type IoniconsName =
   | 'woman-outline'
   | 'woman-sharp';
 
-export const ioniconsArr = [
+export const IONICONS_ARRAY = [
   'accessibility',
   'accessibility-outline',
   'accessibility-sharp',

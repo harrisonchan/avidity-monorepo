@@ -1,5 +1,5 @@
 import { RecurrenceRule } from '@shared/utils';
-import { Color, LatLng } from './baseTypes';
+import { Color, DateParam, LatLng } from './baseTypes';
 import { Illustration, IoniconsName } from './componentTypes';
 
 type BaseGoalIconIllustration = {
@@ -20,14 +20,18 @@ export type GoalStatus = 'complete' | 'incomplete' | 'skip' | 'holiday';
 export type GoalDateTimeEntry = {
   date: string;
   dateTime?: string;
-  timeZone?: string;
+  timeZone: string; //changing this to required. I'm tired of dealing with dates fucking hell
 };
 
+export type GoalStreak = { dates: string[]; incomplete: string[] | null; skips: string[] | null; holidays: string[] | null };
+
 export type GoalStreakData = {
-  streaks: { dates: string[]; length: number; incomplete: string[] | null; skips: string[] | null; holidays: string[] | null }[];
-  incomplete: string[];
-  skips: string[];
-  holidays: string[];
+  streaks: GoalStreak[];
+  // incomplete: string[];
+  // skips: string[];
+  // holidays: string[];
+  current: string[];
+  longest: string[][];
   streakOptions: GoalStreakOptions | null;
 };
 
@@ -78,6 +82,8 @@ export const goalCategoryArr: GoalCategory[] = [
   'utilities',
 ];
 
+export type GoalRecurrenceRule = RecurrenceRule & { start: DateParam; timeZone: string };
+
 export type Goal = {
   id: string;
   title: string;
@@ -89,7 +95,7 @@ export type Goal = {
     status: Record<string, GoalStatus>;
   };
   streakData: GoalStreakData | null;
-  recurrence: RecurrenceRule | null;
+  recurrence: GoalRecurrenceRule | null;
   groupId: string;
   duration: GoalDuration | null;
   commute: GoalDuration | null;
@@ -104,5 +110,5 @@ export type GoalGroup = {
   description: string | null;
   illustration: GoalIllustration;
   goals: Set<string>; //goal ids
-  date: { start: string; end: string } | null;
+  date: { start: string; end: string } | null; //change date to GoalDateTimeEntry later
 };

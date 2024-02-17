@@ -190,10 +190,7 @@ function createTimeSlots(params: { timeBlocks: TimeBlock[]; scheduleStart?: Dayj
     mergeBlocks(idx + 1);
   };
   mergeBlocks(0);
-  const sortedMergedBlocks = mergedBlocks.sort((_b1, _b2) => {
-    if (_b1.start.isAfter(_b2.start, 'minute')) return 1;
-    return -1;
-  });
+  const sortedMergedBlocks = mergedBlocks.sort((_b1, _b2) => dateArraySortFunc(_b1.start, _b2.start));
   const timeSlots: TimeSlot[] = [];
   for (let i = 0; i < sortedMergedBlocks.length - 1; i++) {
     const start = sortedMergedBlocks[i].end;
@@ -201,6 +198,17 @@ function createTimeSlots(params: { timeBlocks: TimeBlock[]; scheduleStart?: Dayj
     if (start.isBefore(end, 'minute')) timeSlots.push({ start, end });
   }
   return timeSlots;
+}
+
+/**
+ * helper sort function to sort date arrays by ascending
+ * @param a DateParam
+ * @param b DateParam
+ * @returns number (1 if same or after and -1 is before)
+ */
+function dateArraySortFunc(a: DateParam, b: DateParam): number {
+  if (dayjs(a).isSameOrAfter(dayjs(b), 'minute')) return 1;
+  return -1;
 }
 
 export function createSchedule(params: { date: DateParam; goals: Goal[]; scheduleOptions?: ScheduleOptions }): GoalSchedule {
@@ -264,12 +272,7 @@ export function createSchedule(params: { date: DateParam; goals: Goal[]; schedul
   console.log(goalsWithDuration);
   console.log(goalsWithoutTime);
   //Sort all 3 arrays by either starting time or duration (based on scheduleOptions)
-  const sortedGoalsWithTime = goalsWithTime.sort((_g1, _g2) => {
-    const dateTime1 = _g1.dateTimeData.start.dateTime!;
-    const dateTime2 = _g2.dateTimeData.start.dateTime!;
-    if (dayjs(dateTime1).isSameOrBefore(dayjs(dateTime2), 'minute')) return -1;
-    return 1;
-  });
+  const sortedGoalsWithTime = goalsWithTime.sort((_g1, _g2) => dateArraySortFunc(_g1.dateTimeData.start.dateTime, _g2.dateTimeData.start.dateTime));
   const sortedGoalsWithDuration = goalsWithDuration.sort((_g1, _g2) => {
     const duration1 = getGoalDuration(_g1.duration!);
     const duration2 = getGoalDuration(_g2.duration!);
@@ -340,10 +343,7 @@ export function createSchedule(params: { date: DateParam; goals: Goal[]; schedul
       start: dayjs(item.start),
       end: dayjs(item.end),
     }))
-    .sort((a, b) => {
-      if (a.end.isBefore(b.end, 'minute')) return -1;
-      return 1;
-    });
+    .sort((a, b) => dateArraySortFunc(a.end, b.end));
   console.log('BLOCKED RESPITES: ', blockedRespites);
   let timeBlocks: TimeBlock[] = sortedGoalsWithTime
     .map((_g) => ({ start: dayjs(_g.dateTimeData.start.dateTime), end: dayjs(_g.dateTimeData.end.dateTime) }))
@@ -374,8 +374,8 @@ export function createSchedule(params: { date: DateParam; goals: Goal[]; schedul
             convertGoalToScheduledGoal({
               ...goal,
               dateTimeData: {
-                start: { date: start.date, dateTime: timeSlot.start.format() },
-                end: { date: end.date, dateTime: timeSlot.start.add(goalDuration, 'millisecond').format() },
+                start: { date: start.date, dateTime: timeSlot.start.format(), timeZone: '' },
+                end: { date: end.date, dateTime: timeSlot.start.add(goalDuration, 'millisecond').format(), timeZone: '' },
                 status,
               },
             })
@@ -386,42 +386,37 @@ export function createSchedule(params: { date: DateParam; goals: Goal[]; schedul
       });
     }
   };
-  let disallowedCategoriesGoalsWithDuration: (Goal & { duration: GoalDuration })[] = [];
-  const allowedCategoriesGoalsWithDuration = sortedGoalsWithDuration.filter((_g) => {
+  const disallowedCategoriesGoalsWithDuration: (Goal & { duration: GoalDuration })[] = [];
+  let allowedCategoriesGoalsWithDuration = sortedGoalsWithDuration.filter((_g) => {
     if (scheduleOptions.scheduleRespiteOptions.allowUncategorizedDuringRespites || allowedCategoriesDuringRespites.includes(_g.category!))
       return true;
     disallowedCategoriesGoalsWithDuration.push(_g);
     return false;
   });
-  console.log(allowedCategoriesGoalsWithDuration);
-  console.log(disallowedCategoriesGoalsWithDuration);
-  let disallowedCategoriesGoalsWithoutTime: (Goal & { duration: GoalDuration })[] = [];
-  const allowedCategoriesGoalsWithoutTime = sortedGoalsWithoutTime.filter((_g) => {
+  addToScheduleUsingTimeSlots(disallowedCategoriesGoalsWithDuration, availableTimeSlots);
+  addToScheduleUsingTimeSlots(allowedCategoriesGoalsWithDuration, availableTimeSlots);
+  allowedCategoriesGoalsWithDuration = allowedCategoriesGoalsWithDuration.concat(disallowedCategoriesGoalsWithDuration);
+  addToScheduleUsingTimeSlots(allowedCategoriesGoalsWithDuration, respiteTimeSlots);
+  allowedCategoriesGoalsWithDuration.forEach((goal) => unscheduled.push(goal));
+
+  const disallowedCategoriesGoalsWithoutTime: (Goal & { duration: GoalDuration })[] = [];
+  let allowedCategoriesGoalsWithoutTime = sortedGoalsWithoutTime.filter((_g) => {
     if (scheduleOptions.scheduleRespiteOptions.allowUncategorizedDuringRespites || allowedCategoriesDuringRespites.includes(_g.category!))
       return true;
     disallowedCategoriesGoalsWithoutTime.push(_g);
     return false;
   });
-  console.log(allowedCategoriesGoalsWithoutTime);
-  console.log(disallowedCategoriesGoalsWithoutTime);
-  addToScheduleUsingTimeSlots(allowedCategoriesGoalsWithDuration, respiteTimeSlots);
-  disallowedCategoriesGoalsWithDuration = disallowedCategoriesGoalsWithDuration.concat(allowedCategoriesGoalsWithDuration);
-  addToScheduleUsingTimeSlots(disallowedCategoriesGoalsWithDuration, availableTimeSlots);
-  disallowedCategoriesGoalsWithDuration.forEach((goal) => unscheduled.push(goal));
-
-  addToScheduleUsingTimeSlots(allowedCategoriesGoalsWithoutTime, respiteTimeSlots);
-  disallowedCategoriesGoalsWithoutTime = disallowedCategoriesGoalsWithoutTime.concat(allowedCategoriesGoalsWithoutTime);
   addToScheduleUsingTimeSlots(disallowedCategoriesGoalsWithoutTime, availableTimeSlots);
-  disallowedCategoriesGoalsWithoutTime.forEach((goal) => unscheduled.push(goal));
+  addToScheduleUsingTimeSlots(allowedCategoriesGoalsWithoutTime, availableTimeSlots);
+  allowedCategoriesGoalsWithoutTime = allowedCategoriesGoalsWithoutTime.concat(disallowedCategoriesGoalsWithoutTime);
+  addToScheduleUsingTimeSlots(allowedCategoriesGoalsWithoutTime, respiteTimeSlots);
+  allowedCategoriesGoalsWithoutTime.forEach((goal) => unscheduled.push(goal));
 
   console.log('AVAILABLE TIMESLOTS', availableTimeSlots);
   console.log('RESPITE TIMESLOTS', respiteTimeSlots);
 
   sortedGoalsWithoutTime.forEach((goal) => unscheduled.push(goal));
-  schedule.sort((a, b) => {
-    if (dayjs(a.start).isBefore(dayjs(b.start), 'minute')) return -1;
-    return 1;
-  });
+  schedule.sort((a, b) => dateArraySortFunc(a.start, b.start));
   return {
     schedule,
     unscheduled,
