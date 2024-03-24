@@ -1,21 +1,21 @@
 {
   "run": {
-    "command": "nx serve web-avidity",
-    "startTime": "2024-01-06T10:26:06.209Z",
-    "endTime": "2024-01-19T09:54:20.841Z",
+    "command": "nx run web:dev",
+    "startTime": "2024-02-17T19:51:55.104Z",
+    "endTime": "2024-02-18T14:31:18.904Z",
     "inner": false
   },
   "tasks": [
     {
-      "taskId": "web-avidity:serve:development",
-      "target": "serve",
-      "projectName": "web-avidity",
-      "hash": "15305915844034486703",
-      "startTime": "2024-01-06T10:26:06.219Z",
-      "endTime": "2024-01-19T09:54:20.827Z",
+      "taskId": "web:dev",
+      "target": "dev",
+      "projectName": "web",
+      "hash": "13543981010256495372",
+      "startTime": "2024-02-17T19:51:55.119Z",
+      "endTime": "2024-02-18T14:31:18.895Z",
       "params": "",
       "cacheStatus": "cache-miss",
-      "status": 1
+      "status": 0
     }
   ]
 }

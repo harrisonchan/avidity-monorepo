@@ -13,16 +13,15 @@
     "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
-    "forceConsistentCasingInFileNames": false,
     "baseUrl": ".",
     "paths": {
-      "@shared/helpers": ["packages/shared/helpers/src/index.ts"],
-      "@shared/stores": ["packages/shared/stores/src/index.ts"],
-      "@shared/types": ["packages/shared/types/src/index.ts"],
-      "@shared/utils": ["packages/shared/utils/src/index.ts"],
-      "@web/*": ["packages/web/avidity/src/app/*"]
-    },
-    "noErrorTruncation": true
+      "@web/*": ["apps/web/src/app/*"],
+      // "@shared/*": ["shared/*"],
+      "@shared/helpers": ["shared/helpers/src/index.ts"],
+      "@shared/stores": ["shared/stores/src/index.ts"],
+      "@shared/types": ["shared/types/src/index.ts"],
+      "@shared/utils": ["shared/utils/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
