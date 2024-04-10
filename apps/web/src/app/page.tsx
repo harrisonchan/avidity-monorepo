@@ -5,6 +5,7 @@ import { createRecurrenceRule, getStandardFormat, sanitizeDateForRRule, useGetRe
 import dayjs, { Dayjs } from 'dayjs';
 import { useEffect, useRef, useState } from 'react';
 import { RRule } from 'rrule';
+import { AddGoal } from './components';
 
 export default function Index() {
   const rrule = useRef<GoalRecurrenceRule>({
@@ -28,6 +29,7 @@ export default function Index() {
   // }, [rule]);
   return (
     <div>
+      <AddGoal />
       {isCalculating ? <h1 className="text-3xl">is Loading...</h1> : <h1 className="text-3xl">is not Loading...</h1>}
       <button
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"

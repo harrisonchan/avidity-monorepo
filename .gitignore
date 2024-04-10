@@ -42,3 +42,8 @@ Thumbs.db
 
 # Next.js
 .next
+# Does this even work??
+.nx/cache/*
+.nx/cache/file-map.json
+.nx/cache/parsed-lock-file.json
+.nx/cache/project-graph.json

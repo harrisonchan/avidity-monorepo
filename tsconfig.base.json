@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@web/*": ["apps/web/src/app/*"],
+      "@web/styles/*": ["apps/web/src/styles/*"],
       // "@shared/*": ["shared/*"],
       "@shared/helpers": ["shared/helpers/src/index.ts"],
       "@shared/stores": ["shared/stores/src/index.ts"],
