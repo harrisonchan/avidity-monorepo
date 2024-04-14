@@ -2016,6 +2016,15 @@
         "hash": "10c0/608494c53968085bfcf9b987d80c3ec6720bdb65f78591d53e8bba3b360e86366d48a7dee11405dd443f5a3565432184b95bb9d4954bca1922cc9385a942caaf"
       }
     },
+    "npm:@radix-ui/react-checkbox": {
+      "type": "npm",
+      "name": "npm:@radix-ui/react-checkbox",
+      "data": {
+        "version": "1.0.4",
+        "packageName": "@radix-ui/react-checkbox",
+        "hash": "10c0/a4bd259a7e15ad88f72524190ddcc2db0688d439aad954e06d0adf6038b2e17397ed8ae0ea26ab09bf6981f1b9dd883904b2b7e74b307b5c6b1a3765d27fe737"
+      }
+    },
     "npm:@radix-ui/react-collection": {
       "type": "npm",
       "name": "npm:@radix-ui/react-collection",
@@ -2041,6 +2050,15 @@
         "version": "1.0.1",
         "packageName": "@radix-ui/react-context",
         "hash": "10c0/3de5761b32cc70cd61715527f29d8c699c01ab28c195ced972ccbc7025763a373a68f18c9f948c7a7b922e469fd2df7fee5f7536e3f7bad44ffc06d959359333"
+      }
+    },
+    "npm:@radix-ui/react-dialog": {
+      "type": "npm",
+      "name": "npm:@radix-ui/react-dialog",
+      "data": {
+        "version": "1.0.5",
+        "packageName": "@radix-ui/react-dialog",
+        "hash": "10c0/c5b3069397379e79857a3203f3ead4d12d87736b59899f02a63e620a07dd1e6704e15523926cdf8e39afe1c945a7ff0f2533c5ea5be1e17c3114820300a51133"
       }
     },
     "npm:@radix-ui/react-direction": {
@@ -2095,6 +2113,15 @@
         "version": "1.0.1",
         "packageName": "@radix-ui/react-id",
         "hash": "10c0/e2859ca58bea171c956098ace7ecf615cf9432f58a118b779a14720746b3adcf0351c36c75de131548672d3cd290ca238198acbd33b88dc4706f98312e9317ad"
+      }
+    },
+    "npm:@radix-ui/react-label": {
+      "type": "npm",
+      "name": "npm:@radix-ui/react-label",
+      "data": {
+        "version": "2.0.2",
+        "packageName": "@radix-ui/react-label",
+        "hash": "10c0/a6528735b9f3e15ad83b7a905861bbc5a9b9236716957d6e99902bbfced0472aed4ddbf519bc0e6c41f528986e7acf7270cf0734a2fc380a547a8640809d3a81"
       }
     },
     "npm:@radix-ui/react-menu": {
@@ -2194,6 +2221,15 @@
         "version": "1.0.1",
         "packageName": "@radix-ui/react-use-layout-effect",
         "hash": "10c0/13cd0c38395c5838bc9a18238020d3bcf67fb340039e6d1cbf438be1b91d64cf6900b78121f3dc9219faeb40dcc7b523ce0f17e4a41631655690e5a30a40886a"
+      }
+    },
+    "npm:@radix-ui/react-use-previous@1.0.1": {
+      "type": "npm",
+      "name": "npm:@radix-ui/react-use-previous@1.0.1",
+      "data": {
+        "version": "1.0.1",
+        "packageName": "@radix-ui/react-use-previous",
+        "hash": "10c0/f5fbc602108668484a4ed506b7842482222d1d03094362e26abb7fdd593eee8794fc47d85b3524fb9d00884801c89a6eefd0bed0971eba1ec189c637b6afd398"
       }
     },
     "npm:@radix-ui/react-use-rect": {
@@ -17495,6 +17531,51 @@
       "type": "static"
     },
     {
+      "source": "npm:@radix-ui/react-checkbox",
+      "target": "npm:@babel/runtime",
+      "type": "static"
+    },
+    {
+      "source": "npm:@radix-ui/react-checkbox",
+      "target": "npm:@radix-ui/primitive",
+      "type": "static"
+    },
+    {
+      "source": "npm:@radix-ui/react-checkbox",
+      "target": "npm:@radix-ui/react-compose-refs",
+      "type": "static"
+    },
+    {
+      "source": "npm:@radix-ui/react-checkbox",
+      "target": "npm:@radix-ui/react-context",
+      "type": "static"
+    },
+    {
+      "source": "npm:@radix-ui/react-checkbox",
+      "target": "npm:@radix-ui/react-presence",
+      "type": "static"
+    },
+    {
+      "source": "npm:@radix-ui/react-checkbox",
+      "target": "npm:@radix-ui/react-primitive",
+      "type": "static"
+    },
+    {
+      "source": "npm:@radix-ui/react-checkbox",
+      "target": "npm:@radix-ui/react-use-controllable-state",
+      "type": "static"
+    },
+    {
+      "source": "npm:@radix-ui/react-checkbox",
+      "target": "npm:@radix-ui/react-use-previous@1.0.1",
+      "type": "static"
+    },
+    {
+      "source": "npm:@radix-ui/react-checkbox",
+      "target": "npm:@radix-ui/react-use-size",
+      "type": "static"
+    },
+    {
       "source": "npm:@radix-ui/react-collection",
       "target": "npm:@babel/runtime",
       "type": "static"
@@ -17527,6 +17608,81 @@
     {
       "source": "npm:@radix-ui/react-context",
       "target": "npm:@babel/runtime",
+      "type": "static"
+    },
+    {
+      "source": "npm:@radix-ui/react-dialog",
+      "target": "npm:@babel/runtime",
+      "type": "static"
+    },
+    {
+      "source": "npm:@radix-ui/react-dialog",
+      "target": "npm:@radix-ui/primitive",
+      "type": "static"
+    },
+    {
+      "source": "npm:@radix-ui/react-dialog",
+      "target": "npm:@radix-ui/react-compose-refs",
+      "type": "static"
+    },
+    {
+      "source": "npm:@radix-ui/react-dialog",
+      "target": "npm:@radix-ui/react-context",
+      "type": "static"
+    },
+    {
+      "source": "npm:@radix-ui/react-dialog",
+      "target": "npm:@radix-ui/react-dismissable-layer",
+      "type": "static"
+    },
+    {
+      "source": "npm:@radix-ui/react-dialog",
+      "target": "npm:@radix-ui/react-focus-guards",
+      "type": "static"
+    },
+    {
+      "source": "npm:@radix-ui/react-dialog",
+      "target": "npm:@radix-ui/react-focus-scope",
+      "type": "static"
+    },
+    {
+      "source": "npm:@radix-ui/react-dialog",
+      "target": "npm:@radix-ui/react-id",
+      "type": "static"
+    },
+    {
+      "source": "npm:@radix-ui/react-dialog",
+      "target": "npm:@radix-ui/react-portal",
+      "type": "static"
+    },
+    {
+      "source": "npm:@radix-ui/react-dialog",
+      "target": "npm:@radix-ui/react-presence",
+      "type": "static"
+    },
+    {
+      "source": "npm:@radix-ui/react-dialog",
+      "target": "npm:@radix-ui/react-primitive",
+      "type": "static"
+    },
+    {
+      "source": "npm:@radix-ui/react-dialog",
+      "target": "npm:@radix-ui/react-slot",
+      "type": "static"
+    },
+    {
+      "source": "npm:@radix-ui/react-dialog",
+      "target": "npm:@radix-ui/react-use-controllable-state",
+      "type": "static"
+    },
+    {
+      "source": "npm:@radix-ui/react-dialog",
+      "target": "npm:aria-hidden",
+      "type": "static"
+    },
+    {
+      "source": "npm:@radix-ui/react-dialog",
+      "target": "npm:react-remove-scroll",
       "type": "static"
     },
     {
@@ -17637,6 +17793,16 @@
     {
       "source": "npm:@radix-ui/react-id",
       "target": "npm:@radix-ui/react-use-layout-effect",
+      "type": "static"
+    },
+    {
+      "source": "npm:@radix-ui/react-label",
+      "target": "npm:@babel/runtime",
+      "type": "static"
+    },
+    {
+      "source": "npm:@radix-ui/react-label",
+      "target": "npm:@radix-ui/react-primitive",
       "type": "static"
     },
     {
@@ -17921,6 +18087,11 @@
     },
     {
       "source": "npm:@radix-ui/react-use-layout-effect",
+      "target": "npm:@babel/runtime",
+      "type": "static"
+    },
+    {
+      "source": "npm:@radix-ui/react-use-previous@1.0.1",
       "target": "npm:@babel/runtime",
       "type": "static"
     },

@@ -53,7 +53,7 @@ module.exports = {
         ring: "var(--ring)",
         background: {
           DEFAULT: "var(--background)",
-          white: "var(--background-white)",
+          white: "var(--background-light)",
         },
         foreground: "var(--foreground)",
         destructive: {

@@ -28,7 +28,7 @@
     --grey-dark: #4a5363;
     --foreground: #22262d;
     --background: #fff3f4;
-    --background-white: var(--light);
+    --background-light: var(--light);
     --muted: var(--grey-light);
     --muted-foreground: var(--grey-dark);
     --popover: var(--light);
@@ -84,7 +84,7 @@
     @apply border-border;
   }
   body {
-    @apply bg-background-white text-dark font-sans;
+    @apply bg-background-light text-dark font-sans;
     font-feature-settings: 'rlig' 1, 'calt' 1;
   }
 }
