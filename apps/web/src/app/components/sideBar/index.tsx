@@ -1,6 +1,23 @@
 'use client';
-import React, { useEffect, useState } from 'react';
-import { Button, ButtonProps } from '@web/components';
+import React, { useState } from 'react';
+import {
+  Avatar,
+  AvatarFallback,
+  AvatarImage,
+  Button,
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuPortal,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuSub,
+  DropdownMenuSubContent,
+  DropdownMenuSubTrigger,
+  DropdownMenuTrigger,
+} from '@web/components';
 import Link from 'next/link';
 
 type SideBarMenuProps = {
@@ -13,10 +30,10 @@ function SideBarMenu(props: SideBarMenuProps) {
   return (
     <div className="flex flex-col">
       {props.items.map((item, idx) => (
-        <Link href={item.link}>
+        <Link key={item.link + idx} href={item.link}>
           <Button
             className={selectedItemIdx === idx ? 'bg-primary-light text-primary hover:bg-primary-light' : ''}
-            key={idx}
+            key={item.title + idx}
             onClick={() => {
               setSelectedItemIdx(idx);
             }}>
@@ -30,9 +47,71 @@ function SideBarMenu(props: SideBarMenuProps) {
 
 function SideBar() {
   return (
-    <div className="flex flex-col h-screen align-center p-4 pt-2 mr-4 bg-background rounded-r-2xl">
-      {/* <Button>Today</Button>
-      <SideBarMenuItem isSelected={false}>Scheduler</SideBarMenuItem> */}
+    <div className="flex flex-col h-screen align-center items-center p-4 pt-2 mr-4 bg-background rounded-r-2xl">
+      <h1>Avidity</h1>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild>
+          <Button>
+            <Avatar className="h-8 w-8 mr-1">
+              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarFallback>User</AvatarFallback>
+            </Avatar>
+            <h4>Harrison</h4>
+          </Button>
+        </DropdownMenuTrigger>
+        <DropdownMenuContent className="w-56">
+          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuGroup>
+            <DropdownMenuItem>
+              Profile
+              <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              Billing
+              <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              Settings
+              <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
+            </DropdownMenuItem>
+            <DropdownMenuItem>
+              Keyboard shortcuts
+              <DropdownMenuShortcut>⌘K</DropdownMenuShortcut>
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+          <DropdownMenuSeparator />
+          <DropdownMenuGroup>
+            <DropdownMenuItem>Team</DropdownMenuItem>
+            <DropdownMenuSub>
+              <DropdownMenuSubTrigger>Invite users</DropdownMenuSubTrigger>
+              <DropdownMenuPortal>
+                <DropdownMenuSubContent>
+                  <DropdownMenuItem>Email</DropdownMenuItem>
+                  <DropdownMenuItem>Message</DropdownMenuItem>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>More...</DropdownMenuItem>
+                </DropdownMenuSubContent>
+              </DropdownMenuPortal>
+            </DropdownMenuSub>
+            <DropdownMenuItem>
+              New Team
+              <DropdownMenuShortcut>⌘+T</DropdownMenuShortcut>
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>GitHub</DropdownMenuItem>
+          <DropdownMenuItem>Support</DropdownMenuItem>
+          <DropdownMenuItem disabled>API</DropdownMenuItem>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>
+            Log out
+            <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <div className="flex flex-row items-center"></div>
       <SideBarMenu
         items={[
           { title: 'Hi', link: '/' },

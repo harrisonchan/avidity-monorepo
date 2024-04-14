@@ -31,7 +31,7 @@
     --background-white: var(--light);
     --muted: var(--grey-light);
     --muted-foreground: var(--grey-dark);
-    --popover: var(--grey-light);
+    --popover: var(--light);
     --popover-foreground: var(--dark);
     --border: var(--grey);
     --input: var(--grey);
@@ -95,16 +95,16 @@
 
 /* TYPOGRAPHY */
 .h1 {
-  @apply text-3xl font-bold;
-}
-.h2 {
   @apply text-2xl font-bold;
 }
-.h3 {
+.h2 {
   @apply text-xl font-bold;
 }
-.h4 {
+.h3 {
   @apply text-base font-bold;
+}
+.h4 {
+  @apply text-sm font-bold;
 }
 .body {
   @apply text-sm font-medium;
@@ -113,7 +113,7 @@
   @apply text-xs font-medium text-grey;
 }
 .tertiary {
-  @apply text-xs font-normal;
+  @apply text-xs font-medium;
 }
 h1 {
   @apply h1;
