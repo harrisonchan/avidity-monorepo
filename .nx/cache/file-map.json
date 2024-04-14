@@ -116,72 +116,76 @@
   "fileMap": {
     "nonProjectFiles": [
       {
-        "file": ".eslintignore",
-        "hash": "7663861978715868291"
-      },
-      {
-        "file": ".editorconfig",
-        "hash": "5443105041930014821"
-      },
-      {
         "file": ".yarn/install-state.gz",
         "hash": "5099500568536315521"
       },
       {
-        "file": ".eslintrc.json",
-        "hash": "17866138117546000433"
+        "file": ".eslintignore",
+        "hash": "7663861978715868291"
       },
       {
-        "file": ".prettierrc",
-        "hash": "16046363424815075219"
-      },
-      {
-        "file": "package.json",
-        "hash": "16076768274797728256"
-      },
-      {
-        "file": "nx.json",
-        "hash": "2021478189396849343"
-      },
-      {
-        "file": "jest.preset.js",
-        "hash": "9430166341120122740"
+        "file": ".yarn/releases/yarn-4.1.1.cjs",
+        "hash": "6708668144986729228"
       },
       {
         "file": "jest.config.ts",
         "hash": "12333515226966617182"
       },
       {
-        "file": ".gitignore",
-        "hash": "13083317094979760820"
-      },
-      {
-        "file": ".vscode/extensions.json",
-        "hash": "4934098906304722861"
-      },
-      {
         "file": "README.md",
         "hash": "14736387704784279400"
-      },
-      {
-        "file": "yarn.lock",
-        "hash": "10380756783284057742"
-      },
-      {
-        "file": "tsconfig.base.json",
-        "hash": "16175568986480394678"
-      },
-      {
-        "file": ".yarnrc.yml",
-        "hash": "1612807690830057048"
       },
       {
         "file": ".prettierignore",
         "hash": "16448050467312557263"
       },
       {
-        "file": ".yarn/releases/yarn-4.1.1.cjs",
-        "hash": "6708668144986729228"
+        "file": ".vercelignore",
+        "hash": "12614809469601804973"
+      },
+      {
+        "file": ".editorconfig",
+        "hash": "5443105041930014821"
+      },
+      {
+        "file": ".vscode/extensions.json",
+        "hash": "4934098906304722861"
+      },
+      {
+        "file": "package.json",
+        "hash": "16076768274797728256"
+      },
+      {
+        "file": "tsconfig.base.json",
+        "hash": "16175568986480394678"
+      },
+      {
+        "file": ".eslintrc.json",
+        "hash": "17866138117546000433"
+      },
+      {
+        "file": "yarn.lock",
+        "hash": "10380756783284057742"
+      },
+      {
+        "file": ".yarnrc.yml",
+        "hash": "1612807690830057048"
+      },
+      {
+        "file": "jest.preset.js",
+        "hash": "9430166341120122740"
+      },
+      {
+        "file": ".prettierrc",
+        "hash": "16046363424815075219"
+      },
+      {
+        "file": "nx.json",
+        "hash": "2021478189396849343"
+      },
+      {
+        "file": ".gitignore",
+        "hash": "13083317094979760820"
       }
     ],
     "projectFileMap": {

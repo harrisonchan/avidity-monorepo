@@ -16858,3 +16858,386 @@ Error: write EPIPE
 [NX Daemon Server] - 2024-04-14T14:35:50.134Z - [WATCHER]: Processing file changes in outputs
 [NX Daemon Server] - 2024-04-14T14:35:51.133Z - [WATCHER]: Processing file changes in outputs
 [NX Daemon Server] - 2024-04-14T14:35:51.672Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2024-04-14T15:08:56.188Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2024-04-14T15:09:01.797Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2024-04-14T15:14:42.883Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2024-04-14T15:14:42.908Z - [WATCHER]: .vercelignore was created or restored
+[NX Daemon Server] - 2024-04-14T15:14:43.042Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2024-04-14T15:14:43.043Z - [REQUEST]: .vercelignore
+[NX Daemon Server] - 2024-04-14T15:14:43.043Z - [REQUEST]: 
+[NX Daemon Server] - 2024-04-14T15:14:44.596Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2024-04-14T15:14:44.596Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2024-04-14T15:14:44.596Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2024-04-14T15:14:44.597Z - Time taken for 'hash changed files from watcher' 24.350156009197235ms
+[NX Daemon Server] - 2024-04-14T15:14:48.906Z - [WATCHER]: .vercelignore was modified
+[NX Daemon Server] - 2024-04-14T15:14:48.907Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2024-04-14T15:14:48.907Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2024-04-14T15:14:48.908Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 1.
+[NX Daemon Server] - 2024-04-14T15:14:48.908Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2024-04-14T15:14:48.909Z - Time taken for 'changed-projects' 0.2661980092525482ms
+[NX Daemon Server] - 2024-04-14T15:14:49.115Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2024-04-14T15:14:49.116Z - [REQUEST]: .vercelignore
+[NX Daemon Server] - 2024-04-14T15:14:49.116Z - [REQUEST]: 
+[NX Daemon Server] - 2024-04-14T15:14:49.925Z - Time taken for 'hash changed files from watcher' 1.203334003686905ms
+[NX Daemon Server] - 2024-04-14T15:14:59.118Z - [WATCHER]: old stuff was deleted
+[NX Daemon Server] - 2024-04-14T15:14:59.119Z - [REQUEST]: Responding to the client. File watch changed
+[NX Daemon Server] - 2024-04-14T15:14:59.119Z - Done responding to the client File watch changed
+[NX Daemon Server] - 2024-04-14T15:14:59.119Z - Handled FILE-WATCH-CHANGED. Handling time: 0. Response time: 0.
+[NX Daemon Server] - 2024-04-14T15:14:59.119Z - [WATCHER]: Processing file changes in outputs
+[NX Daemon Server] - 2024-04-14T15:14:59.119Z - Time taken for 'changed-projects' 0.25936198234558105ms
+[NX Daemon Server] - 2024-04-14T15:14:59.520Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2024-04-14T15:14:59.520Z - [REQUEST]: 
+[NX Daemon Server] - 2024-04-14T15:14:59.520Z - [REQUEST]: old stuff
+Unable to create nodes for old stuff/package.json using plugin @nx/eslint/plugin. 
+
+	 Inner Error: Error: ENOENT: no such file or directory, scandir '/Users/harrisonchan/Desktop/Programming/avidity-monorepo/old stuff'
+    at readdirSync (node:fs:1529:3)
+    at t.readdirSync (node:electron/js2c/node_init:2:11289)
+    at getEslintConfigsForProject (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/@nx/eslint/src/plugins/plugin.js:32:45)
+    at exports.createNodes (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/@nx/eslint/src/plugins/plugin.js:13:31)
+    at buildProjectsConfigurationsFromProjectPathsAndPlugins (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/project-configuration-utils.js:148:29)
+    at createProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:89:156)
+    at _retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:61:12)
+    at retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:46:12)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async processFilesAndCreateAndSerializeProjectGraph (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:140:28)
+Unable to create nodes for old stuff/packages/web/avidity-e2e/cypress.config.ts using plugin @nx/cypress/plugin. 
+
+	 Inner Error: Error: ENOENT: no such file or directory, scandir '/Users/harrisonchan/Desktop/Programming/avidity-monorepo/old stuff/packages/web/avidity-e2e'
+    at readdirSync (node:fs:1529:3)
+    at t.readdirSync (node:electron/js2c/node_init:2:11289)
+    at exports.createNodes (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/@nx/cypress/src/plugins/plugin.js:34:51)
+    at buildProjectsConfigurationsFromProjectPathsAndPlugins (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/project-configuration-utils.js:148:29)
+    at createProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:89:156)
+    at _retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:61:12)
+    at retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:46:12)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async processFilesAndCreateAndSerializeProjectGraph (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:140:28)
+    at async Timeout._onTimeout (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:81:13)
+Unable to create nodes for old stuff/jest.config.ts using plugin @nx/jest/plugin. 
+
+	 Inner Error: Error: ENOENT: no such file or directory, scandir '/Users/harrisonchan/Desktop/Programming/avidity-monorepo/old stuff'
+    at readdirSync (node:fs:1529:3)
+    at t.readdirSync (node:electron/js2c/node_init:2:11289)
+    at exports.createNodes (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/@nx/jest/src/plugins/plugin.js:35:51)
+    at buildProjectsConfigurationsFromProjectPathsAndPlugins (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/project-configuration-utils.js:148:29)
+    at createProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:89:156)
+    at _retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:61:12)
+    at retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:46:12)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async processFilesAndCreateAndSerializeProjectGraph (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:140:28)
+    at async Timeout._onTimeout (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:81:13)
+Unable to create nodes for old stuff/packages/mobile/avidity/jest.config.ts using plugin @nx/jest/plugin. 
+
+	 Inner Error: Error: ENOENT: no such file or directory, scandir '/Users/harrisonchan/Desktop/Programming/avidity-monorepo/old stuff/packages/mobile/avidity'
+    at readdirSync (node:fs:1529:3)
+    at t.readdirSync (node:electron/js2c/node_init:2:11289)
+    at exports.createNodes (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/@nx/jest/src/plugins/plugin.js:35:51)
+    at buildProjectsConfigurationsFromProjectPathsAndPlugins (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/project-configuration-utils.js:148:29)
+    at createProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:89:156)
+    at _retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:61:12)
+    at retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:46:12)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async processFilesAndCreateAndSerializeProjectGraph (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:140:28)
+    at async Timeout._onTimeout (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:81:13)
+Unable to create nodes for old stuff/packages/server/jest.config.ts using plugin @nx/jest/plugin. 
+
+	 Inner Error: Error: ENOENT: no such file or directory, scandir '/Users/harrisonchan/Desktop/Programming/avidity-monorepo/old stuff/packages/server'
+    at readdirSync (node:fs:1529:3)
+    at t.readdirSync (node:electron/js2c/node_init:2:11289)
+    at exports.createNodes (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/@nx/jest/src/plugins/plugin.js:35:51)
+    at buildProjectsConfigurationsFromProjectPathsAndPlugins (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/project-configuration-utils.js:148:29)
+    at createProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:89:156)
+    at _retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:61:12)
+    at retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:46:12)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async processFilesAndCreateAndSerializeProjectGraph (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:140:28)
+    at async Timeout._onTimeout (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:81:13)
+Unable to create nodes for old stuff/packages/server-e2e/jest.config.ts using plugin @nx/jest/plugin. 
+
+	 Inner Error: Error: ENOENT: no such file or directory, scandir '/Users/harrisonchan/Desktop/Programming/avidity-monorepo/old stuff/packages/server-e2e'
+    at readdirSync (node:fs:1529:3)
+    at t.readdirSync (node:electron/js2c/node_init:2:11289)
+    at exports.createNodes (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/@nx/jest/src/plugins/plugin.js:35:51)
+    at buildProjectsConfigurationsFromProjectPathsAndPlugins (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/project-configuration-utils.js:148:29)
+    at createProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:89:156)
+    at _retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:61:12)
+    at retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:46:12)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async processFilesAndCreateAndSerializeProjectGraph (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:140:28)
+    at async Timeout._onTimeout (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:81:13)
+Unable to create nodes for old stuff/packages/shared/helpers/jest.config.ts using plugin @nx/jest/plugin. 
+
+	 Inner Error: Error: ENOENT: no such file or directory, scandir '/Users/harrisonchan/Desktop/Programming/avidity-monorepo/old stuff/packages/shared/helpers'
+    at readdirSync (node:fs:1529:3)
+    at t.readdirSync (node:electron/js2c/node_init:2:11289)
+    at exports.createNodes (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/@nx/jest/src/plugins/plugin.js:35:51)
+    at buildProjectsConfigurationsFromProjectPathsAndPlugins (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/project-configuration-utils.js:148:29)
+    at createProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:89:156)
+    at _retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:61:12)
+    at retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:46:12)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async processFilesAndCreateAndSerializeProjectGraph (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:140:28)
+    at async Timeout._onTimeout (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:81:13)
+Unable to create nodes for old stuff/packages/shared/stores/jest.config.ts using plugin @nx/jest/plugin. 
+
+	 Inner Error: Error: ENOENT: no such file or directory, scandir '/Users/harrisonchan/Desktop/Programming/avidity-monorepo/old stuff/packages/shared/stores'
+    at readdirSync (node:fs:1529:3)
+    at t.readdirSync (node:electron/js2c/node_init:2:11289)
+    at exports.createNodes (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/@nx/jest/src/plugins/plugin.js:35:51)
+    at buildProjectsConfigurationsFromProjectPathsAndPlugins (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/project-configuration-utils.js:148:29)
+    at createProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:89:156)
+    at _retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:61:12)
+    at retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:46:12)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async processFilesAndCreateAndSerializeProjectGraph (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:140:28)
+    at async Timeout._onTimeout (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:81:13)
+Unable to create nodes for old stuff/packages/shared/utils/jest.config.ts using plugin @nx/jest/plugin. 
+
+	 Inner Error: Error: ENOENT: no such file or directory, scandir '/Users/harrisonchan/Desktop/Programming/avidity-monorepo/old stuff/packages/shared/utils'
+    at readdirSync (node:fs:1529:3)
+    at t.readdirSync (node:electron/js2c/node_init:2:11289)
+    at exports.createNodes (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/@nx/jest/src/plugins/plugin.js:35:51)
+    at buildProjectsConfigurationsFromProjectPathsAndPlugins (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/project-configuration-utils.js:148:29)
+    at createProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:89:156)
+    at _retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:61:12)
+    at retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:46:12)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async processFilesAndCreateAndSerializeProjectGraph (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:140:28)
+    at async Timeout._onTimeout (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:81:13)
+Unable to create nodes for old stuff/packages/web/avidity/jest.config.ts using plugin @nx/jest/plugin. 
+
+	 Inner Error: Error: ENOENT: no such file or directory, scandir '/Users/harrisonchan/Desktop/Programming/avidity-monorepo/old stuff/packages/web/avidity'
+    at readdirSync (node:fs:1529:3)
+    at t.readdirSync (node:electron/js2c/node_init:2:11289)
+    at exports.createNodes (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/@nx/jest/src/plugins/plugin.js:35:51)
+    at buildProjectsConfigurationsFromProjectPathsAndPlugins (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/project-configuration-utils.js:148:29)
+    at createProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:89:156)
+    at _retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:61:12)
+    at retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:46:12)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async processFilesAndCreateAndSerializeProjectGraph (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:140:28)
+    at async Timeout._onTimeout (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:81:13)
+CreateNodesError: Unable to create nodes for old stuff/packages/web/avidity-e2e/cypress.config.ts using plugin @nx/cypress/plugin. 
+
+	 Inner Error: Error: ENOENT: no such file or directory, scandir '/Users/harrisonchan/Desktop/Programming/avidity-monorepo/old stuff/packages/web/avidity-e2e'
+    at readdirSync (node:fs:1529:3)
+    at t.readdirSync (node:electron/js2c/node_init:2:11289)
+    at exports.createNodes (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/@nx/cypress/src/plugins/plugin.js:34:51)
+    at buildProjectsConfigurationsFromProjectPathsAndPlugins (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/project-configuration-utils.js:148:29)
+    at createProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:89:156)
+    at _retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:61:12)
+    at retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:46:12)
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async processFilesAndCreateAndSerializeProjectGraph (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:140:28)
+    at async Timeout._onTimeout (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:81:13)
+    at /Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/project-configuration-utils.js:156:35
+    at processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async Promise.all (index 1) {
+  [cause]: Error: ENOENT: no such file or directory, scandir '/Users/harrisonchan/Desktop/Programming/avidity-monorepo/old stuff/packages/web/avidity-e2e'
+      at readdirSync (node:fs:1529:3)
+      at t.readdirSync (node:electron/js2c/node_init:2:11289)
+      at exports.createNodes (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/@nx/cypress/src/plugins/plugin.js:34:51)
+      at buildProjectsConfigurationsFromProjectPathsAndPlugins (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/project-configuration-utils.js:148:29)
+      at createProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:89:156)
+      at _retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:61:12)
+      at retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:46:12)
+      at processTicksAndRejections (node:internal/process/task_queues:95:5)
+      at async processFilesAndCreateAndSerializeProjectGraph (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:140:28)
+      at async Timeout._onTimeout (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:81:13) {
+    errno: -2,
+    syscall: 'scandir',
+    code: 'ENOENT',
+    path: '/Users/harrisonchan/Desktop/Programming/avidity-monorepo/old stuff/packages/web/avidity-e2e'
+  }
+}
+[NX Daemon Server] - 2024-04-14T15:15:04.440Z - Started listening on: /var/folders/kg/7t304xws6xd6nj8j2_9rn1xw0000gp/T/db61dfa9b10c9454f57c/d.sock
+[NX Daemon Server] - 2024-04-14T15:15:04.560Z - [WATCHER]: Subscribed to changes within: /Users/harrisonchan/Desktop/Programming/avidity-monorepo (native)
+[NX Daemon Server] - 2024-04-14T15:15:04.688Z - Established a connection. Number of open connections: 1
+[NX Daemon Server] - 2024-04-14T15:15:04.695Z - Established a connection. Number of open connections: 2
+[NX Daemon Server] - 2024-04-14T15:15:04.843Z - [REQUEST]: Client Request for Project Graph Received
+[NX Daemon Server] - 2024-04-14T15:15:04.846Z - [REQUEST]: Updated workspace context based on watched changes, recomputing project graph...
+[NX Daemon Server] - 2024-04-14T15:15:04.847Z - [REQUEST]: 
+[NX Daemon Server] - 2024-04-14T15:15:04.847Z - [REQUEST]: 
+Unable to create nodes for old_stuff/package.json using plugin @nx/eslint/plugin. 
+
+	 Inner Error: Error: ENOENT: no such file or directory, scandir '/Users/harrisonchan/Desktop/Programming/avidity-monorepo/old_stuff'
+    at readdirSync (node:fs:1529:3)
+    at t.readdirSync (node:electron/js2c/node_init:2:11289)
+    at getEslintConfigsForProject (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/@nx/eslint/src/plugins/plugin.js:32:45)
+    at exports.createNodes (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/@nx/eslint/src/plugins/plugin.js:13:31)
+    at buildProjectsConfigurationsFromProjectPathsAndPlugins (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/project-configuration-utils.js:148:29)
+    at createProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:89:156)
+    at _retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:61:12)
+    at retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:46:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async processFilesAndCreateAndSerializeProjectGraph (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:140:28)
+Unable to create nodes for old_stuff/packages/web/avidity-e2e/cypress.config.ts using plugin @nx/cypress/plugin. 
+
+	 Inner Error: Error: ENOENT: no such file or directory, scandir '/Users/harrisonchan/Desktop/Programming/avidity-monorepo/old_stuff/packages/web/avidity-e2e'
+    at readdirSync (node:fs:1529:3)
+    at t.readdirSync (node:electron/js2c/node_init:2:11289)
+    at exports.createNodes (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/@nx/cypress/src/plugins/plugin.js:34:51)
+    at buildProjectsConfigurationsFromProjectPathsAndPlugins (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/project-configuration-utils.js:148:29)
+    at createProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:89:156)
+    at _retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:61:12)
+    at retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:46:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async processFilesAndCreateAndSerializeProjectGraph (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:140:28)
+    at async getCachedSerializedProjectGraphPromise (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:43:16)
+Unable to create nodes for old_stuff/jest.config.ts using plugin @nx/jest/plugin. 
+
+	 Inner Error: Error: ENOENT: no such file or directory, scandir '/Users/harrisonchan/Desktop/Programming/avidity-monorepo/old_stuff'
+    at readdirSync (node:fs:1529:3)
+    at t.readdirSync (node:electron/js2c/node_init:2:11289)
+    at exports.createNodes (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/@nx/jest/src/plugins/plugin.js:35:51)
+    at buildProjectsConfigurationsFromProjectPathsAndPlugins (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/project-configuration-utils.js:148:29)
+    at createProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:89:156)
+    at _retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:61:12)
+    at retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:46:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async processFilesAndCreateAndSerializeProjectGraph (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:140:28)
+    at async getCachedSerializedProjectGraphPromise (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:43:16)
+Unable to create nodes for old_stuff/packages/mobile/avidity/jest.config.ts using plugin @nx/jest/plugin. 
+
+	 Inner Error: Error: ENOENT: no such file or directory, scandir '/Users/harrisonchan/Desktop/Programming/avidity-monorepo/old_stuff/packages/mobile/avidity'
+    at readdirSync (node:fs:1529:3)
+    at t.readdirSync (node:electron/js2c/node_init:2:11289)
+    at exports.createNodes (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/@nx/jest/src/plugins/plugin.js:35:51)
+    at buildProjectsConfigurationsFromProjectPathsAndPlugins (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/project-configuration-utils.js:148:29)
+    at createProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:89:156)
+    at _retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:61:12)
+    at retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:46:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async processFilesAndCreateAndSerializeProjectGraph (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:140:28)
+    at async getCachedSerializedProjectGraphPromise (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:43:16)
+Unable to create nodes for old_stuff/packages/server/jest.config.ts using plugin @nx/jest/plugin. 
+
+	 Inner Error: Error: ENOENT: no such file or directory, scandir '/Users/harrisonchan/Desktop/Programming/avidity-monorepo/old_stuff/packages/server'
+    at readdirSync (node:fs:1529:3)
+    at t.readdirSync (node:electron/js2c/node_init:2:11289)
+    at exports.createNodes (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/@nx/jest/src/plugins/plugin.js:35:51)
+    at buildProjectsConfigurationsFromProjectPathsAndPlugins (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/project-configuration-utils.js:148:29)
+    at createProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:89:156)
+    at _retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:61:12)
+    at retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:46:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async processFilesAndCreateAndSerializeProjectGraph (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:140:28)
+    at async getCachedSerializedProjectGraphPromise (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:43:16)
+Unable to create nodes for old_stuff/packages/server-e2e/jest.config.ts using plugin @nx/jest/plugin. 
+
+	 Inner Error: Error: ENOENT: no such file or directory, scandir '/Users/harrisonchan/Desktop/Programming/avidity-monorepo/old_stuff/packages/server-e2e'
+    at readdirSync (node:fs:1529:3)
+    at t.readdirSync (node:electron/js2c/node_init:2:11289)
+    at exports.createNodes (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/@nx/jest/src/plugins/plugin.js:35:51)
+    at buildProjectsConfigurationsFromProjectPathsAndPlugins (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/project-configuration-utils.js:148:29)
+    at createProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:89:156)
+    at _retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:61:12)
+    at retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:46:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async processFilesAndCreateAndSerializeProjectGraph (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:140:28)
+    at async getCachedSerializedProjectGraphPromise (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:43:16)
+Unable to create nodes for old_stuff/packages/shared/helpers/jest.config.ts using plugin @nx/jest/plugin. 
+
+	 Inner Error: Error: ENOENT: no such file or directory, scandir '/Users/harrisonchan/Desktop/Programming/avidity-monorepo/old_stuff/packages/shared/helpers'
+    at readdirSync (node:fs:1529:3)
+    at t.readdirSync (node:electron/js2c/node_init:2:11289)
+    at exports.createNodes (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/@nx/jest/src/plugins/plugin.js:35:51)
+    at buildProjectsConfigurationsFromProjectPathsAndPlugins (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/project-configuration-utils.js:148:29)
+    at createProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:89:156)
+    at _retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:61:12)
+    at retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:46:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async processFilesAndCreateAndSerializeProjectGraph (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:140:28)
+    at async getCachedSerializedProjectGraphPromise (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:43:16)
+Unable to create nodes for old_stuff/packages/shared/stores/jest.config.ts using plugin @nx/jest/plugin. 
+
+	 Inner Error: Error: ENOENT: no such file or directory, scandir '/Users/harrisonchan/Desktop/Programming/avidity-monorepo/old_stuff/packages/shared/stores'
+    at readdirSync (node:fs:1529:3)
+    at t.readdirSync (node:electron/js2c/node_init:2:11289)
+    at exports.createNodes (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/@nx/jest/src/plugins/plugin.js:35:51)
+    at buildProjectsConfigurationsFromProjectPathsAndPlugins (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/project-configuration-utils.js:148:29)
+    at createProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:89:156)
+    at _retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:61:12)
+    at retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:46:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async processFilesAndCreateAndSerializeProjectGraph (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:140:28)
+    at async getCachedSerializedProjectGraphPromise (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:43:16)
+Unable to create nodes for old_stuff/packages/shared/utils/jest.config.ts using plugin @nx/jest/plugin. 
+
+	 Inner Error: Error: ENOENT: no such file or directory, scandir '/Users/harrisonchan/Desktop/Programming/avidity-monorepo/old_stuff/packages/shared/utils'
+    at readdirSync (node:fs:1529:3)
+    at t.readdirSync (node:electron/js2c/node_init:2:11289)
+    at exports.createNodes (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/@nx/jest/src/plugins/plugin.js:35:51)
+    at buildProjectsConfigurationsFromProjectPathsAndPlugins (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/project-configuration-utils.js:148:29)
+    at createProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:89:156)
+    at _retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:61:12)
+    at retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:46:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async processFilesAndCreateAndSerializeProjectGraph (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:140:28)
+    at async getCachedSerializedProjectGraphPromise (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:43:16)
+Unable to create nodes for old_stuff/packages/web/avidity/jest.config.ts using plugin @nx/jest/plugin. 
+
+	 Inner Error: Error: ENOENT: no such file or directory, scandir '/Users/harrisonchan/Desktop/Programming/avidity-monorepo/old_stuff/packages/web/avidity'
+    at readdirSync (node:fs:1529:3)
+    at t.readdirSync (node:electron/js2c/node_init:2:11289)
+    at exports.createNodes (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/@nx/jest/src/plugins/plugin.js:35:51)
+    at buildProjectsConfigurationsFromProjectPathsAndPlugins (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/project-configuration-utils.js:148:29)
+    at createProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:89:156)
+    at _retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:61:12)
+    at retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:46:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async processFilesAndCreateAndSerializeProjectGraph (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:140:28)
+    at async getCachedSerializedProjectGraphPromise (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:43:16)
+[NX Daemon Server] - 2024-04-14T15:15:10.284Z - [REQUEST]: Responding to the client with an error. Error when preparing serialized project graph. Unable to create nodes for old_stuff/package.json using plugin @nx/eslint/plugin. 
+
+	 Inner Error: Error: ENOENT: no such file or directory, scandir '/Users/harrisonchan/Desktop/Programming/avidity-monorepo/old_stuff'
+    at readdirSync (node:fs:1529:3)
+    at t.readdirSync (node:electron/js2c/node_init:2:11289)
+    at getEslintConfigsForProject (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/@nx/eslint/src/plugins/plugin.js:32:45)
+    at exports.createNodes (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/@nx/eslint/src/plugins/plugin.js:13:31)
+    at buildProjectsConfigurationsFromProjectPathsAndPlugins (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/project-configuration-utils.js:148:29)
+    at createProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:89:156)
+    at _retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:61:12)
+    at retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:46:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async processFilesAndCreateAndSerializeProjectGraph (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:140:28)
+CreateNodesError: Unable to create nodes for old_stuff/package.json using plugin @nx/eslint/plugin. 
+
+	 Inner Error: Error: ENOENT: no such file or directory, scandir '/Users/harrisonchan/Desktop/Programming/avidity-monorepo/old_stuff'
+    at readdirSync (node:fs:1529:3)
+    at t.readdirSync (node:electron/js2c/node_init:2:11289)
+    at getEslintConfigsForProject (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/@nx/eslint/src/plugins/plugin.js:32:45)
+    at exports.createNodes (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/@nx/eslint/src/plugins/plugin.js:13:31)
+    at buildProjectsConfigurationsFromProjectPathsAndPlugins (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/project-configuration-utils.js:148:29)
+    at createProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:89:156)
+    at _retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:61:12)
+    at retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:46:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async processFilesAndCreateAndSerializeProjectGraph (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:140:28)
+    at buildProjectsConfigurationsFromProjectPathsAndPlugins (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/project-configuration-utils.js:175:27)
+    at createProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:89:156)
+    ... 3 lines matching cause stack trace ...
+    at async processFilesAndCreateAndSerializeProjectGraph (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:140:28)
+    at async getCachedSerializedProjectGraphPromise (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:43:16)
+    at async handleRequestProjectGraph (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/handle-request-project-graph.js:12:24)
+    at async handleResult (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/server.js:110:16)
+    at async handleMessage (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/server.js:81:9) {
+  [cause]: Error: ENOENT: no such file or directory, scandir '/Users/harrisonchan/Desktop/Programming/avidity-monorepo/old_stuff'
+      at readdirSync (node:fs:1529:3)
+      at t.readdirSync (node:electron/js2c/node_init:2:11289)
+      at getEslintConfigsForProject (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/@nx/eslint/src/plugins/plugin.js:32:45)
+      at exports.createNodes (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/@nx/eslint/src/plugins/plugin.js:13:31)
+      at buildProjectsConfigurationsFromProjectPathsAndPlugins (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/project-configuration-utils.js:148:29)
+      at createProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:89:156)
+      at _retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:61:12)
+      at retrieveProjectConfigurations (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/project-graph/utils/retrieve-workspace-files.js:46:12)
+      at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+      at async processFilesAndCreateAndSerializeProjectGraph (/Users/harrisonchan/Desktop/Programming/avidity-monorepo/node_modules/nx/src/daemon/server/project-graph-incremental-recomputation.js:140:28) {
+    errno: -2,
+    syscall: 'scandir',
+    code: 'ENOENT',
+    path: '/Users/harrisonchan/Desktop/Programming/avidity-monorepo/old_stuff'
+  }
+}
+[NX Daemon Server] - 2024-04-14T15:15:10.290Z - Done responding to the client null
