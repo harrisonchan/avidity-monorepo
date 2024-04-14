@@ -116,6 +116,30 @@
   "fileMap": {
     "nonProjectFiles": [
       {
+        "file": ".eslintignore",
+        "hash": "7663861978715868291"
+      },
+      {
+        "file": ".editorconfig",
+        "hash": "5443105041930014821"
+      },
+      {
+        "file": ".yarn/install-state.gz",
+        "hash": "5099500568536315521"
+      },
+      {
+        "file": ".eslintrc.json",
+        "hash": "17866138117546000433"
+      },
+      {
+        "file": ".prettierrc",
+        "hash": "16046363424815075219"
+      },
+      {
+        "file": "package.json",
+        "hash": "16076768274797728256"
+      },
+      {
         "file": "nx.json",
         "hash": "2021478189396849343"
       },
@@ -132,44 +156,16 @@
         "hash": "13083317094979760820"
       },
       {
-        "file": ".editorconfig",
-        "hash": "5443105041930014821"
+        "file": ".vscode/extensions.json",
+        "hash": "4934098906304722861"
       },
       {
         "file": "README.md",
         "hash": "14736387704784279400"
       },
       {
-        "file": ".prettierrc",
-        "hash": "16046363424815075219"
-      },
-      {
-        "file": ".yarn/install-state.gz",
-        "hash": "5099500568536315521"
-      },
-      {
-        "file": ".vscode/extensions.json",
-        "hash": "4934098906304722861"
-      },
-      {
-        "file": ".eslintignore",
-        "hash": "7663861978715868291"
-      },
-      {
-        "file": ".prettierignore",
-        "hash": "16448050467312557263"
-      },
-      {
-        "file": "package.json",
-        "hash": "16076768274797728256"
-      },
-      {
         "file": "yarn.lock",
         "hash": "10380756783284057742"
-      },
-      {
-        "file": ".yarn/releases/yarn-4.1.1.cjs",
-        "hash": "6708668144986729228"
       },
       {
         "file": "tsconfig.base.json",
@@ -180,8 +176,12 @@
         "hash": "1612807690830057048"
       },
       {
-        "file": ".eslintrc.json",
-        "hash": "17866138117546000433"
+        "file": ".prettierignore",
+        "hash": "16448050467312557263"
+      },
+      {
+        "file": ".yarn/releases/yarn-4.1.1.cjs",
+        "hash": "6708668144986729228"
       }
     ],
     "projectFileMap": {
@@ -2371,7 +2371,7 @@
         },
         {
           "file": "apps/web/tailwind.config.js",
-          "hash": "7868218322798149791",
+          "hash": "26848022295297441",
           "deps": [
             "npm:tailwindcss",
             "npm:tailwindcss-animate"
