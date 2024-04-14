@@ -1,4 +1,4 @@
-import { RecurrenceRule } from '@shared/utils';
+import { RecurrenceRule } from './rruleTypes';
 import { Color, DateParam, LatLng } from './baseTypes';
 import { Illustration, IoniconsName } from './componentTypes';
 

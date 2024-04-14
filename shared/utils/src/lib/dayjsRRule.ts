@@ -1,23 +1,12 @@
 'use client';
-
 import { RRule } from 'rrule';
 import * as dayjs from 'dayjs';
 import * as utc from 'dayjs/plugin/utc';
-import { DateParam } from '@shared/types';
+import { DateParam, RecurrenceRule } from '@shared/types';
 import { getStandardFormat } from './dayjsUtils';
 import { useRef, useState } from 'react';
 
 dayjs.extend(utc);
-
-export type RecurrenceRule = {
-  frequency: 'yearly' | 'monthly' | 'weekly' | 'daily' | 'hourly';
-  start?: DateParam | null; //recurrence start, implementing mandatory start for performance. Should be set to goal start date by default
-  timeZone?: string | null;
-  until?: DateParam | null;
-  count?: number | null;
-  interval?: number | null;
-  byweekday?: ('monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday')[] | null;
-};
 
 export function createRecurrenceRule(params: { recurrenceRule: RecurrenceRule; noCache?: boolean }) {
   const recurrenceRule = sanitizeRecurrentRule(params.recurrenceRule);

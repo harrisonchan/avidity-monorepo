@@ -13099,11 +13099,6 @@
         "source": "types",
         "target": "npm:dayjs",
         "type": "static"
-      },
-      {
-        "source": "types",
-        "target": "utils",
-        "type": "static"
       }
     ],
     "utils": [
