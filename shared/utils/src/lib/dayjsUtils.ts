@@ -1,10 +1,10 @@
 import { DateParam } from '@shared/types';
-import * as dayjs from 'dayjs';
+import dayjs from 'dayjs';
 import { Dayjs } from 'dayjs';
-import * as utc from 'dayjs/plugin/utc';
-import * as duration from 'dayjs/plugin/duration';
+import utc from 'dayjs/plugin/utc';
+import duration from 'dayjs/plugin/duration';
 import { Duration } from 'dayjs/plugin/duration';
-import * as isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
+import isSameOrBefore from 'dayjs/plugin/isSameOrBefore';
 
 dayjs.extend(utc);
 dayjs.extend(duration);
