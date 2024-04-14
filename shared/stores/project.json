@@ -1,0 +1,19 @@
+{
+  "name": "stores",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "shared/stores/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/shared/stores",
+        "main": "shared/stores/src/index.ts",
+        "tsConfig": "shared/stores/tsconfig.lib.json",
+        "assets": ["shared/stores/*.md"]
+      }
+    }
+  },
+  "tags": []
+}

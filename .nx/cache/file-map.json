@@ -1,0 +1,2511 @@
+{
+  "version": "6.0",
+  "nxVersion": "18.0.4",
+  "deps": {
+    "@phosphor-icons/react": "^2.1.4",
+    "@radix-ui/react-avatar": "^1.0.4",
+    "@radix-ui/react-checkbox": "^1.0.4",
+    "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-dropdown-menu": "^2.0.6",
+    "@radix-ui/react-label": "^2.0.2",
+    "@radix-ui/react-slot": "^1.0.2",
+    "@types/lodash": "^4.14.202",
+    "@types/uuid": "^9.0.8",
+    "autoprefixer": "^10.4.17",
+    "class-variance-authority": "^0.7.0",
+    "clsx": "^2.1.0",
+    "date-holidays": "^3.23.8",
+    "dayjs": "^1.11.10",
+    "lodash": "^4.17.21",
+    "next": "14.0.4",
+    "postcss": "^8.4.35",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "react-hook-form": "^7.51.1",
+    "rrule": "^2.8.1",
+    "tailwind-merge": "^2.2.2",
+    "tailwindcss": "^3.4.1",
+    "tailwindcss-animate": "^1.0.7",
+    "tslib": "^2.3.0",
+    "uuid": "^9.0.1",
+    "zustand": "^4.5.1",
+    "@nx/cypress": "18.0.4",
+    "@nx/eslint": "18.0.4",
+    "@nx/eslint-plugin": "18.0.4",
+    "@nx/jest": "18.0.4",
+    "@nx/js": "18.0.4",
+    "@nx/next": "18.0.4",
+    "@nx/workspace": "18.0.4",
+    "@swc-node/register": "~1.8.0",
+    "@swc/core": "~1.3.85",
+    "@swc/helpers": "~0.5.2",
+    "@types/jest": "^29.4.0",
+    "@types/node": "18.16.9",
+    "@types/react": "18.2.33",
+    "@types/react-dom": "18.2.14",
+    "@typescript-eslint/eslint-plugin": "^6.13.2",
+    "@typescript-eslint/parser": "^6.13.2",
+    "babel-jest": "^29.4.1",
+    "cypress": "^13.0.0",
+    "eslint": "~8.48.0",
+    "eslint-config-next": "14.0.4",
+    "eslint-config-prettier": "^9.0.0",
+    "eslint-plugin-cypress": "^2.13.4",
+    "eslint-plugin-import": "2.27.5",
+    "eslint-plugin-jsx-a11y": "6.7.1",
+    "eslint-plugin-react": "7.32.2",
+    "eslint-plugin-react-hooks": "4.6.0",
+    "jest": "^29.4.1",
+    "jest-environment-jsdom": "^29.4.1",
+    "jest-environment-node": "^29.4.1",
+    "nx": "18.0.4",
+    "prettier": "^2.6.2",
+    "ts-jest": "^29.1.0",
+    "ts-node": "10.9.1",
+    "typescript": "~5.3.2"
+  },
+  "pathMappings": {
+    "@web/*": [
+      "apps/web/src/app/*"
+    ],
+    "@web/styles/*": [
+      "apps/web/src/styles/*"
+    ],
+    "@shared/helpers": [
+      "shared/helpers/src/index.ts"
+    ],
+    "@shared/stores": [
+      "shared/stores/src/index.ts"
+    ],
+    "@shared/types": [
+      "shared/types/src/index.ts"
+    ],
+    "@shared/utils": [
+      "shared/utils/src/index.ts"
+    ]
+  },
+  "nxJsonPlugins": [
+    {
+      "name": "@nx/next/plugin",
+      "options": {
+        "buildTargetName": "build",
+        "devTargetName": "dev",
+        "startTargetName": "start"
+      }
+    },
+    {
+      "name": "@nx/cypress/plugin",
+      "options": {
+        "targetName": "e2e",
+        "componentTestingTargetName": "component-test"
+      }
+    },
+    {
+      "name": "@nx/jest/plugin",
+      "options": {
+        "targetName": "test"
+      }
+    },
+    {
+      "name": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
+    }
+  ],
+  "fileMap": {
+    "nonProjectFiles": [
+      {
+        "file": ".eslintignore",
+        "hash": "7663861978715868291"
+      },
+      {
+        "file": ".editorconfig",
+        "hash": "5443105041930014821"
+      },
+      {
+        "file": ".yarn/install-state.gz",
+        "hash": "5099500568536315521"
+      },
+      {
+        "file": ".eslintrc.json",
+        "hash": "17866138117546000433"
+      },
+      {
+        "file": ".prettierrc",
+        "hash": "16046363424815075219"
+      },
+      {
+        "file": "package.json",
+        "hash": "16076768274797728256"
+      },
+      {
+        "file": "nx.json",
+        "hash": "2021478189396849343"
+      },
+      {
+        "file": "jest.preset.js",
+        "hash": "9430166341120122740"
+      },
+      {
+        "file": "jest.config.ts",
+        "hash": "12333515226966617182"
+      },
+      {
+        "file": ".gitignore",
+        "hash": "13083317094979760820"
+      },
+      {
+        "file": ".vscode/extensions.json",
+        "hash": "4934098906304722861"
+      },
+      {
+        "file": "README.md",
+        "hash": "14736387704784279400"
+      },
+      {
+        "file": "yarn.lock",
+        "hash": "10380756783284057742"
+      },
+      {
+        "file": "tsconfig.base.json",
+        "hash": "16175568986480394678"
+      },
+      {
+        "file": ".yarnrc.yml",
+        "hash": "1612807690830057048"
+      },
+      {
+        "file": ".prettierignore",
+        "hash": "16448050467312557263"
+      },
+      {
+        "file": ".yarn/releases/yarn-4.1.1.cjs",
+        "hash": "6708668144986729228"
+      }
+    ],
+    "projectFileMap": {
+      "server-e2e": [
+        {
+          "file": "old stuff/packages/server-e2e/.eslintrc.json",
+          "hash": "8709851544463005581"
+        },
+        {
+          "file": "old stuff/packages/server-e2e/jest.config.ts",
+          "hash": "14212190043399416865"
+        },
+        {
+          "file": "old stuff/packages/server-e2e/project.json",
+          "hash": "17683041411825065536"
+        },
+        {
+          "file": "old stuff/packages/server-e2e/src/server/server.spec.ts",
+          "hash": "4579662685003779048",
+          "deps": [
+            "npm:axios"
+          ]
+        },
+        {
+          "file": "old stuff/packages/server-e2e/src/support/global-setup.ts",
+          "hash": "2568409276037275290"
+        },
+        {
+          "file": "old stuff/packages/server-e2e/src/support/global-teardown.ts",
+          "hash": "5275447082211835490"
+        },
+        {
+          "file": "old stuff/packages/server-e2e/src/support/test-setup.ts",
+          "hash": "10984585515912236441",
+          "deps": [
+            "npm:axios"
+          ]
+        },
+        {
+          "file": "old stuff/packages/server-e2e/tsconfig.json",
+          "hash": "15443990093475294480"
+        },
+        {
+          "file": "old stuff/packages/server-e2e/tsconfig.spec.json",
+          "hash": "14954872453723519891"
+        }
+      ],
+      "web-avidity": [
+        {
+          "file": "old stuff/packages/web/avidity/.babelrc",
+          "hash": "13020124393823981135"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/.eslintrc.json",
+          "hash": "15946965712701950674"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/config-overrides.js",
+          "hash": "9328107534525432286"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/jest.config.ts",
+          "hash": "2936656381998018353"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/postcss.config.js",
+          "hash": "2759402739052110475",
+          "deps": [
+            "npm:path"
+          ]
+        },
+        {
+          "file": "old stuff/packages/web/avidity/project.json",
+          "hash": "15783888986219564236"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/App.module.css",
+          "hash": "8887387885984320532"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/app.spec.tsx",
+          "hash": "5238530238232168344",
+          "deps": [
+            "npm:@testing-library/react"
+          ]
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/components/goalCard/GoalCard.tsx",
+          "hash": "4196229919170439412",
+          "deps": [
+            "types"
+          ]
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/components/goalCard/index.ts",
+          "hash": "4236903904345678800"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/components/index.ts",
+          "hash": "3378546661604722497"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/components/sideBar/SideBar.tsx",
+          "hash": "15456963159658070109",
+          "deps": [
+            "npm:react",
+            "npm:react-router-dom",
+            "npm:react-icons/io5",
+            "web",
+            "utils"
+          ]
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/components/sideBar/index.ts",
+          "hash": "3037537912628780309"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/data/index.ts",
+          "hash": "4023525012818242546"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/index.tsx",
+          "hash": "3881300992302513446",
+          "deps": [
+            "npm:react-router-dom",
+            "web",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/pages/add/Add.tsx",
+          "hash": "6339341979144288049",
+          "deps": [
+            "npm:react-router-dom"
+          ]
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/pages/add/index.ts",
+          "hash": "6282805951320030378"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/pages/editGoal/EditGoal.tsx",
+          "hash": "15654644897367877531",
+          "deps": [
+            "types",
+            "utils",
+            "npm:formik",
+            "npm:dayjs",
+            "web",
+            "npm:react-router-dom",
+            "helpers"
+          ]
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/pages/editGoal/index.ts",
+          "hash": "1725773144422039341"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/pages/editGroup/EditGroup.tsx",
+          "hash": "12033662863460019369",
+          "deps": [
+            "types",
+            "web",
+            "npm:formik",
+            "npm:react",
+            "npm:react-router-dom"
+          ]
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/pages/editGroup/index.ts",
+          "hash": "8471279825082580930"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/pages/goal/Goal.tsx",
+          "hash": "1512606929100774055",
+          "deps": [
+            "types",
+            "web",
+            "npm:react",
+            "npm:react-router-dom",
+            "npm:react-calendar",
+            "npm:react-calendar/dist/Calendar.css",
+            "helpers",
+            "utils",
+            "npm:dayjs"
+          ]
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/pages/goal/index.ts",
+          "hash": "12002645335251748359"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/pages/goal/styles.css",
+          "hash": "14591444548833682709"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/pages/group/Group.tsx",
+          "hash": "1268787640452191604",
+          "deps": [
+            "types",
+            "web",
+            "npm:react",
+            "npm:react-router-dom"
+          ]
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/pages/group/index.ts",
+          "hash": "12839164932359161304"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/pages/home/Home.tsx",
+          "hash": "13393196706966142545",
+          "deps": [
+            "utils",
+            "web",
+            "npm:dayjs",
+            "npm:react-icons/io5",
+            "stores",
+            "npm:classnames",
+            "npm:react",
+            "npm:react-router-dom"
+          ]
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/pages/home/index.ts",
+          "hash": "17325453861831153407"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/pages/index.ts",
+          "hash": "12940654018105008352"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/pages/schedule/Schedule.tsx",
+          "hash": "15998873399309311373",
+          "deps": [
+            "helpers",
+            "types",
+            "web",
+            "npm:dayjs",
+            "npm:react",
+            "npm:react-router-dom"
+          ]
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/pages/schedule/index.ts",
+          "hash": "15747153579497481196"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/pages/test/Test.tsx",
+          "hash": "2924144237909855901",
+          "deps": [
+            "helpers",
+            "types",
+            "utils",
+            "web",
+            "npm:dayjs",
+            "npm:react",
+            "npm:rrule"
+          ]
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/pages/test/index.ts",
+          "hash": "13614251781732000293"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/router/index.ts",
+          "hash": "9046522683104343621"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/router/router.tsx",
+          "hash": "6870816524360911347",
+          "deps": [
+            "web",
+            "npm:react-router-dom"
+          ]
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/stores/index.ts",
+          "hash": "4040559443134986086"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/stores/useGoalStore.ts",
+          "hash": "7143755350318528285",
+          "deps": [
+            "npm:zustand",
+            "stores",
+            "helpers",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/stores/useTestStore.ts",
+          "hash": "7424010646623035452",
+          "deps": [
+            "helpers",
+            "npm:zustand"
+          ]
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/stores/useUtilStore.ts",
+          "hash": "12332806279815866736",
+          "deps": [
+            "helpers",
+            "web",
+            "npm:immer",
+            "npm:lodash",
+            "npm:zustand"
+          ]
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/types/index.ts",
+          "hash": "10325889194214589364"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/app/types/themeTypes.ts",
+          "hash": "7424661965819238326"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/assets/.gitkeep",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/environments/environment.prod.ts",
+          "hash": "10220522844224226756"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/environments/environment.ts",
+          "hash": "11309522437153898482"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/favicon.ico",
+          "hash": "9303420814833116677"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/index.html",
+          "hash": "14289761474987325975"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/main.tsx",
+          "hash": "15526357478195231060",
+          "deps": [
+            "npm:react",
+            "npm:react-dom",
+            "npm:immer"
+          ]
+        },
+        {
+          "file": "old stuff/packages/web/avidity/src/styles.css",
+          "hash": "9540575453073076294"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/tailwind.config.js",
+          "hash": "15534047433418465549",
+          "deps": [
+            "npm:@nx/react",
+            "npm:path",
+            "npm:daisyui"
+          ]
+        },
+        {
+          "file": "old stuff/packages/web/avidity/tsconfig.app.json",
+          "hash": "278595912003397289"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/tsconfig.json",
+          "hash": "6688172226496934105"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/tsconfig.spec.json",
+          "hash": "9847306665379573533"
+        },
+        {
+          "file": "old stuff/packages/web/avidity/webpack.config.js",
+          "hash": "1043731587818967490",
+          "deps": [
+            "npm:@nx/webpack",
+            "npm:@nx/react"
+          ]
+        }
+      ],
+      "types": [
+        {
+          "file": "shared/types/.eslintrc.json",
+          "hash": "16896711999632553762"
+        },
+        {
+          "file": "shared/types/README.md",
+          "hash": "590437621609819338"
+        },
+        {
+          "file": "shared/types/package.json",
+          "hash": "13400912149020748696",
+          "deps": [
+            "npm:tslib"
+          ]
+        },
+        {
+          "file": "shared/types/project.json",
+          "hash": "16340528285254600721"
+        },
+        {
+          "file": "shared/types/src/index.ts",
+          "hash": "14428353282588746736"
+        },
+        {
+          "file": "shared/types/src/lib/baseTypes.ts",
+          "hash": "5409522656293046964",
+          "deps": [
+            "npm:dayjs"
+          ]
+        },
+        {
+          "file": "shared/types/src/lib/componentTypes/goalCardTypes.ts",
+          "hash": "1667809563163783509"
+        },
+        {
+          "file": "shared/types/src/lib/componentTypes/illustrationTypes.ts",
+          "hash": "5524353213311004472"
+        },
+        {
+          "file": "shared/types/src/lib/componentTypes/index.ts",
+          "hash": "3811470536552750597"
+        },
+        {
+          "file": "shared/types/src/lib/componentTypes/rn-iconTypes.ts",
+          "hash": "12385787468096043559"
+        },
+        {
+          "file": "shared/types/src/lib/formTypes/addFormTypes.ts",
+          "hash": "3397907564016899940",
+          "deps": [
+            "npm:dayjs"
+          ]
+        },
+        {
+          "file": "shared/types/src/lib/formTypes/index.ts",
+          "hash": "6691053117791542771"
+        },
+        {
+          "file": "shared/types/src/lib/goalTypes.ts",
+          "hash": "14045667557109878077",
+          "deps": [
+            "npm:dayjs"
+          ]
+        },
+        {
+          "file": "shared/types/src/lib/goalTypesV2.ts",
+          "hash": "4418386511391866210",
+          "deps": [
+            "utils"
+          ]
+        },
+        {
+          "file": "shared/types/src/lib/index.ts",
+          "hash": "7754238190570473472"
+        },
+        {
+          "file": "shared/types/tsconfig.json",
+          "hash": "634795086719220447"
+        },
+        {
+          "file": "shared/types/tsconfig.lib.json",
+          "hash": "18155349116525859334"
+        }
+      ],
+      "web-e2e": [
+        {
+          "file": "apps/web-e2e/.eslintrc.json",
+          "hash": "14060216369337943343"
+        },
+        {
+          "file": "apps/web-e2e/cypress.config.ts",
+          "hash": "9230741890269110272",
+          "deps": [
+            "npm:@nx/cypress",
+            "npm:cypress"
+          ]
+        },
+        {
+          "file": "apps/web-e2e/project.json",
+          "hash": "16469893696217259579"
+        },
+        {
+          "file": "apps/web-e2e/src/e2e/app.cy.ts",
+          "hash": "1626985499450916261"
+        },
+        {
+          "file": "apps/web-e2e/src/fixtures/example.json",
+          "hash": "11785586596216172004"
+        },
+        {
+          "file": "apps/web-e2e/src/support/app.po.ts",
+          "hash": "11157016311132186162"
+        },
+        {
+          "file": "apps/web-e2e/src/support/commands.ts",
+          "hash": "5397443931564808659"
+        },
+        {
+          "file": "apps/web-e2e/src/support/e2e.ts",
+          "hash": "1054106023200826784"
+        },
+        {
+          "file": "apps/web-e2e/tsconfig.json",
+          "hash": "10740392072068377465"
+        }
+      ],
+      "server": [
+        {
+          "file": "old stuff/packages/server/.eslintrc.json",
+          "hash": "13800677001662881425"
+        },
+        {
+          "file": "old stuff/packages/server/jest.config.ts",
+          "hash": "3995731105931845579"
+        },
+        {
+          "file": "old stuff/packages/server/project.json",
+          "hash": "13875324570359770919"
+        },
+        {
+          "file": "old stuff/packages/server/src/assets/.gitkeep",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "old stuff/packages/server/src/main.ts",
+          "hash": "10278849143939227291",
+          "deps": [
+            "npm:express",
+            "npm:path"
+          ]
+        },
+        {
+          "file": "old stuff/packages/server/tsconfig.app.json",
+          "hash": "6758816428596401805"
+        },
+        {
+          "file": "old stuff/packages/server/tsconfig.json",
+          "hash": "3490524966360018312"
+        },
+        {
+          "file": "old stuff/packages/server/tsconfig.spec.json",
+          "hash": "11550347367511341917"
+        },
+        {
+          "file": "old stuff/packages/server/webpack.config.js",
+          "hash": "10619490397189790225",
+          "deps": [
+            "npm:@nx/webpack"
+          ]
+        }
+      ],
+      "web-avidity-e2e": [
+        {
+          "file": "old stuff/packages/web/avidity-e2e/.eslintrc.json",
+          "hash": "7973176717762084071"
+        },
+        {
+          "file": "old stuff/packages/web/avidity-e2e/cypress.config.ts",
+          "hash": "15414076024138857470",
+          "deps": [
+            "npm:cypress",
+            "npm:@nx/cypress"
+          ]
+        },
+        {
+          "file": "old stuff/packages/web/avidity-e2e/project.json",
+          "hash": "5359979069623858063"
+        },
+        {
+          "file": "old stuff/packages/web/avidity-e2e/src/e2e/app.cy.ts",
+          "hash": "13462555020157221948"
+        },
+        {
+          "file": "old stuff/packages/web/avidity-e2e/src/fixtures/example.json",
+          "hash": "11614668686582597233"
+        },
+        {
+          "file": "old stuff/packages/web/avidity-e2e/src/support/app.po.ts",
+          "hash": "11157016311132186162"
+        },
+        {
+          "file": "old stuff/packages/web/avidity-e2e/src/support/commands.ts",
+          "hash": "7314691991044890572"
+        },
+        {
+          "file": "old stuff/packages/web/avidity-e2e/src/support/e2e.ts",
+          "hash": "3666078656922506009"
+        },
+        {
+          "file": "old stuff/packages/web/avidity-e2e/tsconfig.json",
+          "hash": "7790126871106100160"
+        }
+      ],
+      "shared-types": [
+        {
+          "file": "old stuff/packages/shared/types/.eslintrc.json",
+          "hash": "9703569748258640057"
+        },
+        {
+          "file": "old stuff/packages/shared/types/README.md",
+          "hash": "13984268598373994613"
+        },
+        {
+          "file": "old stuff/packages/shared/types/package.json",
+          "hash": "12705418237662693911"
+        },
+        {
+          "file": "old stuff/packages/shared/types/project.json",
+          "hash": "2340242008732933228"
+        },
+        {
+          "file": "old stuff/packages/shared/types/src/index.ts",
+          "hash": "14428353282588746736"
+        },
+        {
+          "file": "old stuff/packages/shared/types/src/lib/baseTypes.ts",
+          "hash": "5409522656293046964",
+          "deps": [
+            "npm:dayjs"
+          ]
+        },
+        {
+          "file": "old stuff/packages/shared/types/src/lib/componentTypes/goalCardTypes.ts",
+          "hash": "1667809563163783509"
+        },
+        {
+          "file": "old stuff/packages/shared/types/src/lib/componentTypes/illustrationTypes.ts",
+          "hash": "5524353213311004472"
+        },
+        {
+          "file": "old stuff/packages/shared/types/src/lib/componentTypes/index.ts",
+          "hash": "3811470536552750597"
+        },
+        {
+          "file": "old stuff/packages/shared/types/src/lib/componentTypes/rn-iconTypes.ts",
+          "hash": "12385787468096043559"
+        },
+        {
+          "file": "old stuff/packages/shared/types/src/lib/formTypes/addFormTypes.ts",
+          "hash": "3397907564016899940",
+          "deps": [
+            "npm:dayjs"
+          ]
+        },
+        {
+          "file": "old stuff/packages/shared/types/src/lib/formTypes/index.ts",
+          "hash": "6691053117791542771"
+        },
+        {
+          "file": "old stuff/packages/shared/types/src/lib/goalTypes.ts",
+          "hash": "14045667557109878077",
+          "deps": [
+            "npm:dayjs"
+          ]
+        },
+        {
+          "file": "old stuff/packages/shared/types/src/lib/goalTypesV2.ts",
+          "hash": "4418386511391866210",
+          "deps": [
+            "utils"
+          ]
+        },
+        {
+          "file": "old stuff/packages/shared/types/src/lib/index.ts",
+          "hash": "7754238190570473472"
+        },
+        {
+          "file": "old stuff/packages/shared/types/tsconfig.json",
+          "hash": "11362601880824838265"
+        },
+        {
+          "file": "old stuff/packages/shared/types/tsconfig.lib.json",
+          "hash": "5554291030212586824"
+        }
+      ],
+      "shared-utils": [
+        {
+          "file": "old stuff/packages/shared/utils/.eslintrc.json",
+          "hash": "5415343759066179758"
+        },
+        {
+          "file": "old stuff/packages/shared/utils/README.md",
+          "hash": "4867776221816429465"
+        },
+        {
+          "file": "old stuff/packages/shared/utils/jest.config.ts",
+          "hash": "17480129416265097128"
+        },
+        {
+          "file": "old stuff/packages/shared/utils/package.json",
+          "hash": "2989259854907374715"
+        },
+        {
+          "file": "old stuff/packages/shared/utils/project.json",
+          "hash": "9769131416216708899"
+        },
+        {
+          "file": "old stuff/packages/shared/utils/src/index.ts",
+          "hash": "14428353282588746736"
+        },
+        {
+          "file": "old stuff/packages/shared/utils/src/lib/SharedUtils.spec.ts",
+          "hash": "17142166017379555900"
+        },
+        {
+          "file": "old stuff/packages/shared/utils/src/lib/SharedUtils.ts",
+          "hash": "393383238747502460"
+        },
+        {
+          "file": "old stuff/packages/shared/utils/src/lib/arrayUtils.ts",
+          "hash": "5991160150483035385"
+        },
+        {
+          "file": "old stuff/packages/shared/utils/src/lib/dayjsRRule.ts",
+          "hash": "11847339179003872234",
+          "deps": [
+            "npm:rrule",
+            "npm:dayjs",
+            "types"
+          ]
+        },
+        {
+          "file": "old stuff/packages/shared/utils/src/lib/dayjsUtils.ts",
+          "hash": "13111864938112795954",
+          "deps": [
+            "types",
+            "npm:dayjs"
+          ]
+        },
+        {
+          "file": "old stuff/packages/shared/utils/src/lib/index.ts",
+          "hash": "2511086189225687783"
+        },
+        {
+          "file": "old stuff/packages/shared/utils/src/lib/mapUtils.ts",
+          "hash": "14101944265865772866"
+        },
+        {
+          "file": "old stuff/packages/shared/utils/src/lib/stringUtils.ts",
+          "hash": "16392803586993193557"
+        },
+        {
+          "file": "old stuff/packages/shared/utils/tsconfig.json",
+          "hash": "1098465750514412960"
+        },
+        {
+          "file": "old stuff/packages/shared/utils/tsconfig.lib.json",
+          "hash": "5554291030212586824"
+        },
+        {
+          "file": "old stuff/packages/shared/utils/tsconfig.spec.json",
+          "hash": "9110660443763673899"
+        }
+      ],
+      "shared-stores": [
+        {
+          "file": "old stuff/packages/shared/stores/.eslintrc.json",
+          "hash": "9703569748258640057"
+        },
+        {
+          "file": "old stuff/packages/shared/stores/README.md",
+          "hash": "9410590322897760008"
+        },
+        {
+          "file": "old stuff/packages/shared/stores/jest.config.ts",
+          "hash": "14962804551542158611"
+        },
+        {
+          "file": "old stuff/packages/shared/stores/package.json",
+          "hash": "8344040156979037535"
+        },
+        {
+          "file": "old stuff/packages/shared/stores/project.json",
+          "hash": "4626391014036908547"
+        },
+        {
+          "file": "old stuff/packages/shared/stores/src/index.ts",
+          "hash": "14428353282588746736"
+        },
+        {
+          "file": "old stuff/packages/shared/stores/src/lib/SharedStores.spec.ts",
+          "hash": "13454570303391023948"
+        },
+        {
+          "file": "old stuff/packages/shared/stores/src/lib/SharedStores.ts",
+          "hash": "17133673366245923653"
+        },
+        {
+          "file": "old stuff/packages/shared/stores/src/lib/goalStore/createGoalSlice.ts",
+          "hash": "17138636767421145032",
+          "deps": [
+            "npm:zustand",
+            "npm:lodash",
+            "types",
+            "utils",
+            "helpers"
+          ]
+        },
+        {
+          "file": "old stuff/packages/shared/stores/src/lib/goalStore/createGoalSliceV2.ts",
+          "hash": "17965722167199728895",
+          "deps": [
+            "npm:zustand",
+            "npm:lodash",
+            "npm:dayjs",
+            "types",
+            "utils",
+            "helpers"
+          ]
+        },
+        {
+          "file": "old stuff/packages/shared/stores/src/lib/goalStore/createGoalSliceV3.ts",
+          "hash": "13721663701862745880",
+          "deps": [
+            "npm:zustand",
+            "npm:lodash",
+            "npm:dayjs",
+            "types",
+            "utils",
+            "helpers"
+          ]
+        },
+        {
+          "file": "old stuff/packages/shared/stores/src/lib/goalStore/index.ts",
+          "hash": "6820094263354506409"
+        },
+        {
+          "file": "old stuff/packages/shared/stores/src/lib/goalStore/reviverReplacer.ts",
+          "hash": "11089630026794383786",
+          "deps": [
+            "npm:dayjs",
+            "npm:lodash"
+          ]
+        },
+        {
+          "file": "old stuff/packages/shared/stores/src/lib/index.ts",
+          "hash": "2980830568153251074"
+        },
+        {
+          "file": "old stuff/packages/shared/stores/tsconfig.json",
+          "hash": "1098465750514412960"
+        },
+        {
+          "file": "old stuff/packages/shared/stores/tsconfig.lib.json",
+          "hash": "5554291030212586824"
+        },
+        {
+          "file": "old stuff/packages/shared/stores/tsconfig.spec.json",
+          "hash": "12999169761713108731"
+        }
+      ],
+      "@avidity-monorepo/source": [
+        {
+          "file": "old stuff/.env",
+          "hash": "5238204894158769644"
+        },
+        {
+          "file": "old stuff/.eslintignore",
+          "hash": "7663861978715868291"
+        },
+        {
+          "file": "old stuff/.eslintrc.json",
+          "hash": "18315524891129148814"
+        },
+        {
+          "file": "old stuff/.gitignore",
+          "hash": "16197639227381389682"
+        },
+        {
+          "file": "old stuff/.prettierignore",
+          "hash": "16448050467312557263"
+        },
+        {
+          "file": "old stuff/.prettierrc",
+          "hash": "16046363424815075219"
+        },
+        {
+          "file": "old stuff/babel.config.json",
+          "hash": "5546405625092116747"
+        },
+        {
+          "file": "old stuff/jest.config.ts",
+          "hash": "12333515226966617182",
+          "deps": [
+            "npm:@nx/jest"
+          ]
+        },
+        {
+          "file": "old stuff/jest.preset.js",
+          "hash": "9430166341120122740",
+          "deps": [
+            "npm:@nx/jest"
+          ]
+        },
+        {
+          "file": "old stuff/migrations.json",
+          "hash": "826636709933540859"
+        },
+        {
+          "file": "old stuff/nx.json",
+          "hash": "7938248336256105641"
+        },
+        {
+          "file": "old stuff/package.json",
+          "hash": "15828776028925214537",
+          "deps": [
+            "npm:@swc/helpers",
+            "npm:@types/uuid",
+            "npm:axios",
+            "npm:classnames",
+            "npm:date-holidays",
+            "npm:dayjs",
+            "npm:express",
+            "npm:lodash",
+            "npm:react",
+            "npm:react-dom",
+            "npm:rrule",
+            "npm:tslib",
+            "npm:uuid",
+            "npm:zustand",
+            "npm:@babel/core",
+            "npm:@babel/preset-react",
+            "npm:@nx/cypress",
+            "npm:@nx/eslint-plugin",
+            "npm:@nx/jest",
+            "npm:@nx/js",
+            "npm:@nx/linter",
+            "npm:@nx/react",
+            "npm:@nx/web",
+            "npm:@nx/webpack",
+            "npm:@nx/workspace",
+            "npm:@svgr/webpack",
+            "npm:@swc/core",
+            "npm:@types/express",
+            "npm:@types/jest",
+            "npm:@types/lodash",
+            "npm:@types/node",
+            "npm:@types/react",
+            "npm:@types/react-dom",
+            "npm:@typescript-eslint/eslint-plugin",
+            "npm:@typescript-eslint/parser",
+            "npm:autoprefixer",
+            "npm:babel-jest",
+            "npm:cypress",
+            "npm:eslint",
+            "npm:eslint-config-prettier",
+            "npm:eslint-plugin-cypress",
+            "npm:eslint-plugin-import",
+            "npm:eslint-plugin-jsx-a11y",
+            "npm:eslint-plugin-react",
+            "npm:eslint-plugin-react-hooks",
+            "npm:jest",
+            "npm:jest-circus",
+            "npm:jest-environment-jsdom",
+            "npm:jest-environment-node",
+            "npm:nx",
+            "npm:postcss",
+            "npm:prettier",
+            "npm:tailwindcss",
+            "npm:ts-jest",
+            "npm:ts-node",
+            "npm:typescript",
+            "npm:url-loader"
+          ]
+        },
+        {
+          "file": "old stuff/packages/.gitkeep",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "old stuff/test.json",
+          "hash": "17783034107112710138"
+        },
+        {
+          "file": "old stuff/tools/tsconfig.tools.json",
+          "hash": "16088922570277978783"
+        },
+        {
+          "file": "old stuff/tsconfig.base.json",
+          "hash": "340832834700055258"
+        },
+        {
+          "file": "old stuff/yarn.lock",
+          "hash": "10825388988162210895"
+        }
+      ],
+      "mobile-avidity": [
+        {
+          "file": "old stuff/packages/mobile/avidity/.babelrc.js",
+          "hash": "2245960743762624374"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/.eslintrc.json",
+          "hash": "12045782407883736785"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/Gemfile",
+          "hash": "18401619577538077782"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/build.gradle",
+          "hash": "10978870278838865536"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/debug.keystore",
+          "hash": "5037686243849261810"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/proguard-rules.pro",
+          "hash": "13814197385154279786"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/androidTest/java/com/avidity/DetoxTest.java",
+          "hash": "16007438609171119145"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/debug/AndroidManifest.xml",
+          "hash": "16997767733914164177"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/debug/java/com/avidity/ReactNativeFlipper.java",
+          "hash": "18185888923422133625"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/main/AndroidManifest.xml",
+          "hash": "7079440948961830635"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/main/assets/fonts/Roboto-Black.ttf",
+          "hash": "7491435733589274410"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/main/assets/fonts/Roboto-BlackItalic.ttf",
+          "hash": "6367488612617151901"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/main/assets/fonts/Roboto-Bold.ttf",
+          "hash": "11118875498363073866"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/main/assets/fonts/Roboto-BoldItalic.ttf",
+          "hash": "18208016290686678219"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/main/assets/fonts/Roboto-Italic.ttf",
+          "hash": "2871797822062044145"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/main/assets/fonts/Roboto-Light.ttf",
+          "hash": "11743008747391677234"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/main/assets/fonts/Roboto-LightItalic.ttf",
+          "hash": "7345932088123158190"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/main/assets/fonts/Roboto-Medium.ttf",
+          "hash": "12534942947226036357"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/main/assets/fonts/Roboto-MediumItalic.ttf",
+          "hash": "10354767113262496729"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/main/assets/fonts/Roboto-Regular.ttf",
+          "hash": "9500555408324524103"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/main/assets/fonts/Roboto-Thin.ttf",
+          "hash": "16494021493287799544"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/main/assets/fonts/Roboto-ThinItalic.ttf",
+          "hash": "8572171983110193039"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/main/java/com/avidity/MainActivity.java",
+          "hash": "17498998963103481107"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/main/java/com/avidity/MainApplication.java",
+          "hash": "6451094523122630724"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/main/res/drawable/rn_edit_text_material.xml",
+          "hash": "617140720749664772"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/main/res/mipmap-hdpi/ic_launcher.png",
+          "hash": "10788509195642110029"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/main/res/mipmap-hdpi/ic_launcher_round.png",
+          "hash": "14348562046770238248"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/main/res/mipmap-mdpi/ic_launcher.png",
+          "hash": "328692529308011025"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/main/res/mipmap-mdpi/ic_launcher_round.png",
+          "hash": "11802043336826859502"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/main/res/mipmap-xhdpi/ic_launcher.png",
+          "hash": "13006206334539413900"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/main/res/mipmap-xhdpi/ic_launcher_round.png",
+          "hash": "1812825738055967771"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/main/res/mipmap-xxhdpi/ic_launcher.png",
+          "hash": "6104457872863500683"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/main/res/mipmap-xxhdpi/ic_launcher_round.png",
+          "hash": "2478168592410677995"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png",
+          "hash": "12283149652938275290"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/main/res/mipmap-xxxhdpi/ic_launcher_round.png",
+          "hash": "7126668675123994836"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/main/res/values/strings.xml",
+          "hash": "13204733306768967330"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/main/res/values/styles.xml",
+          "hash": "14052910750539201041"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/main/res/xml/network_security_config.xml",
+          "hash": "7470100900868657300"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/app/src/release/java/com/avidity/ReactNativeFlipper.java",
+          "hash": "1004615485409942722"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/build.gradle",
+          "hash": "15784805952569049714"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/gradle.properties",
+          "hash": "13135622246796849421"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/gradle/wrapper/gradle-wrapper.jar",
+          "hash": "11064621541907778082"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/gradle/wrapper/gradle-wrapper.properties",
+          "hash": "2303248026073298933"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/gradlew",
+          "hash": "10638153001440534383"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/gradlew.bat",
+          "hash": "18278234324834608139"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/link-assets-manifest.json",
+          "hash": "5425869593920275298"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/android/settings.gradle",
+          "hash": "7602887038372028629"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/app.json",
+          "hash": "8204201260710773859"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/babel-v72.config.json",
+          "hash": "342140665667840562"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/ios/.xcode.env",
+          "hash": "12704946661619936455"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/ios/Avidity.xcodeproj/project.pbxproj",
+          "hash": "7538279501980925786"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/ios/Avidity.xcodeproj/xcshareddata/xcschemes/Avidity.xcscheme",
+          "hash": "17910418643895389239"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/ios/Avidity.xcworkspace/contents.xcworkspacedata",
+          "hash": "1798767160792694586"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/ios/Avidity.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist",
+          "hash": "12722229457274558422"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/ios/Avidity/AppDelegate.h",
+          "hash": "4105548683868581501"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/ios/Avidity/AppDelegate.mm",
+          "hash": "11473787516895296314"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/ios/Avidity/Images.xcassets/AppIcon.appiconset/Contents.json",
+          "hash": "11595540762170193386"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/ios/Avidity/Images.xcassets/Contents.json",
+          "hash": "16272710630576636421"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/ios/Avidity/Info.plist",
+          "hash": "8672503374597367569"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/ios/Avidity/LaunchScreen.storyboard",
+          "hash": "13853613947694925528"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/ios/Avidity/main.m",
+          "hash": "3932908704591016568"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/ios/AvidityTests/AvidityTests.m",
+          "hash": "11486713468066533565"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/ios/AvidityTests/Info.plist",
+          "hash": "490535150174461673"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/ios/Podfile",
+          "hash": "15717271728384875993"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/ios/Podfile.lock",
+          "hash": "16450012875992686103"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/ios/link-assets-manifest.json",
+          "hash": "5425869593920275298"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/jest.config.ts",
+          "hash": "18149253983012625536"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/metro.config.js",
+          "hash": "5365908645546752773",
+          "deps": [
+            "npm:@nx/react-native",
+            "npm:@react-native/metro-config",
+            "npm:metro-config/src/defaults/exclusionList",
+            "npm:react-native-svg-transformer"
+          ]
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/package.json",
+          "hash": "362914546943012869",
+          "deps": [
+            "npm:react",
+            "npm:date-holidays",
+            "npm:dayjs"
+          ]
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/project.json",
+          "hash": "8398992162435339492"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/react-native.config.js",
+          "hash": "17667096336428908482"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/App.spec.tsx",
+          "hash": "3379911321437688186",
+          "deps": [
+            "npm:react",
+            "npm:@testing-library/react-native"
+          ]
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/App.tsx",
+          "hash": "2088067975390385599",
+          "deps": [
+            "npm:react-native",
+            "npm:react-native-vector-icons/Ionicons"
+          ]
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/fonts/Roboto-Black.ttf",
+          "hash": "7491435733589274410"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/fonts/Roboto-BlackItalic.ttf",
+          "hash": "6367488612617151901"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/fonts/Roboto-Bold.ttf",
+          "hash": "11118875498363073866"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/fonts/Roboto-BoldItalic.ttf",
+          "hash": "18208016290686678219"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/fonts/Roboto-Italic.ttf",
+          "hash": "2871797822062044145"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/fonts/Roboto-Light.ttf",
+          "hash": "11743008747391677234"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/fonts/Roboto-LightItalic.ttf",
+          "hash": "7345932088123158190"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/fonts/Roboto-Medium.ttf",
+          "hash": "12534942947226036357"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/fonts/Roboto-MediumItalic.ttf",
+          "hash": "10354767113262496729"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/fonts/Roboto-Regular.ttf",
+          "hash": "9500555408324524103"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/fonts/Roboto-Thin.ttf",
+          "hash": "16494021493287799544"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/fonts/Roboto-ThinItalic.ttf",
+          "hash": "8572171983110193039"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_animal.svg",
+          "hash": "15976652774598124286"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_bad_gateway.svg",
+          "hash": "530404161829777217"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_bored.svg",
+          "hash": "1702148449738576102"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_business_plan.svg",
+          "hash": "3000745346068751239"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_business_travel.svg",
+          "hash": "6011378534169306503"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_car_drifting.svg",
+          "hash": "17046859310443728591"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_come_back_later.svg",
+          "hash": "15385698034044765988"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_connection_lost.svg",
+          "hash": "15543048115499708682"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_cool_guy.svg",
+          "hash": "6733694471094861826"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_couple.svg",
+          "hash": "1698637080725978912"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_delete_confirmation.svg",
+          "hash": "17170694323768139072"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_deleted.svg",
+          "hash": "5154416535241730746"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_delivery.svg",
+          "hash": "8266149651273534359"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_done.svg",
+          "hash": "5269762287403478652"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_downloading.svg",
+          "hash": "10463096964015786301"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_e_commerce.svg",
+          "hash": "14395115708302689121"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_error.svg",
+          "hash": "5937138825190965300"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_explore.svg",
+          "hash": "13712954017160229564"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_failure.svg",
+          "hash": "9859969114878175219"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_family.svg",
+          "hash": "16764500322457494156"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_fashion.svg",
+          "hash": "6300849360850705077"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_finances.svg",
+          "hash": "2634408355936990838"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_food.svg",
+          "hash": "6299101184129673606"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_freedom.svg",
+          "hash": "14819264925670914620"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_friends.svg",
+          "hash": "13965021852900653821"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_globe.svg",
+          "hash": "13463847385449642603"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_growth.svg",
+          "hash": "16683940409273250465"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_hangout.svg",
+          "hash": "4620186106561656185"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_health_research.svg",
+          "hash": "17954022264440334734"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_hello.svg",
+          "hash": "7467180463087131851"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_landscape.svg",
+          "hash": "16758476252645451441"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_list_is_empty.svg",
+          "hash": "12298652623087961630"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_loading.svg",
+          "hash": "8893082970645648990"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_location.svg",
+          "hash": "16083828826368445939"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_medicine.svg",
+          "hash": "17528799819124623185"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_message_sent.svg",
+          "hash": "4093553586823404813"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_mind_blowing.svg",
+          "hash": "15364642327462352462"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_mother_nature.svg",
+          "hash": "11736922105103060402"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_music.svg",
+          "hash": "6377263540500491937"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_navigate.svg",
+          "hash": "11441861445778503710"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_news.svg",
+          "hash": "5108304768569922953"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_no_comments.svg",
+          "hash": "7373279872406839693"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_no_messages.svg",
+          "hash": "14893468189343198269"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_no_results.svg",
+          "hash": "6704009975748998876"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_order_placed.svg",
+          "hash": "10891690162242595714"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_painter.svg",
+          "hash": "7093474086619098896"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_portrait.svg",
+          "hash": "9549880593931728021"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_relationship.svg",
+          "hash": "5707259941721164657"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_relax.svg",
+          "hash": "17352035282105912145"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_run.svg",
+          "hash": "14138178811358961764"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_safe_box.svg",
+          "hash": "15655183194921235904"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_science.svg",
+          "hash": "3684081745760609106"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_searching.svg",
+          "hash": "9560868007074426046"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_security.svg",
+          "hash": "393778504932464554"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_settings.svg",
+          "hash": "2606614860175210230"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_sign_in.svg",
+          "hash": "12502093391807309316"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_sign_out.svg",
+          "hash": "3510483328006571476"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_sign_up.svg",
+          "hash": "3396684118574989018"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_social_distancing.svg",
+          "hash": "9342809493387860576"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_soulful.svg",
+          "hash": "16746134394071290969"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_sports.svg",
+          "hash": "12285088780876046010"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_tasks.svg",
+          "hash": "3355013178992971404"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_technology.svg",
+          "hash": "3546643432368186788"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_travel.svg",
+          "hash": "9588655644586510170"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_under_construction.svg",
+          "hash": "5790507872346029580"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_unsubscribed.svg",
+          "hash": "6301407906527829187"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_upgrading.svg",
+          "hash": "433251244171712723"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_victory.svg",
+          "hash": "14259256537664880402"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_video_call.svg",
+          "hash": "10164470443892479206"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_virus.svg",
+          "hash": "8530783803178477133"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_wear_a_mask.svg",
+          "hash": "5866355422120594965"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_welcome.svg",
+          "hash": "7644774214678383704"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_work_from_home.svg",
+          "hash": "6328136454971510741"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_workflow.svg",
+          "hash": "3707225307171195834"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/illustration_writing.svg",
+          "hash": "8467443828403376328"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/illustrations/index.ts",
+          "hash": "13822750013833829834"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/assets/index.ts",
+          "hash": "7835494841329194076"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/app/types/declaration.d.ts",
+          "hash": "3354311636493595016",
+          "deps": [
+            "npm:react",
+            "npm:react-native-svg"
+          ]
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/assets/.gitkeep",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/favicon.ico",
+          "hash": "9303420814833116677"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/index.html",
+          "hash": "6552975508004431225"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/main-web.tsx",
+          "hash": "10961225461819622514",
+          "deps": [
+            "npm:react",
+            "npm:react-dom"
+          ]
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/src/main.tsx",
+          "hash": "4703592302550328477",
+          "deps": [
+            "npm:react-native"
+          ]
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/test-setup.ts",
+          "hash": "9919311210714806624",
+          "deps": [
+            "npm:@testing-library/jest-native/extend-expect"
+          ]
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/tsconfig.app.json",
+          "hash": "15870457732686368424"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/tsconfig.json",
+          "hash": "1754873082611176780"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/tsconfig.spec.json",
+          "hash": "622485232520597903"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity/webpack.config.js",
+          "hash": "5228851307903289267",
+          "deps": [
+            "npm:@nx/webpack",
+            "npm:@nx/react"
+          ]
+        }
+      ],
+      "utils": [
+        {
+          "file": "shared/utils/.eslintrc.json",
+          "hash": "16896711999632553762"
+        },
+        {
+          "file": "shared/utils/README.md",
+          "hash": "3816604565008484386"
+        },
+        {
+          "file": "shared/utils/jest.config.ts",
+          "hash": "15404466279815249406"
+        },
+        {
+          "file": "shared/utils/package.json",
+          "hash": "3924716541426402970",
+          "deps": [
+            "npm:tslib"
+          ]
+        },
+        {
+          "file": "shared/utils/project.json",
+          "hash": "11325026145117661598"
+        },
+        {
+          "file": "shared/utils/src/index.ts",
+          "hash": "14428353282588746736"
+        },
+        {
+          "file": "shared/utils/src/lib/SharedUtils.spec.ts",
+          "hash": "17142166017379555900"
+        },
+        {
+          "file": "shared/utils/src/lib/SharedUtils.ts",
+          "hash": "393383238747502460"
+        },
+        {
+          "file": "shared/utils/src/lib/arrayUtils.ts",
+          "hash": "5991160150483035385"
+        },
+        {
+          "file": "shared/utils/src/lib/dayjsRRule.ts",
+          "hash": "15814864827141632729",
+          "deps": [
+            "npm:rrule",
+            "npm:dayjs",
+            "types",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "shared/utils/src/lib/dayjsUtils.ts",
+          "hash": "13111864938112795954",
+          "deps": [
+            "types",
+            "npm:dayjs"
+          ]
+        },
+        {
+          "file": "shared/utils/src/lib/index.ts",
+          "hash": "7251345760927610033"
+        },
+        {
+          "file": "shared/utils/src/lib/mapUtils.ts",
+          "hash": "14101944265865772866"
+        },
+        {
+          "file": "shared/utils/src/lib/stringUtils.ts",
+          "hash": "16392803586993193557"
+        },
+        {
+          "file": "shared/utils/src/lib/tailwindUtils.ts",
+          "hash": "15456290709904554663",
+          "deps": [
+            "npm:clsx",
+            "npm:tailwind-merge"
+          ]
+        },
+        {
+          "file": "shared/utils/tsconfig.json",
+          "hash": "5840880287502376438"
+        },
+        {
+          "file": "shared/utils/tsconfig.lib.json",
+          "hash": "3632393694954060084"
+        },
+        {
+          "file": "shared/utils/tsconfig.spec.json",
+          "hash": "11550347367511341917"
+        }
+      ],
+      "shared-helpers": [
+        {
+          "file": "old stuff/packages/shared/helpers/.eslintrc.json",
+          "hash": "9703569748258640057"
+        },
+        {
+          "file": "old stuff/packages/shared/helpers/README.md",
+          "hash": "2497875519422677425"
+        },
+        {
+          "file": "old stuff/packages/shared/helpers/jest.config.ts",
+          "hash": "11600587243757260259"
+        },
+        {
+          "file": "old stuff/packages/shared/helpers/package.json",
+          "hash": "255822138439834550"
+        },
+        {
+          "file": "old stuff/packages/shared/helpers/project.json",
+          "hash": "3646605219416870349"
+        },
+        {
+          "file": "old stuff/packages/shared/helpers/src/index.ts",
+          "hash": "14428353282588746736"
+        },
+        {
+          "file": "old stuff/packages/shared/helpers/src/lib/constants.ts",
+          "hash": "3490265402728115206"
+        },
+        {
+          "file": "old stuff/packages/shared/helpers/src/lib/createSelectors.ts",
+          "hash": "3785187008002027149",
+          "deps": [
+            "npm:zustand"
+          ]
+        },
+        {
+          "file": "old stuff/packages/shared/helpers/src/lib/goalHelpers.spec.ts",
+          "hash": "6801247685161410546"
+        },
+        {
+          "file": "old stuff/packages/shared/helpers/src/lib/goalHelpers.ts",
+          "hash": "228666330309341687",
+          "deps": [
+            "npm:uuid",
+            "npm:dayjs",
+            "npm:date-holidays",
+            "types",
+            "utils",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "old stuff/packages/shared/helpers/src/lib/index.ts",
+          "hash": "2493537854522257980"
+        },
+        {
+          "file": "old stuff/packages/shared/helpers/src/lib/scheduleHelpers.ts",
+          "hash": "16977935832733505452",
+          "deps": [
+            "types",
+            "utils",
+            "npm:axios",
+            "npm:dayjs",
+            "npm:lodash",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "old stuff/packages/shared/helpers/tsconfig.json",
+          "hash": "1098465750514412960"
+        },
+        {
+          "file": "old stuff/packages/shared/helpers/tsconfig.lib.json",
+          "hash": "5554291030212586824"
+        },
+        {
+          "file": "old stuff/packages/shared/helpers/tsconfig.spec.json",
+          "hash": "9110660443763673899"
+        }
+      ],
+      "mobile-avidity-e2e": [
+        {
+          "file": "old stuff/packages/mobile/avidity-e2e/.babelrc",
+          "hash": "13020124393823981135"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity-e2e/.detoxrc.json",
+          "hash": "17536583149643801331"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity-e2e/.eslintrc.json",
+          "hash": "15946965712701950674"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity-e2e/jest.config.json",
+          "hash": "17021311799062449128"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity-e2e/project.json",
+          "hash": "14015374903706931166"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity-e2e/src/app.spec.ts",
+          "hash": "4412911221720346132",
+          "deps": [
+            "npm:detox"
+          ]
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity-e2e/test-setup.ts",
+          "hash": "891269836898640451",
+          "deps": [
+            "npm:detox"
+          ]
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity-e2e/tsconfig.e2e.json",
+          "hash": "8664226138149994452"
+        },
+        {
+          "file": "old stuff/packages/mobile/avidity-e2e/tsconfig.json",
+          "hash": "14652319087978333387"
+        }
+      ],
+      "helpers": [
+        {
+          "file": "shared/helpers/.eslintrc.json",
+          "hash": "16896711999632553762"
+        },
+        {
+          "file": "shared/helpers/README.md",
+          "hash": "3370157274835758188"
+        },
+        {
+          "file": "shared/helpers/jest.config.ts",
+          "hash": "18282182312716821426"
+        },
+        {
+          "file": "shared/helpers/package.json",
+          "hash": "8868974884448957439",
+          "deps": [
+            "npm:tslib"
+          ]
+        },
+        {
+          "file": "shared/helpers/project.json",
+          "hash": "8146696511668832943"
+        },
+        {
+          "file": "shared/helpers/src/index.ts",
+          "hash": "14428353282588746736"
+        },
+        {
+          "file": "shared/helpers/src/lib/constants.ts",
+          "hash": "3490265402728115206"
+        },
+        {
+          "file": "shared/helpers/src/lib/createSelectors.ts",
+          "hash": "3785187008002027149",
+          "deps": [
+            "npm:zustand"
+          ]
+        },
+        {
+          "file": "shared/helpers/src/lib/goalHelpers.spec.ts",
+          "hash": "6801247685161410546"
+        },
+        {
+          "file": "shared/helpers/src/lib/goalHelpers.ts",
+          "hash": "18268446394691197048",
+          "deps": [
+            "npm:uuid",
+            "npm:dayjs",
+            "npm:date-holidays",
+            "types",
+            "utils",
+            "npm:react"
+          ]
+        },
+        {
+          "file": "shared/helpers/src/lib/index.ts",
+          "hash": "2493537854522257980"
+        },
+        {
+          "file": "shared/helpers/src/lib/scheduleHelpers.ts",
+          "hash": "12729623848096043282",
+          "deps": [
+            "types",
+            "utils",
+            "npm:dayjs"
+          ]
+        },
+        {
+          "file": "shared/helpers/tsconfig.json",
+          "hash": "5840880287502376438"
+        },
+        {
+          "file": "shared/helpers/tsconfig.lib.json",
+          "hash": "3632393694954060084"
+        },
+        {
+          "file": "shared/helpers/tsconfig.spec.json",
+          "hash": "11550347367511341917"
+        }
+      ],
+      "web": [
+        {
+          "file": "apps/web/.eslintrc.json",
+          "hash": "8035581343324934340"
+        },
+        {
+          "file": "apps/web/index.d.ts",
+          "hash": "5498222895072842432"
+        },
+        {
+          "file": "apps/web/jest.config.ts",
+          "hash": "16056654888912429691"
+        },
+        {
+          "file": "apps/web/next-env.d.ts",
+          "hash": "5909181270615354023"
+        },
+        {
+          "file": "apps/web/next.config.js",
+          "hash": "11575962222159169528",
+          "deps": [
+            "npm:@nx/next"
+          ]
+        },
+        {
+          "file": "apps/web/postcss.config.js",
+          "hash": "1579725330904862112"
+        },
+        {
+          "file": "apps/web/project.json",
+          "hash": "4323500130268356749"
+        },
+        {
+          "file": "apps/web/public/.gitkeep",
+          "hash": "3244421341483603138"
+        },
+        {
+          "file": "apps/web/public/favicon.ico",
+          "hash": "9303420814833116677"
+        },
+        {
+          "file": "apps/web/src/app/add/goal/page.tsx",
+          "hash": "2085228206231859535",
+          "deps": [
+            "npm:react",
+            "npm:@phosphor-icons/react"
+          ]
+        },
+        {
+          "file": "apps/web/src/app/api/hello/route.ts",
+          "hash": "495073956729887886"
+        },
+        {
+          "file": "apps/web/src/app/components/AddGoal/index.tsx",
+          "hash": "17588451812992969553",
+          "deps": [
+            "npm:react",
+            "npm:react-hook-form"
+          ]
+        },
+        {
+          "file": "apps/web/src/app/components/GoalCard/index.tsx",
+          "hash": "4196229919170439412",
+          "deps": [
+            "types"
+          ]
+        },
+        {
+          "file": "apps/web/src/app/components/SideBar/index.tsx",
+          "hash": "15597329151470767625",
+          "deps": [
+            "npm:react",
+            "npm:next"
+          ]
+        },
+        {
+          "file": "apps/web/src/app/components/index.ts",
+          "hash": "6840431962638174704"
+        },
+        {
+          "file": "apps/web/src/app/components/ui/Avatar/index.tsx",
+          "hash": "10704221920408427523",
+          "deps": [
+            "npm:react",
+            "npm:@radix-ui/react-avatar",
+            "utils"
+          ]
+        },
+        {
+          "file": "apps/web/src/app/components/ui/Button/index.tsx",
+          "hash": "18145881033351259621",
+          "deps": [
+            "npm:react",
+            "npm:@radix-ui/react-slot",
+            "npm:class-variance-authority",
+            "utils"
+          ]
+        },
+        {
+          "file": "apps/web/src/app/components/ui/Dialog/index.tsx",
+          "hash": "14124293988116482606",
+          "deps": [
+            "npm:react",
+            "npm:@radix-ui/react-dialog",
+            "npm:@phosphor-icons/react",
+            "utils"
+          ]
+        },
+        {
+          "file": "apps/web/src/app/components/ui/DropdownMenu/index.tsx",
+          "hash": "5006757626250312809",
+          "deps": [
+            "npm:react",
+            "npm:@radix-ui/react-dropdown-menu",
+            "npm:@phosphor-icons/react",
+            "utils"
+          ]
+        },
+        {
+          "file": "apps/web/src/app/components/ui/Input/index.tsx",
+          "hash": "16109737037485654613",
+          "deps": [
+            "npm:react",
+            "utils"
+          ]
+        },
+        {
+          "file": "apps/web/src/app/components/ui/index.ts",
+          "hash": "2598495357685202739"
+        },
+        {
+          "file": "apps/web/src/app/layout.tsx",
+          "hash": "16266739551746894212"
+        },
+        {
+          "file": "apps/web/src/app/page.module.css",
+          "hash": "4786619528779355986"
+        },
+        {
+          "file": "apps/web/src/app/page.tsx",
+          "hash": "6130484114994507898",
+          "deps": [
+            "types",
+            "utils",
+            "npm:dayjs",
+            "npm:react",
+            "npm:rrule"
+          ]
+        },
+        {
+          "file": "apps/web/src/app/post/[postId]/page.tsx",
+          "hash": "6618165777623774905"
+        },
+        {
+          "file": "apps/web/src/app/post/new/page.tsx",
+          "hash": "6802031681828981723"
+        },
+        {
+          "file": "apps/web/src/app/post/page.tsx",
+          "hash": "10462585882201874430"
+        },
+        {
+          "file": "apps/web/src/app/today/page.tsx",
+          "hash": "17132948862706665217",
+          "deps": [
+            "npm:react"
+          ]
+        },
+        {
+          "file": "apps/web/src/styles/global.css",
+          "hash": "17256071225174832574"
+        },
+        {
+          "file": "apps/web/tailwind.config.js",
+          "hash": "26848022295297441",
+          "deps": [
+            "npm:tailwindcss",
+            "npm:tailwindcss-animate"
+          ]
+        },
+        {
+          "file": "apps/web/tsconfig.json",
+          "hash": "12484396008935816763"
+        },
+        {
+          "file": "apps/web/tsconfig.spec.json",
+          "hash": "6922413205408300107"
+        },
+        {
+          "file": "apps/web/src/app/components/ui/Checkbox/index.tsx",
+          "hash": "7731441133936282305",
+          "deps": [
+            "npm:react",
+            "npm:@radix-ui/react-checkbox",
+            "npm:@phosphor-icons/react",
+            "utils"
+          ]
+        },
+        {
+          "file": "apps/web/src/app/components/ui/Label/index.tsx",
+          "hash": "3016398745406936281",
+          "deps": [
+            "npm:react",
+            "npm:@radix-ui/react-label",
+            "npm:class-variance-authority",
+            "utils"
+          ]
+        }
+      ],
+      "stores": [
+        {
+          "file": "shared/stores/.eslintrc.json",
+          "hash": "16896711999632553762"
+        },
+        {
+          "file": "shared/stores/README.md",
+          "hash": "12913894231569711888"
+        },
+        {
+          "file": "shared/stores/jest.config.ts",
+          "hash": "13891603246596816915"
+        },
+        {
+          "file": "shared/stores/package.json",
+          "hash": "13915220109532846351",
+          "deps": [
+            "npm:tslib"
+          ]
+        },
+        {
+          "file": "shared/stores/project.json",
+          "hash": "7347338916757259862"
+        },
+        {
+          "file": "shared/stores/src/index.ts",
+          "hash": "14428353282588746736"
+        },
+        {
+          "file": "shared/stores/src/lib/SharedStores.spec.ts",
+          "hash": "13454570303391023948"
+        },
+        {
+          "file": "shared/stores/src/lib/SharedStores.ts",
+          "hash": "17133673366245923653"
+        },
+        {
+          "file": "shared/stores/src/lib/goalStore/createGoalSlice.ts",
+          "hash": "17138636767421145032",
+          "deps": [
+            "npm:zustand",
+            "npm:lodash",
+            "types",
+            "utils",
+            "helpers"
+          ]
+        },
+        {
+          "file": "shared/stores/src/lib/goalStore/createGoalSliceV2.ts",
+          "hash": "17965722167199728895",
+          "deps": [
+            "npm:zustand",
+            "npm:lodash",
+            "npm:dayjs",
+            "types",
+            "utils",
+            "helpers"
+          ]
+        },
+        {
+          "file": "shared/stores/src/lib/goalStore/createGoalSliceV3.ts",
+          "hash": "1201940869821329686",
+          "deps": [
+            "npm:zustand",
+            "npm:lodash",
+            "npm:dayjs",
+            "types",
+            "utils",
+            "helpers"
+          ]
+        },
+        {
+          "file": "shared/stores/src/lib/goalStore/index.ts",
+          "hash": "6820094263354506409"
+        },
+        {
+          "file": "shared/stores/src/lib/goalStore/reviverReplacer.ts",
+          "hash": "11089630026794383786",
+          "deps": [
+            "npm:dayjs",
+            "npm:lodash"
+          ]
+        },
+        {
+          "file": "shared/stores/src/lib/index.ts",
+          "hash": "2980830568153251074"
+        },
+        {
+          "file": "shared/stores/tsconfig.json",
+          "hash": "5840880287502376438"
+        },
+        {
+          "file": "shared/stores/tsconfig.lib.json",
+          "hash": "3632393694954060084"
+        },
+        {
+          "file": "shared/stores/tsconfig.spec.json",
+          "hash": "11550347367511341917"
+        }
+      ]
+    }
+  }
+}
