@@ -1,3 +1,5 @@
-export { default as AddGoal } from './addGoal';
-export { default as GoalCard } from './goalCard';
-export { default as SideBar } from './sideBar';
+export { default as AddGoal } from './AddGoal';
+export { Button, buttonVariants } from './Button';
+export type { ButtonProps } from './Button';
+export { default as GoalCard } from './GoalCard';
+export { default as SideBar } from './SideBar';

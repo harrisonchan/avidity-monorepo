@@ -12,6 +12,15 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/today',
+        permanent: true
+      }
+    ]
+  },
 };
 
 const plugins = [
@@ -19,4 +28,5 @@ const plugins = [
   withNx,
 ];
 
-module.exports = composePlugins(...plugins)(nextConfig);
+
+module.exports = composePlugins(...plugins)(nextConfig)
