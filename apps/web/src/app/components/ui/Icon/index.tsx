@@ -1,15 +1,15 @@
 import { Acorn, AirplaneTakeoff } from '@phosphor-icons/react/dist/ssr';
 import { IconProps as BaseIconProps, Icon as BaseIcon } from '@phosphor-icons/react';
-import { PhosphorIconNames } from '@shared/types';
+import { SupportedPhosphorIconNames } from '@shared/types';
 
 // ONLY THE ONES I'M GOING TO USE
-const supportedPhosphorIcons: { [key in PhosphorIconNames]?: BaseIcon } = {
+const supportedPhosphorIcons: { [key in SupportedPhosphorIconNames]?: BaseIcon } = {
   Acorn: Acorn,
   AirplaneTakeoff: AirplaneTakeoff,
 };
 
 export type IconProps = BaseIconProps & {
-  name: 'Acorn' | 'AirplaneTakeoff';
+  name: SupportedPhosphorIconNames;
 };
 
 export function Icon(props: IconProps) {
