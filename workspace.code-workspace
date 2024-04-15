@@ -1,0 +1,11 @@
+{
+  "folders": [
+    {
+      "path": "."
+    }
+  ],
+  "settings": {
+    "background.customImages": ["https://www.hdwallpapers.in/download/anya_forger_bond_4k_hd_spy_x_family-1920x1080.jpg"],
+    "background.useFront": false
+  }
+}

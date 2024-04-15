@@ -29,7 +29,7 @@
     --foreground: #22262d;
     --background: #fff3f4;
     --background-light: var(--light);
-    --muted: var(--grey-light);
+    --muted: var(--grey);
     --muted-foreground: var(--grey-dark);
     --popover: var(--light);
     --popover-foreground: var(--dark);

@@ -39,16 +39,17 @@ function SideBarMenu(props: SideBarMenuProps) {
   return (
     <div className="flex flex-col">
       {props.items.map((item, idx) => (
-        <Link key={item.link + idx} href={item.link}>
-          <Button
-            className={selectedItemIdx === idx ? 'bg-primary-light text-primary hover:bg-primary-light' : ''}
-            key={item.title + idx}
-            onClick={() => {
-              setSelectedItemIdx(idx);
-            }}>
+        <Button
+          className={selectedItemIdx === idx ? 'bg-primary-light text-primary hover:bg-primary-light' : ''}
+          key={item.title + idx}
+          onClick={() => {
+            setSelectedItemIdx(idx);
+          }}
+          asChild>
+          <Link key={item.link + idx} href={item.link}>
             {item.title}
-          </Button>
-        </Link>
+          </Link>
+        </Button>
       ))}
     </div>
   );
@@ -57,7 +58,9 @@ function SideBarMenu(props: SideBarMenuProps) {
 function SideBar() {
   return (
     <div className="flex flex-col h-screen align-center items-center p-4 pt-2 mr-4 bg-background rounded-r-2xl">
-      <h1>Avidity</h1>
+      <Link href="/">
+        <h1>Avidity</h1>
+      </Link>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button>

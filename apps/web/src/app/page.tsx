@@ -4,8 +4,23 @@ import { GoalRecurrenceRule } from '@shared/types';
 import { createRecurrenceRule, getStandardFormat, sanitizeDateForRRule, useGetRecurrentDates } from '@shared/utils';
 import dayjs, { Dayjs } from 'dayjs';
 import { useEffect, useRef, useState } from 'react';
-import { RRule } from 'rrule';
-import { AddGoal } from './components';
+import { Icon } from '@web/components';
+
+const Boop1 = () => {
+  return <div>Boop1</div>;
+};
+const Boop2 = () => {
+  return <div>Boop2</div>;
+};
+const Boops = { Boop1, Boop2 };
+const TestComponent = (props: { boopAmount: 'Boop1' | 'Boop2' }) => {
+  const Boop = Boops[props.boopAmount];
+  return (
+    <div>
+      <Boop />
+    </div>
+  );
+};
 
 export default function Index() {
   const rrule = useRef<GoalRecurrenceRule>({
@@ -27,5 +42,12 @@ export default function Index() {
   // useEffect(() => {
   //   console.log('rule', rule);
   // }, [rule]);
-  return <div>hey bitch</div>;
+  return (
+    <div>
+      hey bitch
+      <TestComponent boopAmount={'Boop1'} />
+      <TestComponent boopAmount={'Boop2'} />
+      <Icon name="AirplaneTakeoff" />
+    </div>
+  );
 }
